@@ -8,7 +8,11 @@ class WishList extends React.Component {
     render() {
         return (
             <div className="wish-list">
-                <p>this is the WishList</p>
+                <ul>
+                    <li>Coke</li>
+                    <li>Switch</li>
+                    <li>Socks</li>
+                </ul>
             </div>
         )
     }

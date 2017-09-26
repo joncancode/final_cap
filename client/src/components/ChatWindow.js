@@ -8,7 +8,8 @@ class ChatWindow extends React.Component {
     render() {
         return (
             <div className="chat-window">
-                <p>this is the ChatWindow</p>
+                <h2>Chat</h2>
+                <p>this is where people would chat</p>
             </div>
         )
     }

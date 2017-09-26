@@ -56,9 +56,11 @@ class App extends React.Component {
         return(
             <div className="app">
                 < Header />
-                < WishList />
-                < ProductWindow />
-                < ChatWindow />
+                <div className="main-container">
+                    < WishList />
+                    < ProductWindow />
+                    < ChatWindow />
+                </div>
             </div>
         )
     }

@@ -1,3 +1,11 @@
 .wish-list {
-    border: 1px solid blue;
+    background-color: lightgreen;
+    max-width: 10%;
+
+
+}
+
+.wish-list ul {
+    list-style-type: none;
+
 }
