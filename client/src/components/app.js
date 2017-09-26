@@ -3,6 +3,14 @@ import * as Cookies from 'js-cookie';
 
 import QuestionPage from './question-page';
 import LoginPage from './login-page';
+import Header from './Header';
+import WishList from './WishList';
+import ProductWindow from './ProductWindow';
+import ChatWindow from './ChatWindow';
+
+
+
+import './styles/App.css';
 
 class App extends React.Component {
     constructor(props) {
@@ -40,11 +48,19 @@ class App extends React.Component {
     }
 
     render() {
-        if (!this.state.currentUser) {
-            return <LoginPage />;
-        }
+        // if (!this.state.currentUser) {
+        //     return <LoginPage />;
+        // }
 
-        return <QuestionPage />;
+        // return <QuestionPage />;
+        return(
+            <div className="app">
+                < Header />
+                < WishList />
+                < ProductWindow />
+                < ChatWindow />
+            </div>
+        )
     }
 }
 
