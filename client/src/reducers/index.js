@@ -27,6 +27,12 @@ const initialState = {
                     "inventory": "not in stock"
                 }
             ]
+        },
+        {
+            "itemName": "Nintendo Switch"
+        },
+        {
+            "itemName": "Socks"
         }
     ]
 };

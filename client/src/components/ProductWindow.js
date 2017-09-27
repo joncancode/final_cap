@@ -1,15 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import './styles/ProductWindow.css';
 
-import { connect } from 'react-redux';
 
 class ProductWindow extends React.Component {
 
-    
-    
-    
-    
     render() {
         const currentItem = this.props.itemData[0];
         const storeData = currentItem.stores.map((item, index) =>
@@ -49,7 +45,6 @@ class ProductWindow extends React.Component {
 
 const mapStateToProps = function(state) {
     return {
-        currentUser: state.currentUser,
         itemData: state.itemData,
         loading: state.loading
     };
