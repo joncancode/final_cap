@@ -21,7 +21,6 @@ mongoose.connect(keys.MONGO_URI);
 //   secret = require('./config/keys');
 // }
 
-const app = express();
 
 // cookie lives for 30 days, keys encrypted
 app.use(
