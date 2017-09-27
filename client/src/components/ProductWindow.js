@@ -5,15 +5,27 @@ import './styles/ProductWindow.css';
 import { connect } from 'react-redux';
 
 class ProductWindow extends React.Component {
+
+    
+    
+    
+    
     render() {
         const currentItem = this.props.itemData[0];
-        console.log(this.props)
+        const storeData = currentItem.stores.map((item, index) =>
+        <tr>
+            <th>Store</th>
+            <th>{item.name}</th>
+            <th>{item.inventory}</th>
+        </tr>
+      );
+
         return (
             <div className="product-window">
                 <div className="item-overview">
                     <h2>{currentItem.itemName}</h2>
                     <p>Added by {currentItem.creator}</p>
-                    <img src="http://via.placeholder.com/350x150"/>
+                    <img src={currentItem.image}/>
                 </div>
                 <div className="item-info">
                     <table>
@@ -27,16 +39,7 @@ class ProductWindow extends React.Component {
                             <th>{currentItem.upcCode}</th>
                             <th></th>
                         </tr>
-                        <tr>
-                            <th>Store 1</th>
-                            <th>{currentItem.stores[0].name}</th>
-                            <th>{currentItem.stores[0].inventory}</th>
-                        </tr>
-                        <tr>
-                            <th>Store 2</th>
-                            <th>Gas station on Main St</th>
-                            <th>Last seen by Dan</th>
-                        </tr>
+                        {storeData}
                     </table>
                 </div>
             </div>

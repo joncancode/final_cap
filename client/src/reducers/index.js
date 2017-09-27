@@ -12,6 +12,7 @@ const initialState = {
             "creator": "David",
             "price": "2",
             "upcCode": "7469962653",
+            "image": "http://via.placeholder.com/300x150",
             "stores": [
                 {
                     "name": "Target",
@@ -20,6 +21,10 @@ const initialState = {
                 {
                     "name": "Walmart",
                     "inventory": "last seen by Dan"
+                },
+                {
+                    "name": "CVS Pharmacy",
+                    "inventory": "not in stock"
                 }
             ]
         }
