@@ -17,3 +17,6 @@ yarn-debug.log*
 yarn-error.log*
 
 server/secret.js
+package-lock.json
+server/package-lock.json
+client/package-lock.json
