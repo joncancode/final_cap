@@ -1,63 +1,72 @@
 const path = require('path');
 const express = require('express');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const BearerStrategy = require('passport-http-bearer').Strategy;
-
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const { Users } = require('./models/User');
+const { Products } = require('./models/Product');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const cookieSession = require('cookie-session');
 
 mongoose.connect(keys.MONGO_URI);
 
-let secret = {
-  CLIENT_ID: process.env.CLIENT_ID,
-  CLIENT_SECRET: process.env.CLIENT_SECRET,
-  MONGO_URI: process.env.MONGO_URI
-};
-  if (process.env.NODE_ENV !== 'production') {
-  secret = require('./config/keys');
-}
+// let secret = {
+//   CLIENT_ID: process.env.CLIENT_ID,
+//   CLIENT_SECRET: process.env.CLIENT_SECRET,
+//   MONGO_URI: process.env.MONGO_URI
+// };
+//   if (process.env.NODE_ENV !== 'production') {
+//   secret = require('./config/keys');
+// }
 
 const app = express();
+
+// cookie lives for 30 days, keys encrypted
+app.use(
+    cookieSession({
+        maxAge: 30 * 24 * 60 * 60 * 1000, 
+        keys: [keys.COOKIE_KEY]
+    })
+);
+
 
 const database = {
 };
 
 app.use(passport.initialize());
+app.use(passport.session())
+
+passport.serializeUser((user, cb) => {
+    cb(null, user.id); // auto generated mongo id is the user.id, used to find user in cookie
+});
+
+passport.deserializeUser((id, cb) => {
+    User.findById(id)
+    .then(user => {
+        cb(null, user);
+    });
+});
 
 passport.use(
     new GoogleStrategy({
-        clientID:  secret.CLIENT_ID,
-        clientSecret: secret.CLIENT_SECRET,
+        clientID:  keys.CLIENT_ID,
+        clientSecret: keys.CLIENT_SECRET,
         callbackURL: `/api/auth/google/callback`
     },
     (accessToken, refreshToken, profile, cb) => {
-        // Job 1: Set up Mongo/Mongoose, create a User model which store the
-        // google id, and the access token
-        // Job 2: Update this callback to either update or create the user
-        // so it contains the correct access token
-        const user = database[accessToken] = {
-            googleId: profile.id,
-            accessToken: accessToken
-        };
-        return cb(null, user);
+        Users.findOne({googleId: profile.id})
+        .then((existingUser) => {
+            if (existingUser) {
+                // user already exists
+                cb(null, existingUser); // telling passport, user exists great we are done
+            } else {
+                // user does not exist, create new user
+                new Users({googleId: profile.id}).save() // persisting to mongo database the google id
+                .then(user => cb(null, user)); // if success, done
+            }
+        });
     }
 ));
-
-passport.use(
-    new BearerStrategy(
-        (token, done) => {
-            // Job 3: Update this callback to try to find a user with a
-            // matching access token.  If they exist, let em in, if not,
-            // don't.
-            if (!(token in database)) {
-                return done(null, false);
-            }
-            return done(null, database[token]);
-        }
-    )
-);
 
 app.get('/api/auth/google',
     passport.authenticate('google', {scope: ['profile']}));
@@ -79,12 +88,6 @@ app.get('/api/auth/logout', (req, res) => {
     res.redirect('/');
 });
 
-app.get('/api/me',
-    passport.authenticate('bearer', {session: false}),
-    (req, res) => res.json({
-        googleId: req.user.googleId
-    })
-);
 
 app.get('/api/questions',
     passport.authenticate('bearer', {session: false}),
@@ -94,9 +97,9 @@ app.get('/api/questions',
 
 // -----------------------------------------------------------
 app.post('/api/post', (req, res) => {
-    Users.create({
-      username: req.body.username,
-      password: req.body.password
+    Products.create({
+        name: req.body.name
+      
     })
       .then(()=> {
         res.status(201).json(req.body);
