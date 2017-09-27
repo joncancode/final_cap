@@ -1,12 +1,26 @@
 .product-window {
     display: flex;
-    /* justify-content: center; */
 }
 
 .product-window > div {
     flex: 1;
 }
 
-.item-info > table {
+.item-overview > p, h2 {
+    padding-left: 10px;
+    text-align: left;
+}
+
+.item-overview > img {
+    max-width: 350px;
+}
+
+table {
+    margin-top: 120px;
     width: 100%;
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
 }
