@@ -96,11 +96,19 @@ var opts = {
     "key_type": "3scale"
   }
 }
+
 var req = https.request(opts, function(res) {
-//   console.log('statusCode: ', res.statusCode);
-//   console.log('headers: ', res.headers);
+  console.log('statusCode: ', res.statusCode);
+  console.log('headers: ', res.headers);
   res.on('data', function(d) {
-    console.log('BODY: ' + d);
+    console.log('BODY' + d);
+// for (key in d) {
+//     if (typeof(d[key]) != 'number' ) {
+//     console.log('loop@@@', key, d[key])
+//     }
+// }
+let parsedData = JSON.parse(d)
+console.log('BUUUUUF', d)
   })
 })
 req.on('error', function(e) {
