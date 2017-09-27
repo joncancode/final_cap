@@ -1,0 +1,13 @@
+* {
+    text-align: center;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    /* flex-direction: column; */
+}
+
+.main-container > div{
+    flex: 1;
+}

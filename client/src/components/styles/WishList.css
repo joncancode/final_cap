@@ -1,0 +1,15 @@
+.wish-list {
+    background-color: #32C3C3;
+    max-width: 10%;
+
+
+}
+
+.wish-list ul {
+    list-style-type: none;
+    padding: 0px;
+}
+
+.wish-list li {
+    text-align: left;
+}
