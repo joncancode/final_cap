@@ -4,13 +4,19 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
 
+const keys = require('./config/keys');
+const mongoose = require('mongoose');
+const { Users } = require('./models/User');
+
+mongoose.connect(keys.MONGO_URI);
+
 let secret = {
   CLIENT_ID: process.env.CLIENT_ID,
-  CLIENT_SECRET: process.env.CLIENT_SECRET
-}
-
-if(process.env.NODE_ENV != 'production') {
-  secret = require('./secret');
+  CLIENT_SECRET: process.env.CLIENT_SECRET,
+  MONGO_URI: process.env.MONGO_URI
+};
+  if (process.env.NODE_ENV !== 'production') {
+  secret = require('./config/keys');
 }
 
 const app = express();
@@ -84,6 +90,34 @@ app.get('/api/questions',
     passport.authenticate('bearer', {session: false}),
     (req, res) => res.json(['Question 1', 'Question 2'])
 );
+
+
+// -----------------------------------------------------------
+app.post('/api/post', (req, res) => {
+    Users.create({
+      username: req.body.username,
+      password: req.body.password
+    })
+      .then(()=> {
+        res.status(201).json(req.body);
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+      });
+  });
+
+
+// -----------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
