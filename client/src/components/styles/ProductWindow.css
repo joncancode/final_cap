@@ -1,4 +1,12 @@
 .product-window {
-    border: 1px solid green;
+    display: flex;
+    /* justify-content: center; */
+}
 
+.product-window > div {
+    flex: 1;
+}
+
+.item-info > table {
+    width: 100%;
 }
