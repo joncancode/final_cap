@@ -3,7 +3,8 @@ import {
 } from '../actions';
 
 const initialState = {
-    currentUser: null,
+    currentUser: 'SomeGuysUsername',
+    // currentUser: null,
     loading: false,
     error: null,
     itemData: [
