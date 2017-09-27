@@ -7,6 +7,8 @@ const { Products } = require('./models/Product');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const cookieSession = require('cookie-session');
+const BearerStrategy = require('passport-http-bearer').Strategy;
+const app = express()
 
 mongoose.connect(keys.MONGO_URI);
 
@@ -121,6 +123,67 @@ app.post('/api/post', (req, res) => {
 
 
 
+//======================================================================//
+
+const https = require('https')
+var opts = {
+  hostname: 'api.upcitemdb.com',
+  path: '/prod/trial/search',
+  method: 'POST',
+  headers: {
+    "Content-Type": "application/json",
+    "key_type": "3scale"
+  }
+}
+
+var req = https.request(opts, function(res) {
+  console.log('statusCode: ', res.statusCode);
+  console.log('headers: ', res.headers);
+  res.on('data', function(d) {
+    console.log('BODY' + d);
+// for (key in d) {
+//     if (typeof(d[key]) != 'number' ) {
+//     console.log('loop@@@', key, d[key])
+//     }
+// }
+let parsedData = JSON.parse(d)
+console.log('BUUUUUF', d)
+  })
+})
+req.on('error', function(e) {
+  console.log('problem with request: ' + e.message);
+})
+
+ req.write('{ "s": "socks" }')
+// other requests
+req.end()
+
+let query;
+const upcURL = `http://www.upcitemdb.com/query?s=${query}&type=2`
+
+// app.post('/api/search/', (req, res) => {
+//     const query = req.body.query;
+//     const apiURL = `http://www.upcitemdb.com/query?s=${query}&type=2`
+//     return fetch(apiURL, {
+//       'Content-Type': 'application/json'
+//     })
+//       .then(results => {
+//         console.log('results', results.body);
+//         return results.json();
+//       })
+//       .then(resJson => {
+//         //console.log(resJson)
+
+//         return res.status(200).send(resJson);
+//       })
+//       .catch(err => {
+//         console.log({err});
+//         res.status(500).json({ message: 'Internal error' });
+//       });
+//   });
+
+
+//======================================================================//
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
@@ -135,6 +198,7 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 let server;
 function runServer(port=3001) {
     return new Promise((resolve, reject) => {
+        console.log('now running on port 3001')
         server = app.listen(port, () => {
             resolve();
         }).on('error', reject);
