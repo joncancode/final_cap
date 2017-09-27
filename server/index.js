@@ -21,8 +21,6 @@ mongoose.connect(keys.MONGO_URI);
 //   secret = require('./config/keys');
 // }
 
-const app = express();
-
 // cookie lives for 30 days, keys encrypted
 app.use(
     cookieSession({
@@ -124,63 +122,46 @@ app.post('/api/post', (req, res) => {
 
 
 //======================================================================//
+// WE ONLY HAVE 100 QUERIES SO KEEP COMMENTED UNLESS NEEDED
+//======================================================================//
 
-const https = require('https')
-var opts = {
-  hostname: 'api.upcitemdb.com',
-  path: '/prod/trial/search',
-  method: 'POST',
-  headers: {
-    "Content-Type": "application/json",
-    "key_type": "3scale"
-  }
-}
-
-var req = https.request(opts, function(res) {
-  console.log('statusCode: ', res.statusCode);
-  console.log('headers: ', res.headers);
-  res.on('data', function(d) {
-    console.log('BODY' + d);
-// for (key in d) {
-//     if (typeof(d[key]) != 'number' ) {
-//     console.log('loop@@@', key, d[key])
-//     }
+// const https = require('https')
+// var opts = {
+//   hostname: 'api.upcitemdb.com',
+//   path: '/prod/trial/search',
+//   method: 'POST',
+//   headers: {
+//     "Content-Type": "application/json",
+//     "key_type": "3scale"
+//   }
 // }
-let parsedData = JSON.parse(d)
-console.log('BUUUUUF', d)
-  })
-})
-req.on('error', function(e) {
-  console.log('problem with request: ' + e.message);
-})
 
- req.write('{ "s": "socks" }')
-// other requests
-req.end()
 
-let query;
-const upcURL = `http://www.upcitemdb.com/query?s=${query}&type=2`
+// var req = https.request(opts, function(res) {
+//   console.log('statusCode: ', res.statusCode);
+//   console.log('headers: ', res.headers);
+//   res.on('data', function(d) {
+      
+//     // let newData = ('BODY: ' + d)
+//     console.log('item name: ', JSON.parse(d).items[0].title);
+//     console.log('brand: ', JSON.parse(d).items[0].brand);
+//     console.log('price: ', JSON.parse(d).items[0].lowest_recorded_price);
+//     console.log('upc code: ', JSON.parse(d).items[0].upc);
+//     console.log('about: ', JSON.parse(d).items[0].description);
+//     console.log('images: ', JSON.parse(d).items[0].images[0]);
+    
+//   })
+// })
+// req.on('error', function(e) {
+//   console.log('problem with request: ' + e.message);
+// })
 
-// app.post('/api/search/', (req, res) => {
-//     const query = req.body.query;
-//     const apiURL = `http://www.upcitemdb.com/query?s=${query}&type=2`
-//     return fetch(apiURL, {
-//       'Content-Type': 'application/json'
-//     })
-//       .then(results => {
-//         console.log('results', results.body);
-//         return results.json();
-//       })
-//       .then(resJson => {
-//         //console.log(resJson)
+// // let query;
+// // const upcURL = `http://www.upcitemdb.com/query?s=${query}&type=2`
 
-//         return res.status(200).send(resJson);
-//       })
-//       .catch(err => {
-//         console.log({err});
-//         res.status(500).json({ message: 'Internal error' });
-//       });
-//   });
+//  req.write('{ "s": "socks" }')
+// // other requests
+// req.end()
 
 
 //======================================================================//
