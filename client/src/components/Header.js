@@ -31,9 +31,6 @@ class Header extends React.Component {
     }
 }
 
-<<<<<<< HEAD
-export default Header;
-=======
 const mapStateToProps = function(state) {
     return {
         currentUser: state.currentUser
@@ -41,4 +38,3 @@ const mapStateToProps = function(state) {
 };
 
 export default connect(mapStateToProps)(Header);
->>>>>>> 4b677a11ed9e9d7cd8cbd5e30724883c996a839a
