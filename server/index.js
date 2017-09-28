@@ -2,8 +2,6 @@ const path = require('path');
 const express = require('express');
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
-const passport = require("passport");
-const app = express();
 
 mongoose.connect(keys.MONGO_URI);
 
@@ -35,20 +33,40 @@ require("./Routes/authRoutes")(app);
 //   console.log('statusCode: ', res.statusCode);
 //   console.log('headers: ', res.headers);
 //   res.on('data', function(d) {
-      
-//     // let newData = ('BODY: ' + d)
-//     console.log('item name: ', JSON.parse(d).items[0].title);
-//     console.log('brand: ', JSON.parse(d).items[0].brand);
-//     console.log('price: ', JSON.parse(d).items[0].lowest_recorded_price);
-//     console.log('upc code: ', JSON.parse(d).items[0].upc);
-//     console.log('about: ', JSON.parse(d).items[0].description);
-//     console.log('images: ', JSON.parse(d).items[0].images[0]);
-    
 //   })
 // })
 // req.on('error', function(e) {
 //   console.log('problem with request: ' + e.message);
 // })
+
+
+//  req.write('{ "s": "socks" }')
+// // other requests
+// req.end()
+
+// let query;
+// const upcURL = `http://www.upcitemdb.com/query?s=${query}&type=2`
+
+// app.post('/api/search/', (req, res) => {
+//     const query = req.body.query;
+//     const apiURL = `http://www.upcitemdb.com/query?s=${query}&type=2`
+//     return fetch(apiURL, {
+//       'Content-Type': 'application/json'
+//     })
+//       .then(results => {
+//         console.log('results', results.body);
+//         return results.json();
+//       })
+//       .then(resJson => {
+//         //console.log(resJson)
+
+//         return res.status(200).send(resJson);
+//       })
+//       .catch(err => {
+//         console.log({err});
+//         res.status(500).json({ message: 'Internal error' });
+//       });
+//   });
 
 // // let query;
 // // const upcURL = `http://www.upcitemdb.com/query?s=${query}&type=2`
@@ -56,6 +74,7 @@ require("./Routes/authRoutes")(app);
 //  req.write('{ "s": "socks" }')
 // // other requests
 // req.end()
+
 
 
 //======================================================================//
