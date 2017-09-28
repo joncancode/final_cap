@@ -1,7 +1,7 @@
 "use strict";
 const passport = require("passport");
-const { Users } = require('../Models/User');
-const { Products } = require('../Models/Product');
+const { Users } = require('../models/User');
+const { Products } = require('../models/Product');
 
 module.exports = app => {
 
