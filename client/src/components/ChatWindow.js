@@ -8,30 +8,32 @@ constructor(props) {
     super(props)
     this.state = {
         user: '',
-        password: '',
         text: '',
+        chatText: ''
      }
 }
 
-handleSignup = (e) => {
-    e.preventDefault();
-    //needs to have a dispatch from action
-        this.setState( {user: 'Bob',
-            password: 'password'} )
-}
+// handleSignup = (e) => {
+//     e.preventDefault();
+//     //needs to have a dispatch from action
+//         this.setState( {user: 'Bob',
+//             password: 'password'} )
+// }
 
 
 handleSubmit = (e) => {
     e.preventDefault();
+    console.log('form submit');
     //needs to have a dispatch from action
-        this.setState( {user: 'Bob',
-            text: 'Hello'} )
+        this.setState( {user: '',
+            text: '',
+          chatroom: 'hello'} )
 }
 
   render() {
     return (
       <div className="chat-window">
-        <div id="namesWrapper">
+        {/* <div id="namesWrapper">
           <h2>Chatosphere</h2>
           <p>Create profile:</p>
           <div id="error" />
@@ -40,12 +42,15 @@ handleSubmit = (e) => {
             <input type="text" size="30" id="username" placeholder="Password" />
             <input id="submit" type="submit" value="Submit" />
           </form>
-        </div>
+        </div> */}
 
         <div id="mainWrapper">
           <h2>Chatosphere</h2>
           <div id="chatWrapper">
-            <div id="chatWindow" />
+            <div id="chatWindow"
+            value={this.state.chatText}
+            >
+            </div>
             <form id="messageForm" onSubmit={e => this.handleSubmit(e)}>
               <input
                 type="text"

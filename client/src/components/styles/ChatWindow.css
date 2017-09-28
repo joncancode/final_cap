@@ -11,3 +11,9 @@
     color: white;
     margin: 0px;
 }
+
+#chatWindow {
+    min-height: 220px;
+    margin-bottom: 10px;
+    background-color: whitesmoke;
+}
