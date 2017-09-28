@@ -1,0 +1,13 @@
+.chat-window {
+    background-color: skyblue;
+
+    padding-bottom: 50px;
+    margin: 0px;
+    max-width: 30%;
+}
+
+.chat-window > h2 {
+    background-color: blue;
+    color: white;
+    margin: 0px;
+}
