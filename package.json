@@ -27,6 +27,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "express": "^4.14.1",
     "http-proxy-middleware": "^0.17.3",
+    "jquery": "^3.2.1",
     "npm-run-all": "^4.0.1",
     "socket.io": "^2.0.3",
     "xp": "^1.0.1"
