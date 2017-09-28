@@ -25,7 +25,7 @@ class Header extends React.Component {
         return (
             <div className="header">
                 <h1>App Name</h1>
-                {this.renderUser()}
+                    {this.renderUser()}
             </div>
         )
     }
