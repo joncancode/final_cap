@@ -31,14 +31,6 @@ require("./Routes/authRoutes")(app);
 //   }
 // }
 
-// cookie lives for 30 days, keys encrypted
-app.use(
-    cookieSession({
-        maxAge: 30 * 24 * 60 * 60 * 1000, 
-        keys: [keys.COOKIE_KEY]
-    })
-);
-
 
 //  req.write('{ "s": "socks" }')
 // // other requests
