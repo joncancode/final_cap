@@ -4,7 +4,7 @@ import {
 
 const initialState = {
     currentUser: 'SomeGuysUsername',
-    // currentUser: null,
+    loggedIn: true,
     loading: false,
     error: null,
     itemData: [

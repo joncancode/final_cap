@@ -38,12 +38,12 @@ class WishList extends React.Component {
                                 <h2>Add new item</h2>
                                     <input type="text"/>
                                     <button onClick={this.showModal.bind(this)}>Search</button>
-                                    {/* <Modal ref="modal" keyboard={this.callback}>
+                                    <Modal ref="modal" keyboard={this.callback}>
                                         <div className="add-item-modal">
                                             <h2>something else</h2>
                                             <button onClick={this.hideModal.bind(this)} className="close-button">Close</button>
                                         </div>
-                                    </Modal> */}
+                                    </Modal>
                                     <br/>
                                 <button onClick={this.hideModal.bind(this)} className="close-button">Close</button>
                             </div>

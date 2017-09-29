@@ -5,7 +5,7 @@ import QuestionPage from './question-page';
 import LoginPage from './login-page';
 import Header from './Header';
 import WishList from './WishList';
-import ProductWindow from './ProductWindow';
+import MainWindow from './MainWindow';
 import ChatWindow from './ChatWindow';
 
 
@@ -58,7 +58,7 @@ class App extends React.Component {
                 < Header />
                 <div className="main-container">
                     < WishList />
-                    < ProductWindow />
+                    < MainWindow />
                     < ChatWindow />
                 </div>
             </div>
