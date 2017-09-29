@@ -45,9 +45,6 @@ io.sockets.on('connection', function(socket){
 
 });
 
-// server.listen(process.env.PORT || 3000);
-// console.log('Server is running on port 3000');
+server.listen(process.env.PORT || 3300);
+console.log('Server is running on port 3300');
 
-module.exports = {
-  
-};

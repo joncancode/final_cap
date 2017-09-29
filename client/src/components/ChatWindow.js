@@ -1,68 +1,15 @@
-import React from 'react';
-import $ from 'jquery';
+import React, { Component } from 'react';
+import WindowLayout from './WindowLayout'
 
 import './styles/ChatWindow.css';
 
+//this component needs to be reduxified 
 class ChatWindow extends React.Component {
-constructor(props) {
-    super(props)
-    this.state = {
-        user: '',
-        text: '',
-        chatText: ''
-     }
-}
-
-// handleSignup = (e) => {
-//     e.preventDefault();
-//     //needs to have a dispatch from action
-//         this.setState( {user: 'Bob',
-//             password: 'password'} )
-// }
-
-
-handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('form submit');
-    //needs to have a dispatch from action
-        this.setState( {user: '',
-            text: '',
-          chatroom: 'hello'} )
-}
-
+  
   render() {
     return (
       <div className="chat-window">
-        {/* <div id="namesWrapper">
-          <h2>Chatosphere</h2>
-          <p>Create profile:</p>
-          <div id="error" />
-          <form id="usernameForm" onSubmit={e => this.handleSignup(e)} >
-            <input type="text" size="30" id="username" placeholder="User" />
-            <input type="text" size="30" id="username" placeholder="Password" />
-            <input id="submit" type="submit" value="Submit" />
-          </form>
-        </div> */}
-
-        <div id="mainWrapper">
-          <h2>Chatosphere</h2>
-          <div id="chatWrapper">
-            <div id="chatWindow"
-            value={this.state.chatText}
-            >
-            </div>
-            <form id="messageForm" onSubmit={e => this.handleSubmit(e)}>
-              <input
-                type="text"
-                size="35"
-                id="message"
-                placeholder="Enter message here"
-                value={this.state.text}
-              />
-              <input type="submit" value="Submit" />
-            </form>
-          </div>
-        </div>
+        <WindowLayout title="Chat Window" />
       </div>
     );
   }
