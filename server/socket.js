@@ -45,6 +45,6 @@ io.sockets.on('connection', function(socket){
 
 });
 
-server.listen(process.env.PORT || 3300);
-console.log('Server is running on port 3300');
+server.listen(process.env.PORT || 3400);
+console.log('Server is running on port 3400');
 

@@ -42,16 +42,16 @@ setUser = ({user, isUser}) => {
       <div className="login">
         <form onSubmit={this.handleSubmit} className="login-form">
           <label htmlFor="nickname">
-            <h2>What should we call you?</h2>
+            
             <input
-              ref={input => {
+              ref={(input) => {
                 this.textInput = input;
               }}
               type="text"
               id="nickname"
               value={nickname}
               onChange={this.handleChange}
-              placeHolder={"what's your username?"}
+              placeholder={"say something"}
             />
             <div className="error">{error ? error : null} </div>
           </label>
