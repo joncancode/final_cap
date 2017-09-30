@@ -4,6 +4,8 @@ import $ from 'jquery';
 
 import './styles/ChatWindow.css';
 
+const io = require('socket.io-client');
+
 //this component needs to be reduxified 
 class ChatWindow extends React.Component {
   constructor(props) {
@@ -21,6 +23,13 @@ class ChatWindow extends React.Component {
   //         this.setState( {user: 'Bob',
   //             password: 'password'} )
   // }
+
+  componentDidMount(){
+    this.socket = io.connect('http://localhost:3400');
+    this.socket.on('connect', function(tradeMsg) {
+        console.log("socket connected on component");
+    });
+}
 
   handleSubmit = e => {
     e.preventDefault();
