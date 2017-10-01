@@ -1,10 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import $ from 'jquery';
-
 import './styles/ChatWindow.css';
 
-const io = require('socket.io-client');
+import io from 'socket.io-client'
+let socket = io('http://localhost:3400')
 
 //this component needs to be reduxified 
 class ChatWindow extends React.Component {
@@ -12,37 +10,45 @@ class ChatWindow extends React.Component {
     super(props);
     this.state = {
       user: '',
-      text: '',
-      chatText: ''
+      message: [],
+      socket: socket
     };
   }
 
-  // handleSignup = (e) => {
-  //     e.preventDefault();
-  //     //needs to have a dispatch from action
-  //         this.setState( {user: 'Bob',
-  //             password: 'password'} )
-  // }
+  // state = { data: {} }
 
-  componentDidMount(){
-    this.socket = io.connect('http://localhost:3400');
-    this.socket.on('connect', function(tradeMsg) {
-        console.log("socket connected on component");
-    });
-}
-
-  handleSubmit = e => {
-    e.preventDefault();
-    console.log('form submit');
-    this.setState({
-      // return {
-      user: 'userguy: ',
-      text: 'to be input text',
-      chatText: 'chat'
-      // }
+  componentDidMount() {    
+    socket.on(`new message `, data => {
+      console.log('new message: ', data);
     })
-    console.log(this.state);
   }
+
+    onChangeValue = e => {
+      this.setState({
+        message: e.target.value
+      });
+      console.log(e.target.value)
+    };
+
+    sendMessage = message => {
+      socket.emit(`send message`, message);
+    }
+
+    handleSubmit = (e) => {
+      e.preventDefault();
+      console.log('form submit');
+  
+      var message = this.input.value;
+  
+      this.sendMessage(message);
+      
+      this.setState({
+        message: message
+      })
+      console.log('state', this.state)
+    }
+
+
 
   render() {
     return (
@@ -51,15 +57,18 @@ class ChatWindow extends React.Component {
           <h2>Chatosphere</h2>
           <div id="chatWrapper">
             <ul className="chatWindow">
-              <li><strong>{this.state.user}</strong> {this.state.chatText}</li>
+              <li>{this.state.message}</li>
             </ul>
-            <form id="messageForm" onSubmit={e => this.handleSubmit(e)}>
-              <input
+            <form id="messageForm" onSubmit={e => this.handleSubmit(e)}
+              >
+              <input 
+              ref={input => this.input = input} 
                 type="text"
                 size="35"
                 id="message"
                 placeholder="Enter message here"
-                value={this.state.value}
+                value={this.state.message}
+                onChange={this.onChangeValue}
               />
               <input type="submit" value="Submit" />
             </form>

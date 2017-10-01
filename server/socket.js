@@ -1,20 +1,24 @@
 'use strict';
-const express = require('express'),
-  app = express(),
-  server = require('http').createServer(app),
-  io = require('socket.io').listen(server);
-let usernames = [];
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+// const express = require('express'),
+//   app = express(),
+//   server = require('http').createServer(app),
+//   io = require('socket.io').listen(server);
+// let usernames = [];
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '../client/public/index.html');
 });
 
 // get the client to connect to the server with socket.io, responds in the console
-io.sockets.on('connection', function(socket){
-  console.log('Client is connected');
+io.on('connection', function(socket) {
+  console.log('Client is connected on socket.js');
 
-  socket.on('new user', function(data, callback){
-    if(usernames.indexOf(data) !== -1) {
+  socket.on('new user', function(data, callback) {
+    if (usernames.indexOf(data) !== -1) {
       callback(false);
     } else {
       callback(true);
@@ -30,21 +34,20 @@ io.sockets.on('connection', function(socket){
   }
 
   // Send message
-  socket.on('send message', function(data){
-    io.sockets.emit('new message', {msg: data, user: socket.username});
+  socket.on('send message', function(data) {
+    io.emit('new message', data);
   });
 
   // Disconnect event
-  socket.on('disconnect', function(data){
-    if(!socket.username){
+  socket.on('disconnect', function(data) {
+    if (!socket.username) {
       return;
     }
     usernames.splice(usernames.indexOf(socket.username), 1);
     updateUsernames;
   });
-
 });
 
-server.listen(process.env.PORT || 3400);
-console.log('Server is running on port 3400');
-
+http.listen(process.env.PORT || 3400, function() {
+  console.log('listening to server on *:3400');
+});
