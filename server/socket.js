@@ -4,7 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '../client/public/index.html');
+  res.sendFile(__dirname + '../client/src/components/ChatWindow.js');
 });
 
 // get the client to connect to the server with socket.io, responds in the console

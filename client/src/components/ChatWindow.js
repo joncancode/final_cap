@@ -32,6 +32,7 @@ class ChatWindow extends React.Component {
 
     sendMessage = message => {
       socket.emit(`send message`, message);
+      console.log(`this is the "send message"`, message);
     }
 
     handleSubmit = (e) => {
