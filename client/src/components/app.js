@@ -1,6 +1,8 @@
 import React from 'react';
 import * as Cookies from 'js-cookie';
 
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 import QuestionPage from './question-page';
 import LoginPage from './login-page';
 import Header from './Header';
@@ -56,11 +58,18 @@ class App extends React.Component {
         return(
             <div className="app">
                 < Header />
-                <div className="main-container">
-                    < WishList />
-                    < MainWindow />
-                    < ChatWindow />
-                </div>
+                    {/* <Router> */}
+                        {/* <Switch> */}
+                            <div className="main-container">
+                                < WishList />
+                                {/* <Route name="items" path="/items" component={WishList} /> */}
+                                < MainWindow />
+                                {/* <Route name="items" path="/items:id" component={MainWindow} {...appProps}/> */}
+                                < ChatWindow />
+                            </div>
+                            
+                        {/* </Switch> */}
+                    {/* </Router> */}
             </div>
         )
     }
