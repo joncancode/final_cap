@@ -3,12 +3,6 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-// const express = require('express'),
-//   app = express(),
-//   server = require('http').createServer(app),
-//   io = require('socket.io').listen(server);
-// let usernames = [];
-
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '../client/public/index.html');
 });
