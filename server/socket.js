@@ -5,12 +5,14 @@ var io = require('socket.io')(http);
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '../client/src/components/ChatWindow.js');
+  console.log(__dirname + " dir name");
 });
 
 // get the client to connect to the server with socket.io, responds in the console
 io.on('connection', function(socket) {
   console.log('Client is connected on socket.js');
 
+  
   socket.on('new user', function(data, callback) {
     if (usernames.indexOf(data) !== -1) {
       callback(false);
