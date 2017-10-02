@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
+
 const passport = require('passport');
 
 const app = express();
@@ -10,9 +11,6 @@ mongoose.connect(keys.MONGO_URI);
 
 const database = {
 };
-
-app.use(passport.initialize());
-app.use(passport.session())
 
 require("./Routes/authRoutes")(app);
 

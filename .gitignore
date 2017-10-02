@@ -19,6 +19,7 @@ yarn-debug.log*
 yarn-error.log*
 .vscode
 .idea
+.eslintrc
 
 server/secret.js
 package-lock.json
