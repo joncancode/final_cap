@@ -4,7 +4,8 @@ import {
 
 const initialState = {
     currentUser: 'SomeGuysUsername',
-    // currentUser: null,
+    // loggedIn: false,
+    loggedIn: true,
     loading: false,
     error: null,
     itemData: [
@@ -12,8 +13,8 @@ const initialState = {
             "itemName": "Coca-cola",
             "creator": "David",
             "price": "2",
-            "upcCode": "7469962653",
-            "image": "http://via.placeholder.com/300x150",
+            "upcCode": "1",
+            "image": "http://via.placeholder.com/301x150",
             "stores": [
                 {
                     "name": "Target",
@@ -30,25 +31,22 @@ const initialState = {
             ]
         },
         {
-            "itemName": "Nintendo Switch"
+            "itemName": "Nintendo Switch",
+            "upcCode": "2",
         },
         {
-            "itemName": "Socks"
+            "itemName": "Socks",
+            "upcCode": "3",
         }
     ]
 };
 
 export const mainReducer = (state = initialState, action) => {
+    //do switch statements
     if (action.type === TEST_ACTION) {
         return Object.assign({}, state, { 
             test: 'the test was updated' 
         });
     } 
-    // else if (action.type === LOGIN_USER_SUCCESS) {
-    //     return Object.assign({}, state, {
-    //         currentUser: action.userId,
-    //         loading: false // does this need to be here? update all depending on joe's response
-    //     });
-    // }
     return state;
 };

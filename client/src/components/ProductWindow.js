@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+
+
 import './styles/ProductWindow.css';
 
 
@@ -9,7 +11,7 @@ class ProductWindow extends React.Component {
     render() {
         const currentItem = this.props.itemData[0];
         const storeData = currentItem.stores.map((item, index) =>
-        <tr>
+        <tr key={index}>
             <th>Store</th>
             <th>{item.name}</th>
             <th>{item.inventory}</th>
