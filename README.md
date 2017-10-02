@@ -1,99 +1,89 @@
-# Space Repetition Starter Kit
+# Find Smithy
 
-This should get you started with your Spaced Repetition app. We're giving you your basic directory structure, and the framework for authentication. However, we aren't persisting any information, and it will be your job to add Mongo/Mongoose. There are helpful comments in `server/index.js`.
+Find Smithy is an application that brings the community together. Not sure if that Nintendo Switch is still available at the local Walmart? Add what you want to our communal list and allow the crowdsourcing to do its magic.
 
-In development, the starter kit runs two servers. One of which is from `create-react-app`, so you get all the fancy hot reloading, etc, the other is the backend. In production, we generate a static folder with all our React stuff, and serve that with Express.
+What's to come - A system to reward points for those who contribute more.
 
-## Getting started
+## Getting Started
 
-First, fork the repo on Github to your own account
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Clone the repo
+### Prerequisites
 
-```sh
-$ git clone https://github.com/YOUR_USERNAME_HERE/spaced-repetition-starter
+What things you need to install the software and how to install them
+
+```
+Give examples
 ```
 
-```sh
-$ cd spaced-repetition-starter
+### Installing
+
+A step by step series of examples that tell you have to get a development env running
+
+Say what the step will be
+
+```
+Give the example
 ```
 
-```sh
-$ npm install
+And repeat
+
+```
+until finished
 ```
 
-You can run it locally now with `npm run dev`, but the Google OAuth stuff won't work without your own credentials.
+End with an example of getting some data out of the system or using it for a little demo
 
-### Get Google OAuth Credentials
+## Running the tests
 
-Visit https://console.developers.google.com
+Explain how to run the automated tests for this system
 
-* Navigate to Library 
-* Under 'Social APIs', Click 'Google+ API'
-* Click 'Enable' at the top (if it isn't already)
+### Break down into end to end tests
 
+Explain what these tests test and why
 
-* Navigate to Credentials
-* It may require you to configure OAuth consent screen.
-* Click 'Create credentials'
-* Choose 'OAuth Client ID'
-* Choose 'Web application'
-* Add `http://localhost:8080` to Authorized JavaScript origins
-* Add `http://localhost:8080/api/auth/google/callback` to Authorized redirect URIs
-* Click 'Create'
-
-You should get a Client ID and Secret.
-
-Back in your project locally, create an `secret.js` file in the `/server` directory:
-
-(Use the client ID and secret we just got from Google)
-
-```js
-module.exports = {
-  CLIENT_ID: 'yourId123.apps.googleusercontent.com',
-  CLIENT_SECRET: 'yoursecret'
-}
+```
+Give an example
 ```
 
-This file is in ignored by git because it is in your `.gitignore`. Never commit or push 'secret.js', the client id and secret need to be kept safe like a password.
+### And coding style tests
 
-### Local Development
+Explain what these tests test and why
 
-```sh
-  npm run dev
+```
+Give an example
 ```
 
-## Deployment to Heroku
+## Deployment
 
-```sh
-$ heroku create
-```
+Add additional notes about how to deploy this on a live system
 
-Configure your Google client id and secret on Heroku:
+## Built With
 
-```sh
-$ heroku config:set CLIENT_ID=yourId123.apps.googleusercontent.com CLIENT_SECRET=yoursecret
-```
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
-(You can also do this on dashboard.heroku.com under your app's settings.)
+## Contributing
 
-### To deploy:
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
-```sh
-$ git push heroku master
-```
+## Versioning
 
-Your app should be live on Heroku soon, but if you try to `Log in with Google`, you will get a 400 error. Take note of your new app's URL.
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
+## Authors
 
-#### Updating Google API authorized origins
+* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
-To fix this, go back to the Google API Dashboard and:
+## License
 
-(You might need to use `http` and or `http` for your Heroku URIs)
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-- Add `http://your-app-name-123.herokuapp.com` to Authorized JavaScript origins
-- Add `http://your-app-name-123.herokuapp.com/api/auth/google/callback` to Authorized redirect URIs
+## Acknowledgments
 
-Try to log in  `Log in with Google` again, and you're golden!
+* Hat tip to anyone who's code was used
+* Inspiration
+* etc

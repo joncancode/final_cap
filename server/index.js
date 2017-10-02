@@ -6,13 +6,14 @@ const passport = require('passport');
 
 const app = express();
 
+const passport = require('passport');
+
+const app = express();
+
 mongoose.connect(keys.MONGO_URI);
 
 const database = {
 };
-
-app.use(passport.initialize());
-app.use(passport.session())
 
 require("./Routes/authRoutes")(app);
 
@@ -30,17 +31,6 @@ require("./Routes/authRoutes")(app);
 //     "key_type": "3scale"
 //   }
 // }
-
-
-// var req = https.request(opts, function(res) {
-//   console.log('statusCode: ', res.statusCode);
-//   console.log('headers: ', res.headers);
-//   res.on('data', function(d) {
-//   })
-// })
-// req.on('error', function(e) {
-//   console.log('problem with request: ' + e.message);
-// })
 
 
 //  req.write('{ "s": "socks" }')

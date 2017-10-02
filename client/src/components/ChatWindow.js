@@ -1,57 +1,73 @@
 import React from 'react';
-
 import './styles/ChatWindow.css';
 
+import io from 'socket.io-client'
+let socket = io('http://localhost:3400')
+
+//this component needs to be reduxified 
 class ChatWindow extends React.Component {
-constructor(props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-        user: '',
-        password: '',
-        text: '',
-     }
-}
+      user: '',
+      message: [],
+      socket: socket
+    };
+  }
 
-handleSignup = (e) => {
-    e.preventDefault();
-    //needs to have a dispatch from action
-        this.setState( {user: 'Bob',
-            password: 'password'} )
-}
+  componentDidMount() {   
+    socket.on(`new message `, data => {
+      console.log('new message: ', data);
+    })
+  }
+
+    onChangeValue = e => {
+      this.setState({
+        message: e.target.value
+      });
+      console.log(e.target.value)
+    };
+
+    sendMessage = message => {
+      socket.emit(`send message`, message);
+      console.log(`this is the "send message"`, message);
+    }
+
+    handleSubmit = (e) => {
+      e.preventDefault();
+      console.log('form submit');
+  
+      var message = this.input.value;
+  
+      this.sendMessage(message);
+      
+      this.setState({
+        message: message
+      })
+      console.log('state', this.state)
+    }
 
 
-handleSubmit = (e) => {
-    e.preventDefault();
-    //needs to have a dispatch from action
-        this.setState( {user: 'Bob',
-            text: 'Hello'} )
-}
 
   render() {
     return (
       <div className="chat-window">
-        <div id="namesWrapper">
-          <h2>Chatosphere</h2>
-          <p>Create profile:</p>
-          <div id="error" />
-          <form id="usernameForm" onSubmit={e => this.handleSignup(e)} >
-            <input type="text" size="30" id="username" placeholder="User" />
-            <input type="text" size="30" id="username" placeholder="Password" />
-            <input id="submit" type="submit" value="Submit" />
-          </form>
-        </div>
-
         <div id="mainWrapper">
           <h2>Chatosphere</h2>
           <div id="chatWrapper">
-            <div id="chatWindow" />
-            <form id="messageForm" onSubmit={e => this.handleSubmit(e)}>
-              <input
+            <ul className="chatWindow">
+              <li>{this.state.message}</li>
+            </ul>
+            <form id="messageForm" onSubmit={e => this.handleSubmit(e)}
+              >
+              <input 
+              ref={input => this.input = input} 
                 type="text"
                 size="35"
                 id="message"
                 placeholder="Enter message here"
-                value={this.state.text}
+                value={this.state.message}
+                onChange={this.onChangeValue}
               />
               <input type="submit" value="Submit" />
             </form>
