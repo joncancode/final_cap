@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
+
+const passport = require('passport');
+
 const app = express();
 
 mongoose.connect(keys.MONGO_URI);
@@ -25,17 +28,6 @@ require("./Routes/authRoutes")(app);
 //     "key_type": "3scale"
 //   }
 // }
-
-
-// var req = https.request(opts, function(res) {
-//   console.log('statusCode: ', res.statusCode);
-//   console.log('headers: ', res.headers);
-//   res.on('data', function(d) {
-//   })
-// })
-// req.on('error', function(e) {
-//   console.log('problem with request: ' + e.message);
-// })
 
 
 //  req.write('{ "s": "socks" }')
