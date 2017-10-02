@@ -1,5 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+// import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { render } from 'react-dom';
+// import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import ProductWindow from './ProductWindow';
 import './styles/MainWindow.css';
@@ -7,17 +11,54 @@ import './styles/MainWindow.css';
 
 class MainWindow extends React.Component {
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     render() {
-        if (this.props.loggedIn !== true) {
+        if (this.props.loggedIn === true) {
+            
             return (
-                <div className="main-window">
-                <p>not logged in</p>
-                </div>
+                // <Router>
+                //     <Switch>
+
+
+              
+                //         <Route exact name="index" path="/" component={ ProductWindow }>
+
+                //         </Route>
+                //      </Switch>
+
+                // </Router>
+                    
+                    
+                    // <Router>
+
+                    
+                        <div className="main-window">
+                    <ProductWindow/>
+                            {/* <Route exact path="/" component={ProductWindow}/> */}
+                        </div>
             )
         }
         else {
             return (
-                < ProductWindow />
+                <div className="main-window">
+                <p>not logged in</p>
+                </div>
             )
         }
     }

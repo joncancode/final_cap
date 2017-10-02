@@ -4,6 +4,7 @@ import {
 
 const initialState = {
     currentUser: 'SomeGuysUsername',
+    // loggedIn: false,
     loggedIn: true,
     loading: false,
     error: null,
@@ -12,7 +13,7 @@ const initialState = {
             "itemName": "Coca-cola",
             "creator": "David",
             "price": "2",
-            "upcCode": "7469962653",
+            "upcCode": "1",
             "image": "http://via.placeholder.com/301x150",
             "stores": [
                 {
@@ -30,10 +31,12 @@ const initialState = {
             ]
         },
         {
-            "itemName": "Nintendo Switch"
+            "itemName": "Nintendo Switch",
+            "upcCode": "2",
         },
         {
-            "itemName": "Socks"
+            "itemName": "Socks",
+            "upcCode": "3",
         }
     ]
 };
