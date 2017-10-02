@@ -4,7 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '../client/src/components/ChatWindow.js');
+  res.sendFile(__dirname + '/index.html');
   console.log(__dirname + " dir name");
 });
 
@@ -31,7 +31,7 @@ io.on('connection', function(socket) {
 
   // Send message
   socket.on('send message', function(data) {
-    io.emit('new message', data);
+    io.emit('send message', data);
   });
 
   // Disconnect event
