@@ -15,21 +15,26 @@ module.exports = app => {
     }),
     (req, res) => {
         res.cookie('accessToken', req.user.accessToken, {expires: 0});
-        res.redirect('/');
+        res.redirect('/Home');
     }
     );
 
     app.get('/api/auth/logout', (req, res) => {
     req.logout();
     res.clearCookie('accessToken');
-    res.redirect('/');
+    res.redirect('/Login');
     });
 
 
-    app.get('/api/questions',
-    passport.authenticate('bearer', {session: false}),
-    (req, res) => res.json(['Question 1', 'Question 2'])
-    );
+app.get("/api/current_user", (req, res) => {
+    res.send(req.user);
+  });
+  // req comes in, sent to handler, 
+  // cookie data extracted, 
+  // pulls user id out of data, 
+  // deserialize user which turns user id into user, 
+  // user model instance added to req obj as req.user.  
+  // http://localhost:5000/api/current_user
 
 
     app.post('/api/post', (req, res) => {

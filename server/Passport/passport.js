@@ -6,6 +6,7 @@ const BearerStrategy = require('passport-http-bearer').Strategy;
 const cookieSession = require("cookie-session");
 const keys = require('../config/keys');
 const app = express();
+const User = mongoose.model("users");
 
 // Middleware: Cookie lives for 30 days, keys encrypted
 app.use(

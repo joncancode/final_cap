@@ -1,16 +1,16 @@
 import React from 'react';
 import * as Cookies from 'js-cookie';
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-import QuestionPage from './question-page';
-import LoginPage from './login-page';
+// import QuestionPage from './question-page';
+import LoginPage from './Login';
 import Header from './Header';
 import WishList from './WishList';
-import MainWindow from './MainWindow';
+import ProductWindow from './ProductWindow';
 import ChatWindow from './ChatWindow';
-
-
+import * as actions from "../actions";
+import { BrowserRouter, Route } from "react-router-dom";
+import { Component } from "react";
+import { connect } from "react-redux";
 
 import './styles/App.css';
 
@@ -23,10 +23,14 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        
+        this.props.fetchUser(); // passing users to reducer
+        console.log('xxxxx-xxx-xx-xx-xx-xx-xx---xx', this.props)
+        
         // Job 4: Redux-ify all of the state and fetch calls to async actions.
         const accessToken = Cookies.get('accessToken');
         if (accessToken) {
-            fetch('/api/me', {
+            fetch('/api/current_user', {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`
                 }
@@ -40,13 +44,19 @@ class App extends React.Component {
                     }
                     throw new Error(res.statusText);
                 }
-                return res.json();
+                return res;
             }).then(currentUser =>
                 this.setState({
                     currentUser
                 })
-            );
+
+            )
+        // .catch(err => {
+        //     console.log({err});
+        //     res.status(500).json({ message: 'Internal error' });
+        // });
         }
+       
     }
 
     render() {
@@ -54,25 +64,23 @@ class App extends React.Component {
         //     return <LoginPage />;
         // }
 
-        // return <QuestionPage />;
         return(
             <div className="app">
-                < Header />
-                    {/* <Router> */}
-                        {/* <Switch> */}
-                            <div className="main-container">
-                                < WishList />
-                                {/* <Route name="items" path="/items" component={WishList} /> */}
-                                < MainWindow />
-                                {/* <Route name="items" path="/items:id" component={MainWindow} {...appProps}/> */}
-                                < ChatWindow />
-                            </div>
-                            
-                        {/* </Switch> */}
-                    {/* </Router> */}
+                <div className="main-container">
+                    <BrowserRouter>
+                        <div>
+                            <Header />
+                            <Route exact path="/Login" component= {LoginPage} />
+                            {/* <Route exact path="/Home" component= {WishList} /> */}
+                            <Route exact path="/Home" component= {ChatWindow} />
+                            {/* <Route exact path="/Home" component= {ProductWindow} /> */}
+                        </div>
+                    </BrowserRouter>
+                </div>
             </div>
         )
     }
 }
 
-export default App;
+// export default App;
+export default connect(null, actions)(App);
