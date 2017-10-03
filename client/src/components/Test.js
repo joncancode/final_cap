@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {Link, Router} from 'react-router-dom';
 
-
+import './styles/ProductWindow.css';
 
 
 
@@ -14,7 +14,7 @@ class Test extends React.Component {
 
         
         return (
-            <div className="wish-list">
+            <div className="product-window">
                 <h2>Test</h2>
                 <div>
                     <p>test</p>

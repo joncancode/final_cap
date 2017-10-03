@@ -31,21 +31,9 @@ class MainWindow extends React.Component {
     render() {
         if (this.props.loggedIn === true) {
             
+            
+console.log('props', this.props);            
             return (
-                // <Router>
-                //     <Switch>
-
-
-              
-                //         <Route exact name="index" path="/" component={ ProductWindow }>
-
-                //         </Route>
-                //      </Switch>
-
-                // </Router>
-                    
-                    
-                    // <Router>
 
                     
                         <div className="main-window">

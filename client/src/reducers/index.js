@@ -13,7 +13,7 @@ const initialState = {
             "itemName": "Coca-cola",
             "creator": "David",
             "price": "2",
-            "upcCode": "1",
+            "upcCode": "73737288",
             "image": "http://via.placeholder.com/301x150",
             "stores": [
                 {
@@ -32,11 +32,11 @@ const initialState = {
         },
         {
             "itemName": "Nintendo Switch",
-            "upcCode": "2",
+            "upcCode": "1235552323",
         },
         {
             "itemName": "Socks",
-            "upcCode": "3",
+            "upcCode": "000800808",
         }
     ]
 };
