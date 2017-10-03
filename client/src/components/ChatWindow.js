@@ -21,7 +21,8 @@ class ChatWindow extends React.Component {
     socket.on(`send message`, data => {
       console.log('send message: ', data);
       this.setState({
-        message: data
+        message: [data],
+        // message: [[...this.state.message, data]]
       })
       console.log('this.st.msg in the compDidMnt', this.state.message );
     })
@@ -48,20 +49,24 @@ class ChatWindow extends React.Component {
       this.sendMessage(message);
       
       this.setState({
-        message: message
+        message: [message]
       })
       console.log('state', this.state)
     }
 
   render() {
+    const msg = [this.state.message]
     return (
       <div className="chat-window">
         <div id="mainWrapper">
           <h2>Chatosphere</h2>
           <div id="chatWrapper">
             <ul className="chatWindow">
-              <li>{this.state.message}</li>
-              <li>{this.listOfMessages}</li>
+
+            {msg.map(function (item) {
+                return <li>{item}</li>
+              })}
+
             </ul>
             <form id="messageForm" onSubmit={e => this.handleSubmit(e)}
               >
