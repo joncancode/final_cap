@@ -16,7 +16,7 @@ class ChatWindow extends React.Component {
   }
 
   componentDidMount() {   
-    socket.on(`send message `, data => {
+    socket.on(`send message`, data => {
       console.log('send message: ', data);
     })
   }
