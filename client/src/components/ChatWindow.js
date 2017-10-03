@@ -5,22 +5,23 @@ import io from 'socket.io-client'
 let socket = io('http://localhost:3400')
 
 //this component needs to be reduxified 
-let msgArray = [];
+let msgArr = [];
 class ChatWindow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       user: '',
       message: [],
+      msgArr: [],
       socket: socket
     };
   }
 
   componentDidMount() {   
     socket.on(`send message`, data => {
-      console.log('send message: ', data);
       this.setState({
         message: [data],
+        msgArr: msgArr
         // message: [[...this.state.message, data]]
       })
       console.log('this.st.msg in the compDidMnt', this.state.message );
@@ -46,7 +47,7 @@ class ChatWindow extends React.Component {
       var message = this.input.value;
   
       this.sendMessage(message);
-      msgArray.push(message)
+      msgArr.push(message)
       this.setState({
         message: [message]
       })
@@ -63,7 +64,10 @@ class ChatWindow extends React.Component {
           <div id="chatWrapper">
             <ul className="chatWindow">
             
-            {msgArray.map(function (item) {
+            {msgArr.map(function (item) {
+                return <li>{item}</li>
+              })}
+            {msg.map(function (item) {
                 return <li>{item}</li>
               })}
 
