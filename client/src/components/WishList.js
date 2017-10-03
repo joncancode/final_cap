@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Link, Router} from 'react-router-dom';
+import {BrowserHistory, BrowserRouter, Link, Router, Route} from 'react-router-dom';
+
+
+import MainWindow from './MainWindow';
 
 const Modal = require('boron/ScaleModal');
 
@@ -19,15 +22,15 @@ class WishList extends React.Component {
 
     render() {
         const wishListItems = this.props.itemData.map((item, index) =>
-        <li key={index}>
-              {/* {item.itemName} */}
-            {/* <Router> */}
-                {/* <Link to='/'> */}
-                {item.itemName}
-                {/* </Link>  */}
-            {/* </Router> */}
-        </li>
-      );
+            <li key={index}>
+            <BrowserRouter history={BrowserHistory}>
+                    <Link to='/${item.upcCode}'>
+                    {item.itemName}
+                    </Link> 
+             {/* <Route path="/:id" component={MainWindow}/> */}
+        </BrowserRouter>
+            </li>
+        );
         
         return (
             <div className="wish-list">

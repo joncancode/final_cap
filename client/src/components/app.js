@@ -1,7 +1,8 @@
 import React from 'react';
 import * as Cookies from 'js-cookie';
+import {BrowserHistory, BrowserRouter, Link, Router, Route} from 'react-router-dom';
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import QuestionPage from './question-page';
 import LoginPage from './login-page';
@@ -9,6 +10,7 @@ import Header from './Header';
 import WishList from './WishList';
 import MainWindow from './MainWindow';
 import ChatWindow from './ChatWindow';
+import Test from './Test';
 
 
 
@@ -56,21 +58,21 @@ class App extends React.Component {
 
         // return <QuestionPage />;
         return(
-            <div className="app">
-                < Header />
-                    {/* <Router> */}
-                        {/* <Switch> */}
-                            <div className="main-container">
-                                < WishList />
-                                {/* <Route name="items" path="/items" component={WishList} /> */}
-                                < MainWindow />
-                                {/* <Route name="items" path="/items:id" component={MainWindow} {...appProps}/> */}
-                                < ChatWindow />
-                            </div>
+            <BrowserRouter history={BrowserHistory}> 
+                <div className="app">
+                    < Header />
+        
+                                <div className="main-container">
+                                    < WishList />
+                                    <Route exact path="/" component={MainWindow}/> 
+                                    <Route exact path="/test" component={Test}/>
                             
-                        {/* </Switch> */}
-                    {/* </Router> */}
-            </div>
+                                    < ChatWindow />
+                                </div>
+                                
+            
+                </div>
+            </BrowserRouter>
         )
     }
 }
