@@ -11,3 +11,19 @@
 .wish-list li {
     text-align: left;
 }
+
+.add-item-modal {
+ padding-bottom: 100px;
+ padding-top: 20px; 
+}
+
+.add-item-modal > h2 {
+    text-align: center;
+}
+
+
+.close-button {
+    background-color: red;
+    margin: 10px 0px;
+    padding: 5px;
+}

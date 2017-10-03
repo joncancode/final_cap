@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
+const passport = require('passport');
+
+const app = express();
 
 const passport = require('passport');
 
