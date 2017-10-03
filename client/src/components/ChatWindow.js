@@ -5,6 +5,8 @@ import io from 'socket.io-client'
 let socket = io('http://localhost:3400')
 
 //this component needs to be reduxified 
+let chatMessage;
+
 class ChatWindow extends React.Component {
   constructor(props) {
     super(props);
@@ -16,8 +18,12 @@ class ChatWindow extends React.Component {
   }
 
   componentDidMount() {   
-    socket.on(`send message `, data => {
+    socket.on(`send message`, data => {
       console.log('send message: ', data);
+      this.setState({
+        message: data
+      })
+      console.log('this.st.msg in the compDidMnt', this.state.message );
     })
   }
 
@@ -47,8 +53,6 @@ class ChatWindow extends React.Component {
       console.log('state', this.state)
     }
 
-
-
   render() {
     return (
       <div className="chat-window">
@@ -57,6 +61,7 @@ class ChatWindow extends React.Component {
           <div id="chatWrapper">
             <ul className="chatWindow">
               <li>{this.state.message}</li>
+              <li>{this.listOfMessages}</li>
             </ul>
             <form id="messageForm" onSubmit={e => this.handleSubmit(e)}
               >
