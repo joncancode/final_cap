@@ -19,13 +19,17 @@ class ChatWindow extends React.Component {
 
   componentDidMount() {   
     socket.on(`send message`, data => {
+      
+
       this.setState({
         message: [data],
         msgArr: msgArr.push(data)
-        // message: [[...this.state.message, data]]
       })
-      console.log('this.st.msgArr in the compDidMnt', this.state.msgArr );
-      console.log('ar', msgArr)
+      console.log('messageArr', msgArr)
+      console.log('length msgarr', msgArr.length)
+      if (msgArr.length > 3) {
+        console.log("ADD SCROLL HERE")
+      }
     })
   }
 
