@@ -21,6 +21,7 @@ yarn-error.log*
 .eslintrc
 
 server/secret.js
-package-lock.json
+*-lock.json
 server/package-lock.json
 client/package-lock.json
+*package-lock*
