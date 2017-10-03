@@ -11,7 +11,7 @@ class ChatWindow extends React.Component {
     super(props);
     this.state = {
       user: '',
-      message: [],
+      message: '',
       msgArr: [],
       socket: socket
     };
@@ -21,10 +21,11 @@ class ChatWindow extends React.Component {
     socket.on(`send message`, data => {
       this.setState({
         message: [data],
-        msgArr: msgArr
+        msgArr: msgArr.push(data)
         // message: [[...this.state.message, data]]
       })
-      console.log('this.st.msg in the compDidMnt', this.state.message );
+      console.log('this.st.msgArr in the compDidMnt', this.state.msgArr );
+      console.log('ar', msgArr)
     })
   }
 
@@ -35,19 +36,18 @@ class ChatWindow extends React.Component {
       console.log(e.target.value)
     };
 
-    sendMessage = message => {
-      socket.emit(`send message`, message);
-      console.log(`this is the "send message"`, message);
+    sendMessage = msgArr => {
+      socket.emit(`send message`, msgArr);
+      console.log(`this is the "send message"`, msgArr);
     }
 
     handleSubmit = (e) => {
       e.preventDefault();
       console.log('form submit');
   
-      var message = this.input.value;
+      var message = this.state.message;
   
       this.sendMessage(message);
-      msgArr.push(message)
       this.setState({
         message: [message]
       })
@@ -55,7 +55,6 @@ class ChatWindow extends React.Component {
     }
 
   render() {
-    const msg = [this.state.message]
     // const arr = ['one', 'two', 'three']
     return (
       <div className="chat-window">
@@ -67,9 +66,7 @@ class ChatWindow extends React.Component {
             {msgArr.map(function (item) {
                 return <li>{item}</li>
               })}
-            {msg.map(function (item) {
-                return <li>{item}</li>
-              })}
+
 
             </ul>
             <form id="messageForm" onSubmit={e => this.handleSubmit(e)}
