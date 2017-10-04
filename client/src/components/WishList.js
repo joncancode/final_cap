@@ -24,14 +24,14 @@ class WishList extends React.Component {
         const wishListItems = this.props.itemData.map((item, index) =>
             <li key={index}>
             <BrowserRouter history={BrowserHistory}>
-                    <Link to={`/${item.upcCode}`}>
+                    <Link to={`/items/${item.upcCode}`}>
                     {/* <Link to={`/items/`}> */}
                     {/* <Link to={`/test/`}> */}
 
                         {item.itemName}
                     </Link> 
              {/* <Route path="/:id" component={MainWindow}/> */}
-        </BrowserRouter>
+            </BrowserRouter>
             </li>
         );
         

@@ -17,6 +17,7 @@ export const getItemsRequest = () => ({
 });
 
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
+
 export const getItemsSuccess = items => ({
   type: GET_ITEMS_SUCCESS,
   items
@@ -28,7 +29,8 @@ export const getItemsError = error => ({
   error
 });
 
-export const fetchItems = (username, password) => dispatch => {
+export const fetchItems = (id) => dispatch => {
+    console.log(id)
     // const credentials = `${username}:${password}`;
     // const encodedAuthHeader = btoa(credentials);
     // const authString = `Basic ${encodedAuthHeader}`;
@@ -41,6 +43,7 @@ export const fetchItems = (username, password) => dispatch => {
     //   },
     //   method: 'GET'
     // };
+
     const sampleData =  [
         {
             "itemName": "THIS IS A TEST",
@@ -106,6 +109,9 @@ export const fetchItems = (username, password) => dispatch => {
             ]
         }
     ]
+    const result = sampleData.find(x => x.upcCode === id)
+    console.log(result)
+
     dispatch(getItemsRequest());
     dispatch(getItemsSuccess(sampleData))
     // return fetch('/api/sessions/', opts)

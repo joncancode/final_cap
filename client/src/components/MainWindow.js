@@ -13,27 +13,40 @@ import './styles/ProductWindow.css';
 
 
 class MainWindow extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {id: this.props.match.params.id}
+    }
+    
+    componentWillReceiveProps(nextProps) {
+        this.setState({id: nextProps.id})
+        // console.log(this.state)
+    }
 
     componentDidMount() {
         this.props.dispatch(
-          fetchItems(this.props.username, this.props.password)
+          fetchItems(this.state.id)
         );
       }
       
     
             
             
-        // console.log('props', this.props);            
-            // return (
-
-                    
-            //             <div className="main-window">
-            //         <ProductWindow/>
-            //                 {/* <Route exact path="/" component={ProductWindow}/> */}
-            //             </div>
-            // )
-            
-    renderResults() {
+      // return (
+          
+          
+          //             <div className="main-window">
+          //         <ProductWindow/>
+          //                 {/* <Route exact path="/" component={ProductWindow}/> */}
+          //             </div>
+          // )
+          
+          renderResults() {
+            // console.log('props', this.props.match.params.id);            
+        
+        
+        
+             
         if (this.props.loading) {
             // return <Spinner spinnerName="circle" noFadeIn />;
             return <div>loading items...</div>;
@@ -47,14 +60,14 @@ class MainWindow extends React.Component {
             );
           }
           if (this.props.itemData) {
-        const currentItem = this.props.itemData[0];
-        const storeData = currentItem.stores.map((item, index) =>
-        <tr key={index}>
-            <th>Store</th>
-            <th>{item.name}</th>
-            <th>{item.inventory}</th>
-        </tr>
-      );
+            const currentItem = this.props.itemData[0];
+            const storeData = currentItem.stores.map((item, index) =>
+            <tr key={index}>
+                <th>Store</th>
+                <th>{item.name}</th>
+                <th>{item.inventory}</th>
+            </tr>
+        );
 
         return (
             <div className="product-window">

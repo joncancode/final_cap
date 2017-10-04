@@ -62,7 +62,6 @@ export const mainReducer = (state = initialState, action) => {
         return Object.assign({}, state, {
           itemData: action.items,
           loading: false,
-          currentItem: fakecurrentItem,
           error: null
         });
       } else if (action.type === GET_ITEMS_ERROR) {
