@@ -60,6 +60,7 @@ class App extends React.Component {
 
         // return <QuestionPage />;
         return(
+
             <BrowserRouter history={BrowserHistory}> 
                 <div className="app">
                     < Header />
