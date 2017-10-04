@@ -81,65 +81,61 @@ export const fetchItems = (id) => dispatch => {
 
     const sampleData =  [
         {
-            "itemName": "THIS IS A TEST1",
+            "itemName": "iPhone 9",
             "upcCode": "73737288",
-            "creator": "Pete1",
-            "price": "3001",
+            "creator": "Pete",
+            "price": "1000",
             "image": "http://via.placeholder.com/301x150",
             "stores": [
                 {
-                    "name": "Target1",
+                    "name": "Target",
                     "inventory": "not in stock"
                 },
                 {
-                    "name": "Walmart1",
-                    "inventory": "last seen by Dan"
+                    "name": "Apple store",
+                    "inventory": "last seen by Ralph"
                 },
                 {
-                    "name": "CVS Pharmacy1",
-                    "inventory": "not in stock"
+                    "name": "Best Buy",
+                    "inventory": "last seen by Hernicio"
                 }
             ]
         },
         {
-            "itemName": "another test2",
+            "itemName": "Limited Edition Yeezys",
             "upcCode": "1235552323",
-            "creator": "Pete2",
-            "price": "3002",
+            "creator": "Svetlana",
+            "price": "100",
             "image": "http://via.placeholder.com/301x150",
             "stores": [
                 {
-                    "name": "Target2",
-                    "inventory": "not in stock2"
+                    "name": "Modells",
+                    "inventory": "not in stock"
                 },
                 {
-                    "name": "Walmar2",
-                    "inventory": "last seen by Da2n"
-                },
-                {
-                    "name": "CVS Pharmacy2",
-                    "inventory": "not in stock2"
+                    "name": "Footlocker",
+                    "inventory": "last seen by Mike"
                 }
             ]
         },
         {
-            "itemName": "yet one more test3",
+            "itemName": "Nintendo Switch",
             "upcCode": "000800808",
-            "creator": "Pete3",
-            "price": "3",
+            "creator": "Mario",
+            "price": "300",
             "image": "http://via.placeholder.com/301x150",
             "stores": [
                 {
-                    "name": "Target3",
-                    "inventory": "not in stock3"
+                    "name": "Best Buy",
+                    "inventory": "not in stock"
                 },
                 {
-                    "name": "Walmart3",
-                    "inventory": "last seen by Dan3"
+                    "name": "Gamestop",
+                    "inventory": "last seen by Luigi"
                 },
                 {
-                    "name": "CVS Pharmacy3",
-                    "inventory": "not in stock3"
+                    "name": "CVS Pharmacy",
+                    "inventory": "not in stock"
                 }
             ]
         }
