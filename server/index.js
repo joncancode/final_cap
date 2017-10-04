@@ -6,10 +6,6 @@ const mongoose = require('mongoose');
 
 // const app = express();
 
-const passport = require('passport');
-
-const app = express();
-
 mongoose.connect(keys.MONGO_URI);
 
 const database = {
