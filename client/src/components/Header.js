@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
 import './styles/Header.css';
-
+/*
 class Header extends Component {
 
     renderContent() {
@@ -10,15 +10,16 @@ class Header extends Component {
       switch (this.props.auth) {
         case null:
           return;
-        case false:
-        console.log('returning login in header')
+        case undefined:
+        // case false:
+
           return (
             <li>
               <a href="/api/auth/google">Login With Google</a>
             </li>
           );
         default:
-        console.log('returning logout in header')
+      
           return (
             <li>
               <a href="/api/auth/logout">Logout</a>
@@ -26,7 +27,24 @@ class Header extends Component {
           );
       }
     }
-  
+  */
+
+    export class Header extends Component {
+      renderContent() {
+        return !this.props.currentUser ? (
+          <li>
+            <a className='user-log' href="/api/auth/google">Login With Google</a>
+          </li>
+        ) : (
+          <li>
+            <a className='user-log' href="/api/auth/logout">Logout</a>
+          </li>
+        );
+      }
+
+
+
+
     render() {
       console.log(this.props);
       return (

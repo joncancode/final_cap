@@ -19,6 +19,7 @@ const initialState = {
 };
 
 export const mainReducer = (state = initialState, action) => {
+
     switch(action.type) {
         case 'GET_ITEMS_REQUEST': {
             return Object.assign({}, state, {
@@ -43,3 +44,14 @@ export const mainReducer = (state = initialState, action) => {
         default : return state;
     } 
 };
+
+
+import { combineReducers } from "redux";
+import authReducer from "./authReducer";
+
+const rootReducer = combineReducers ({
+  auth: authReducer
+});
+
+export default rootReducer;
+
