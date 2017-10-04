@@ -67,19 +67,25 @@ class App extends React.Component {
         return(
             <BrowserRouter history={BrowserHistory}> 
                 <div className="app">
+                    < Header />
+        
+                                <div className="main-container">
+                                    < WishList />
 
-                    < Header currentUser={this.state.currentUser}/>
-                        <div className="main-container">
-                            < WishList /> 
-                                <div>
+                                    <div>
+                                        {/* <Route exact path="/" component={MainWindow}/>  */}
+                                        <Route name="items" path="/items/:id" component={MainWindow}/> 
+                                        {/* <Route exact path="/items/" component={Test}/> */}
                                     <Route exact path="/LoginPage" component={LoginPage} />
-                                    <Route exact path="/" component={MainWindow}/>
-                                    <Route exact path="/:itemId" component={MainWindow}/>
-                                    <Route exact path="/items/" component={Test}/>
-                                    <Route exact path="/Home" component={ChatWindow}/>
-                                </div>
+                                    <Route exact path="/" component={MainWindow}/> 
+                                    {/* <Route exact path="/:itemId" component={MainWindow}/> 
+                                    <Route exact path="/items/" component={Test}/> */}
+                                    </div>
                             
-                        </div>
+                                    < ChatWindow />
+                                </div>
+                                
+            
                 </div>
             </BrowserRouter>
         )

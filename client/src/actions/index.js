@@ -53,9 +53,10 @@ export const getItemsRequest = () => ({
 });
 
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
-export const getItemsSuccess = items => ({
+export const getItemsSuccess = (items, result) => ({
   type: GET_ITEMS_SUCCESS,
-  items
+  items,
+  result
 });
 
 export const GET_ITEMS_ERROR = 'GET_ITEMS_ERROR';
@@ -64,7 +65,7 @@ export const getItemsError = error => ({
   error
 });
 
-export const fetchItems = (username, password) => dispatch => {
+export const fetchItems = (id) => dispatch => {
     // const credentials = `${username}:${password}`;
     // const encodedAuthHeader = btoa(credentials);
     // const authString = `Basic ${encodedAuthHeader}`;
@@ -77,12 +78,13 @@ export const fetchItems = (username, password) => dispatch => {
     //   },
     //   method: 'GET'
     // };
+
     const sampleData =  [
         {
-            "itemName": "THIS IS A TEST",
+            "itemName": "iPhone 9",
             "upcCode": "73737288",
             "creator": "Pete",
-            "price": "300",
+            "price": "1000",
             "image": "http://via.placeholder.com/301x150",
             "stores": [
                 {
@@ -90,50 +92,46 @@ export const fetchItems = (username, password) => dispatch => {
                     "inventory": "not in stock"
                 },
                 {
-                    "name": "Walmart",
-                    "inventory": "last seen by Dan"
+                    "name": "Apple store",
+                    "inventory": "last seen by Ralph"
                 },
                 {
-                    "name": "CVS Pharmacy",
-                    "inventory": "not in stock"
+                    "name": "Best Buy",
+                    "inventory": "last seen by Hernicio"
                 }
             ]
         },
         {
-            "itemName": "another test",
+            "itemName": "Limited Edition Yeezys",
             "upcCode": "1235552323",
-            "creator": "Pete",
-            "price": "300",
+            "creator": "Svetlana",
+            "price": "100",
             "image": "http://via.placeholder.com/301x150",
             "stores": [
                 {
-                    "name": "Target",
+                    "name": "Modells",
                     "inventory": "not in stock"
                 },
                 {
-                    "name": "Walmart",
-                    "inventory": "last seen by Dan"
-                },
-                {
-                    "name": "CVS Pharmacy",
-                    "inventory": "not in stock"
+                    "name": "Footlocker",
+                    "inventory": "last seen by Mike"
                 }
             ]
         },
         {
-            "itemName": "yet one more test",
+            "itemName": "Nintendo Switch",
             "upcCode": "000800808",
-            "creator": "Pete",
+            "creator": "Mario",
             "price": "300",
             "image": "http://via.placeholder.com/301x150",
             "stores": [
                 {
-                    "name": "Target",
+                    "name": "Best Buy",
                     "inventory": "not in stock"
                 },
                 {
-                    "name": "Walmart",
-                    "inventory": "last seen by Dan"
+                    "name": "Gamestop",
+                    "inventory": "last seen by Luigi"
                 },
                 {
                     "name": "CVS Pharmacy",
@@ -142,8 +140,11 @@ export const fetchItems = (username, password) => dispatch => {
             ]
         }
     ]
+    const result = sampleData.find(x => x.upcCode === id)
+    // console.log('RESULT', result)
+
     dispatch(getItemsRequest());
-    dispatch(getItemsSuccess(sampleData))
+    dispatch(getItemsSuccess(sampleData, result))
     // return fetch('/api/sessions/', opts)
     // return(sampleData)
     //     console.log('dispatch') 
