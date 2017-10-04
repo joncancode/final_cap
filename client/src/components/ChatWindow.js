@@ -26,10 +26,6 @@ class ChatWindow extends React.Component {
         msgArr: msgArr.push(data)
       })
       console.log('messageArr', msgArr)
-      console.log('length msgarr', msgArr.length)
-      if (msgArr.length > 3) {
-        console.log("ADD SCROLL HERE")
-      }
     })
   }
 
@@ -81,7 +77,7 @@ class ChatWindow extends React.Component {
                 size="35"
                 id="message"
                 placeholder="Enter message here"
-                value={this.state.message}
+                //value={this.state.message}
                 onChange={this.onChangeValue}
               />
               <input type="submit" value="Submit" />
