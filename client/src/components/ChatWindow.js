@@ -49,7 +49,6 @@ class ChatWindow extends React.Component {
       console.log('form submit');
   
       var message = this.state.message;
-  
       this.sendMessage(message);
       this.setState({
         message: [message]
@@ -67,7 +66,11 @@ class ChatWindow extends React.Component {
             <ul className="chatWindow">
             
             {msgArr.map(function (item) {
-                return <li>{item}</li>
+                return (
+                  <li className="listOfMessages">
+                  <br/><li>{item}</li><br/>
+                  </li>
+                )
               })}
 
 

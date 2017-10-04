@@ -1,24 +1,17 @@
 const path = require('path');
 const express = require('express');
-<<<<<<< HEAD
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const passport = require('passport');
 
 const app = express();
-=======
+
 
 // need models
 require('./models/User');
->>>>>>> master
-
-const passport = require('passport');
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
-const keys = require('./config/keys');
-const mongoose = require('mongoose');
-const app = express();
 // require("./Routes/authRoutes")(app);
 // const { User } = require('./models/User');
 
