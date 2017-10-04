@@ -1,96 +1,152 @@
 const path = require('path');
 const express = require('express');
+
+// need models
+require('./models/User');
+
+const passport = require('passport');
+
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const BearerStrategy = require('passport-http-bearer').Strategy;
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
-// const passport = require('passport');
+const app = express();
+// require("./Routes/authRoutes")(app);
+// const { User } = require('./models/User');
 
-// const app = express();
 
-mongoose.connect(keys.MONGO_URI);
+// here i define User
+const User = require('./models/User');
+
+// Mongoose's default connection logic is deprecated as of 4.11.0.
+var promise = mongoose.connect(keys.MONGO_URI, {
+    useMongoClient: true
+});
+
+const session = require('express-session');
 
 const database = {
 };
 
-require("./Routes/authRoutes")(app);
-
-//======================================================================//
-// WE ONLY HAVE 100 QUERIES SO KEEP COMMENTED UNLESS NEEDED
-//======================================================================//
-
-// const https = require('https')
-// var opts = {
-//   hostname: 'api.upcitemdb.com',
-//   path: '/prod/trial/search',
-//   method: 'POST',
-//   headers: {
-//     "Content-Type": "application/json",
-//     "key_type": "3scale"
-//   }
+// let secret = {
+//   CLIENT_ID: process.env.CLIENT_ID,
+//   CLIENT_SECRET: process.env.SECRET
 // }
 
+// if(process.env.NODE_ENV != 'production') {
+//   keys = require('./secret');
+// }
 
-//  req.write('{ "s": "socks" }')
-// // other requests
-// req.end()
-
-// let query;
-// const upcURL = `http://www.upcitemdb.com/query?s=${query}&type=2`
-
-// app.post('/api/search/', (req, res) => {
-//     const query = req.body.query;
-//     const apiURL = `http://www.upcitemdb.com/query?s=${query}&type=2`
-//     return fetch(apiURL, {
-//       'Content-Type': 'application/json'
-//     })
-//       .then(results => {
-//         console.log('results', results.body);
-//         return results.json();
-//       })
-//       .then(resJson => {
-//         //console.log(resJson)
-
-//         return res.status(200).send(resJson);
-//       })
-//       .catch(err => {
-//         console.log({err});
-//         res.status(500).json({ message: 'Internal error' });
-//       });
-//   });
-
-// // let query;
-// // const upcURL = `http://www.upcitemdb.com/query?s=${query}&type=2`
-
-//  req.write('{ "s": "socks" }')
-// // other requests
-// req.end()
+app.use(passport.initialize());
 
 
+passport.serializeUser((user, cb) => {
+    console.log('serial user', user)
+    cb(null, user.id); // auto generated mongo id is the user.id, used to find user in cookie
+});
 
-//======================================================================//
+passport.deserializeUser((id, cb) => {
+    console.log({id})
+    User.findById(id)
+    .then(user => {
+        cb(null, user);
+    });
+});
 
+passport.use(
+    new GoogleStrategy({
+        clientID:  keys.CLIENT_ID,
+        clientSecret: keys.CLIENT_SECRET,
+        callbackURL: `/api/auth/google/callback`
+    },
+    // profile contains google user id, the unique id token need to save to user record
+    (accessToken, refreshToken, profile, cb) => {
 
-// -----------------------------------------------------------
-app.post('/api/post', (req, res) => {
-    Products.create({
-        name: req.body.name
-      
+        // use mongoose model to create new user and save to db
+        console.log('resume saving to db fix here')
+        new User({ googleId: profile.id}).save();
+
+        
+        const user = database[accessToken] = {
+            googleId: profile.id,
+            accessToken: accessToken
+        };
+        return cb(null, user);
+        
+    }
+));
+
+passport.use(
+    new BearerStrategy(
+        (token, done) => {
+            if (!(token in database)) {
+                return done(null, false);
+            }
+            return done(null, database[token]);
+        }
+    )
+);
+
+app.get('/api/auth/google',
+    passport.authenticate('google', { scope: ['profile'] }));
+   
+app.get('/api/auth/google/callback',
+    passport.authenticate('google', {
+        failureRedirect: '/',
+        session: false
+    }),
+    (req, res, next) => {
+        res.cookie('accessToken', req.user.accessToken, {expires: 0});
+        res.redirect('/Home');
+    }
+);
+
+/*
+app.get('/api/auth/google/callback',
+    (req, res, next) => {
+    return passport.authenticate('google', {
+    failureRedirect: '/',
+    session: false
+},
+    (err, user, info) => {
+        console.log('user', user)
+        console.log('req user', req.user)
+        if (err) {
+        res.redirect('/'); 
+    } else {
+        res.cookie('accessToken', req.user.accessToken, {expires: 0});
+        req.user = user;
+    }
+    })(req, res, next);
     })
-      .then(()=> {
-        res.status(201).json(req.body);
-      })
-      .catch(err => {
-        console.error(err);
-        res.status(500).json({ message: 'Internal server error' });
-      });
+*/
+app.get('/api/auth/logout', (req, res) => {
+    req.logout();
+    res.clearCookie('accessToken');
+    res.redirect('/Login');
+});
+
+app.get('/api/me',
+    passport.authenticate(['bearer' ],{session: false}),
+    (req, res) => res.json({
+        googleId: req.user.googleId
+    })
+);
+
+app.get("/api/current_user", (req, res) => {
+    res.send(req.user);
   });
 
 
-// -----------------------------------------------------------
+// Serve the built client
+app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-
-
-
-
+// Unhandled requests which aren't for the API should serve index.html so
+// client-side routing using browserHistory can function
+app.get(/^(?!\/api(\/|$))/, (req, res) => {
+    const index = path.resolve(__dirname, '../client/build', 'index.html');
+    res.sendFile(index);
+});
 
 
 
@@ -109,7 +165,6 @@ app.post('/api/post', (req, res) => {
 //     "key_type": "3scale"
 //   }
 // }
-
 
 // var req = https.request(opts, function(res) {
 //   console.log('statusCode: ', res.statusCode);
@@ -140,20 +195,12 @@ app.post('/api/post', (req, res) => {
 
 //======================================================================//
 
-// Serve the built client
-app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-// Unhandled requests which aren't for the API should serve index.html so
-// client-side routing using browserHistory can function
-app.get(/^(?!\/api(\/|$))/, (req, res) => {
-    const index = path.resolve(__dirname, '../client/build', 'index.html');
-    res.sendFile(index);
-});
+
 
 let server;
 function runServer(port=3001) {
     return new Promise((resolve, reject) => {
-        console.log('now running on port 3001')
         server = app.listen(port, () => {
             resolve();
         }).on('error', reject);
