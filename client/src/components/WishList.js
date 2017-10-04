@@ -21,6 +21,7 @@ class WishList extends React.Component {
 
 
     render() {
+        // console.log('ITEM DATA PROPS', this.props)
         const wishListItems = this.props.itemData.map((item, index) =>
             <li key={index}>
             <BrowserRouter history={BrowserHistory}>

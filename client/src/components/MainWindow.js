@@ -42,7 +42,7 @@ class MainWindow extends React.Component {
           // )
           
           renderResults() {
-            // console.log('props', this.props.match.params.id);            
+            console.log('MAINWINDOW PROPS', this.props);            
         
         
         
@@ -59,9 +59,11 @@ class MainWindow extends React.Component {
               </strong>
             );
           }
-          if (this.props.itemData) {
-            const currentItem = this.props.itemData[0];
+          if (this.props.activeItem) {
+            const currentItem = this.props.activeItem;
             const storeData = currentItem.stores.map((item, index) =>
+
+     
             <tr key={index}>
                 <th>Store</th>
                 <th>{item.name}</th>

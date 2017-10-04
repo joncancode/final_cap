@@ -11,7 +11,7 @@ const initialState = {
     loggedIn: true,
     loading: false,
     error: null,
-    currentItem: null,
+    activeItem: null,
 
     itemData: [
         {
@@ -58,9 +58,10 @@ export const mainReducer = (state = initialState, action) => {
           error: null
         });
       } else if (action.type === GET_ITEMS_SUCCESS) {
-          const fakecurrentItem= 1;
+        console.log('ACTION PAYLOAD TO REDUCER', action)
         return Object.assign({}, state, {
           itemData: action.items,
+          activeItem: action.result,
           loading: false,
           error: null
         });

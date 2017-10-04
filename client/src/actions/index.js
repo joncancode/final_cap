@@ -17,10 +17,10 @@ export const getItemsRequest = () => ({
 });
 
 export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
-
-export const getItemsSuccess = items => ({
+export const getItemsSuccess = (items, result) => ({
   type: GET_ITEMS_SUCCESS,
-  items
+  items,
+  result
 });
 
 export const GET_ITEMS_ERROR = 'GET_ITEMS_ERROR';
@@ -30,7 +30,6 @@ export const getItemsError = error => ({
 });
 
 export const fetchItems = (id) => dispatch => {
-    console.log(id)
     // const credentials = `${username}:${password}`;
     // const encodedAuthHeader = btoa(credentials);
     // const authString = `Basic ${encodedAuthHeader}`;
@@ -46,74 +45,74 @@ export const fetchItems = (id) => dispatch => {
 
     const sampleData =  [
         {
-            "itemName": "THIS IS A TEST",
+            "itemName": "THIS IS A TEST1",
             "upcCode": "73737288",
-            "creator": "Pete",
-            "price": "300",
+            "creator": "Pete1",
+            "price": "3001",
             "image": "http://via.placeholder.com/301x150",
             "stores": [
                 {
-                    "name": "Target",
+                    "name": "Target1",
                     "inventory": "not in stock"
                 },
                 {
-                    "name": "Walmart",
+                    "name": "Walmart1",
                     "inventory": "last seen by Dan"
                 },
                 {
-                    "name": "CVS Pharmacy",
+                    "name": "CVS Pharmacy1",
                     "inventory": "not in stock"
                 }
             ]
         },
         {
-            "itemName": "another test",
+            "itemName": "another test2",
             "upcCode": "1235552323",
-            "creator": "Pete",
-            "price": "300",
+            "creator": "Pete2",
+            "price": "3002",
             "image": "http://via.placeholder.com/301x150",
             "stores": [
                 {
-                    "name": "Target",
-                    "inventory": "not in stock"
+                    "name": "Target2",
+                    "inventory": "not in stock2"
                 },
                 {
-                    "name": "Walmart",
-                    "inventory": "last seen by Dan"
+                    "name": "Walmar2",
+                    "inventory": "last seen by Da2n"
                 },
                 {
-                    "name": "CVS Pharmacy",
-                    "inventory": "not in stock"
+                    "name": "CVS Pharmacy2",
+                    "inventory": "not in stock2"
                 }
             ]
         },
         {
-            "itemName": "yet one more test",
+            "itemName": "yet one more test3",
             "upcCode": "000800808",
-            "creator": "Pete",
-            "price": "300",
+            "creator": "Pete3",
+            "price": "3",
             "image": "http://via.placeholder.com/301x150",
             "stores": [
                 {
-                    "name": "Target",
-                    "inventory": "not in stock"
+                    "name": "Target3",
+                    "inventory": "not in stock3"
                 },
                 {
-                    "name": "Walmart",
-                    "inventory": "last seen by Dan"
+                    "name": "Walmart3",
+                    "inventory": "last seen by Dan3"
                 },
                 {
-                    "name": "CVS Pharmacy",
-                    "inventory": "not in stock"
+                    "name": "CVS Pharmacy3",
+                    "inventory": "not in stock3"
                 }
             ]
         }
     ]
     const result = sampleData.find(x => x.upcCode === id)
-    console.log(result)
+    // console.log('RESULT', result)
 
     dispatch(getItemsRequest());
-    dispatch(getItemsSuccess(sampleData))
+    dispatch(getItemsSuccess(sampleData, result))
     // return fetch('/api/sessions/', opts)
     // return(sampleData)
     //     console.log('dispatch') 
