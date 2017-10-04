@@ -1,12 +1,18 @@
 import React from 'react';
 import * as Cookies from 'js-cookie';
 
+import {BrowserHistory, BrowserRouter, Link, Router, Route} from 'react-router-dom';
+
+// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 import QuestionPage from './question-page';
 import LoginPage from './login-page';
 import Header from './Header';
 import WishList from './WishList';
+import MainWindow from './MainWindow';
 import ProductWindow from './ProductWindow';
 import ChatWindow from './ChatWindow';
+import Test from './Test';
 
 
 
@@ -54,14 +60,24 @@ class App extends React.Component {
 
         // return <QuestionPage />;
         return(
-            <div className="app">
-                < Header />
-                <div className="main-container">
-                    < WishList />
-                    < ProductWindow />
-                    < ChatWindow />
+            <BrowserRouter history={BrowserHistory}> 
+                <div className="app">
+                    < Header />
+        
+                                <div className="main-container">
+                                    < WishList />
+                                    <div>
+                                    <Route exact path="/" component={MainWindow}/> 
+                                    <Route exact path="/:itemId" component={MainWindow}/> 
+                                    <Route exact path="/items/" component={Test}/>
+                                    </div>
+                            
+                                    < ChatWindow />
+                                </div>
+                                
+            
                 </div>
-            </div>
+            </BrowserRouter>
         )
     }
 }

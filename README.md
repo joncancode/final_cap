@@ -1,5 +1,7 @@
 # Find Smithy
 
+   "heroku-postbuild": "cd client && npm install --only=dev && npm run build",
+
 Find Smithy is an application that brings the community together. Not sure if that Nintendo Switch is still available at the local Walmart? Add what you want to our communal list and allow the crowdsourcing to do its magic.
 
 What's to come - A system to reward points for those who contribute more.

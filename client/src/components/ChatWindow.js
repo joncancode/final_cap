@@ -26,6 +26,9 @@ class ChatWindow extends React.Component {
         msgArr: msgArr.push(data)
       })
       console.log('messageArr', msgArr)
+
+      console.log('send message: ', data);
+
     })
   }
 
