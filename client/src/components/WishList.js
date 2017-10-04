@@ -24,7 +24,7 @@ class WishList extends React.Component {
         const wishListItems = this.props.itemData.map((item, index) =>
             <li key={index}>
             <BrowserRouter history={BrowserHistory}>
-                    <Link to={`/items/${item.upcCode}`}>
+                    <Link to={`/${item.upcCode}`}>
                     {/* <Link to={`/items/`}> */}
                     {/* <Link to={`/test/`}> */}
 

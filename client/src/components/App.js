@@ -66,9 +66,11 @@ class App extends React.Component {
         
                                 <div className="main-container">
                                     < WishList />
+                                    <div>
                                     <Route exact path="/" component={MainWindow}/> 
+                                    <Route exact path="/:itemId" component={MainWindow}/> 
                                     <Route exact path="/items/" component={Test}/>
-                                    <Route exact path="/test/:itemId" component={Test}/>
+                                    </div>
                             
                                     < ChatWindow />
                                 </div>

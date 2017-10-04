@@ -1,5 +1,8 @@
 import {
-    TEST_ACTION
+    TEST_ACTION,
+    GET_ITEMS_REQUEST,
+    GET_ITEMS_SUCCESS,
+    GET_ITEMS_ERROR
 } from '../actions';
 
 const initialState = {
@@ -8,6 +11,8 @@ const initialState = {
     loggedIn: true,
     loading: false,
     error: null,
+    currentItem: null,
+
     itemData: [
         {
             "itemName": "Coca-cola",
@@ -47,6 +52,24 @@ export const mainReducer = (state = initialState, action) => {
         return Object.assign({}, state, { 
             test: 'the test was updated' 
         });
-    } 
+    }  else if (action.type === GET_ITEMS_REQUEST) {
+        return Object.assign({}, state, {
+          loading: true,
+          error: null
+        });
+      } else if (action.type === GET_ITEMS_SUCCESS) {
+          const fakecurrentItem= 1;
+        return Object.assign({}, state, {
+          itemData: action.items,
+          loading: false,
+          currentItem: fakecurrentItem,
+          error: null
+        });
+      } else if (action.type === GET_ITEMS_ERROR) {
+        return Object.assign({}, state, {
+          error: action.error,
+          loading: false
+        });
+      }
     return state;
 };
