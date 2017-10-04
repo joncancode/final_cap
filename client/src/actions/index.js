@@ -1,9 +1,45 @@
-// import * as Cookies from 'js-cookie';
 
-export const TEST_ACTION = 'TEST_ACTION';
-export const testAction = () => ({
-    type: TEST_ACTION
-});
+//--FetchUser------------------------------
+
+import axios from "axios";
+import { FETCH_USER } from "./types";
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) === ' ') {
+          c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+          return c.substring(name.length, c.length);
+      }
+  }
+  return "";
+}
+
+// action creator with axios
+export const fetchUser = () => {
+  return function(dispatch) {
+    axios
+      .get("/api/me", {
+        headers: {
+          authorization: 'Bearer ' + getCookie('accessToken')
+        }
+      })
+      .then(res => {
+     
+        return dispatch({ type: FETCH_USER, payload: res.data });
+      })
+  };
+};
+
+
+//------------------------------------------
+
+
 
 
 // connect socket to redux?

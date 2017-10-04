@@ -14,7 +14,8 @@ import ProductWindow from './ProductWindow';
 import ChatWindow from './ChatWindow';
 import Test from './Test';
 
-
+import * as actions from "../actions";
+import { connect } from "react-redux";
 
 import './styles/App.css';
 
@@ -27,6 +28,10 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+
+        // this.props.fetchUser(); // passing users to reducer
+        // console.log('xxxxx-xxx-xx-xx-xx-xx-xx---xx', this.props)
+
         // Job 4: Redux-ify all of the state and fetch calls to async actions.
         const accessToken = Cookies.get('accessToken');
         if (accessToken) {
@@ -60,7 +65,6 @@ class App extends React.Component {
 
         // return <QuestionPage />;
         return(
-
             <BrowserRouter history={BrowserHistory}> 
                 <div className="app">
                     < Header />
@@ -72,6 +76,10 @@ class App extends React.Component {
                                         {/* <Route exact path="/" component={MainWindow}/>  */}
                                         <Route name="items" path="/items/:id" component={MainWindow}/> 
                                         {/* <Route exact path="/items/" component={Test}/> */}
+                                    <Route exact path="/LoginPage" component={LoginPage} />
+                                    <Route exact path="/" component={MainWindow}/> 
+                                    {/* <Route exact path="/:itemId" component={MainWindow}/> 
+                                    <Route exact path="/items/" component={Test}/> */}
                                     </div>
                             
                                     < ChatWindow />
@@ -84,4 +92,6 @@ class App extends React.Component {
     }
 }
 
-export default App;
+// export default App;
+// actions are assign to the app component as props
+export default connect(null, actions)(App);

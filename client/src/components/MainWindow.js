@@ -30,17 +30,6 @@ class MainWindow extends React.Component {
       }
       
     
-            
-            
-      // return (
-          
-          
-          //             <div className="main-window">
-          //         <ProductWindow/>
-          //                 {/* <Route exact path="/" component={ProductWindow}/> */}
-          //             </div>
-          // )
-          
           renderResults() {
             console.log('MAINWINDOW PROPS', this.props);            
         
@@ -50,25 +39,23 @@ class MainWindow extends React.Component {
         if (this.props.loading) {
             // return <Spinner spinnerName="circle" noFadeIn />;
             return <div>loading items...</div>;
-          }
+        }
       
-          if (this.props.error) {
+        if (this.props.error) {
             return (
               <strong>
                 {this.props.error}
               </strong>
             );
           }
-          if (this.props.activeItem) {
+        if (this.props.activeItem) {
             const currentItem = this.props.activeItem;
             const storeData = currentItem.stores.map((item, index) =>
-
-     
-            <tr key={index}>
-                <th>Store</th>
-                <th>{item.name}</th>
-                <th>{item.inventory}</th>
-            </tr>
+                <tr key={index}>
+                    <th>Store</th>
+                    <th>{item.name}</th>
+                    <th>{item.inventory}</th>
+                </tr>
         );
 
         return (
