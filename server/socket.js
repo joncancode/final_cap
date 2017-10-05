@@ -36,8 +36,8 @@ io.on('connection', function(socket) {
   });
 
     // A user is typing
-    socket.on('user is message', function(data) {
-      io.emit('user is message', data);
+    socket.on('user is typing', function(data) {
+      io.emit('user is typing', data);
       console.log('user is typing from socker server side', data)
     });
 

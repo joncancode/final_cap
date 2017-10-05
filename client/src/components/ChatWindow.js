@@ -20,7 +20,7 @@ class ChatWindow extends React.Component {
   componentDidMount() {
     socket.on(`send message`, data => {
       this.setState({
-        message: [data],
+        message: '',
         msgArr: msgArr.push(data)
       });
       console.log('the state', this.state);
@@ -32,10 +32,9 @@ class ChatWindow extends React.Component {
       message: e.target.value
     });
     console.log(e.target.value);
+    this.isTyping = 'A user is typing';
 
     socket.emit('user is typing', this.isTyping)
-      this.isTyping = 'A user is typing';
-      
 
   };
 
@@ -80,7 +79,7 @@ class ChatWindow extends React.Component {
                 size="35"
                 id="message"
                 placeholder="Enter message here"
-                //value={this.state.message}
+                value={this.state.message}
                 onChange={this.onChangeValue}
               />
               <input type="submit" value="Submit" />
