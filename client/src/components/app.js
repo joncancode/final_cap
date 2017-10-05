@@ -28,7 +28,6 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-
         // this.props.fetchUser(); // passing users to reducer
         // console.log('xxxxx-xxx-xx-xx-xx-xx-xx---xx', this.props)
 
