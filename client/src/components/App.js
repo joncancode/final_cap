@@ -72,10 +72,10 @@ class App extends React.Component {
                             < WishList /> 
                                 <div>
                                     <Route exact path="/LoginPage" component={LoginPage} />
-                                    <Route exact path="/" component={MainWindow}/>
-                                    <Route exact path="/:itemId" component={MainWindow}/>
-                                    <Route exact path="/items/" component={Test}/>
-                                    <Route exact path="/Home" component={MainWindow}/>
+                                    <Route exact path="/items/" component={MainWindow}/>
+                                    <Route exact path="/items/:itemId" component={MainWindow}/>
+                                    {/* <Route exact path="/items/" component={Test}/> */}
+                                    <Route exact path="/Home/" component={MainWindow}/>
                                 </div>
                                 <ChatWindow/>
                             

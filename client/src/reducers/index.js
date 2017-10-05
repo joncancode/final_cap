@@ -43,7 +43,7 @@ export const mainReducer = (state = initialState, action) => {
         }
         case 'GET_ITEMS_SUCCESS': {
             return Object.assign({}, state, {
-                itemData: action.items,
+                itemData: action.items, 
                 activeItem: action.result,
                 loading: false,
                 error: null
