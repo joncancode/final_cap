@@ -35,6 +35,12 @@ io.on('connection', function(socket) {
     console.log('message from handleSubmit', data)
   });
 
+    // A user is typing
+    socket.on('user is message', function(data) {
+      io.emit('user is message', data);
+      console.log('user is typing from socker server side', data)
+    });
+
   // Disconnect event
   socket.on('disconnect', function(data) {
     if (!socket.username) {

@@ -17,11 +17,11 @@ const BearerStrategy = require('passport-http-bearer').Strategy;
 // const mongoose = require('mongoose');
 // const app = express();
 // require("./Routes/authRoutes")(app);
-// const { User } = require('./models/User');
+const { User } = require('./models/User');
 
 
 // here i define User
-const User = require('./models/User');
+// const User = require('./models/User');
 
 // Mongoose's default connection logic is deprecated as of 4.11.0.
 var promise = mongoose.connect(keys.MONGO_URI, {
@@ -43,7 +43,7 @@ const database = {
 // }
 
 app.use(passport.initialize());
-
+app.use(passport.session())
 
 passport.serializeUser((user, cb) => {
     console.log('serial user', user)
@@ -68,8 +68,8 @@ passport.use(
     (accessToken, refreshToken, profile, cb) => {
 
         // use mongoose model to create new user and save to db
-        console.log('resume saving to db fix here')
-        new User({ googleId: profile.id}).save();
+        // console.log('resume saving to db fix here')
+        // new User({ googleId: profile.id}).save();
 
         
         const user = database[accessToken] = {
@@ -77,7 +77,45 @@ passport.use(
             accessToken: accessToken
         };
         return cb(null, user);
-        
+
+    //     User
+    //     .findOne({ googleId: profile.id })
+    //     .then(user => {
+    //       if (user) {
+    //         user.accessToken = accessToken;
+    //         return user.save();
+    //       } else {
+    //         User
+    //           .create({
+    //             displayName: profile.displayName,
+    //             googleId: profile.id,
+    //             accessToken
+    //           })
+    //           .then(console.log('this worked!'))
+    //           .catch(err => {
+    //             console.error(err);
+    //           });
+    //       }
+    //     });
+    //   const user = {
+    //     googleId: profile.id,
+    //     accessToken: accessToken
+    //   };
+    //   return cb(null, user);
+
+ 
+        // User
+        // .findOne({googleId: profile.id})
+        // .then((existingUser) => {
+        //     if (existingUser) {
+        //         // user already exists
+        //         cb(null, existingUser); // telling passport, user exists great we are done
+        //     } else {
+        //         // user does not exist, create new user
+        //         new Users({googleId: profile.id}).save() // persisting to mongo database the google id
+        //         .then(user => cb(null, user)); // if success, done
+        //     }
+        // });
     }
 ));
 
@@ -128,7 +166,7 @@ app.get('/api/auth/google/callback',
 app.get('/api/auth/logout', (req, res) => {
     req.logout();
     res.clearCookie('accessToken');
-    res.redirect('/Login');
+    res.redirect('/LoginPage');
 });
 
 app.get('/api/me',

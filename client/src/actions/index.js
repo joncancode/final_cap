@@ -82,7 +82,7 @@ export const fetchItems = (id) => dispatch => {
     const sampleData =  [
         {
             "itemName": "iPhone 9",
-            "upcCode": "73737288",
+            "upcCode": "1",
             "creator": "Pete",
             "price": "1000",
             "image": "http://via.placeholder.com/301x150",

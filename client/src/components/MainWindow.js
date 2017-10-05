@@ -24,9 +24,12 @@ class MainWindow extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(
-          fetchItems(this.state.id)
-        );
+        if(this.state.id) {
+            this.props.dispatch(fetchItems(this.state.id));
+        } else {
+            this.props.dispatch(fetchItems(1));
+            alert('NOPE')
+        }
       }
       
     
