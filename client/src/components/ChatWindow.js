@@ -23,8 +23,7 @@ class ChatWindow extends React.Component {
         message: '',
         msgArr: msgArr.push(data)
       });
-      console.log('the state', this.state);
-      
+      console.log('the array', msgArr);
     });
   }
 
@@ -37,8 +36,6 @@ class ChatWindow extends React.Component {
     this.isTyping = 'A user is typing...';
     socket.emit('user is typing', this.isTyping)
   };
-
-
 
   sendMessage = msgArr => {
     socket.emit(`send message`, msgArr);
