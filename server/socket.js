@@ -32,13 +32,13 @@ io.on('connection', function(socket) {
   // Send message
   socket.on('send message', function(data) {
     io.emit('send message', data);
-    console.log('message from handleSubmit', data)
+    console.log('server-side message from handleSubmit', data)
   });
 
     // A user is typing
     socket.on('user is typing', function(data) {
       io.emit('user is typing', data);
-      console.log('user is typing from socker server side', data)
+      console.log('server-side message from user is typing', data)
     });
 
   // Disconnect event
