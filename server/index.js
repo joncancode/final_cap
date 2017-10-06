@@ -3,7 +3,6 @@ const express = require('express');
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const passport = require('passport');
-
 const app = express();
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;

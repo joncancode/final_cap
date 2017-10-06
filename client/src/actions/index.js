@@ -82,7 +82,7 @@ export const fetchItems = (id) => dispatch => {
     const sampleData =  [
         {
             "itemName": "iPhone 9",
-            "upcCode": "73737288",
+            "upcCode": "1",
             "creator": "Pete",
             "price": "1000",
             "image": "http://via.placeholder.com/301x150",
@@ -140,8 +140,10 @@ export const fetchItems = (id) => dispatch => {
             ]
         }
     ]
-    const result = sampleData.find(x => x.upcCode === id)
-    // console.log('RESULT', result)
+    // console.log('ID', id)
+    // console.log(sampleData.find(x => x.upcCode == id), 'SAMPLE DATA FIND')
+    const result = sampleData.find(x => x.upcCode == id)
+    console.log('RESULT', result)
 
     dispatch(getItemsRequest());
     dispatch(getItemsSuccess(sampleData, result))

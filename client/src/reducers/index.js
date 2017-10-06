@@ -1,4 +1,5 @@
 import actions from '../actions';
+import { FETCH_USER } from "../actions/types";
 
 const initialState = {
     currentUser: null,
@@ -8,12 +9,25 @@ const initialState = {
     activeItem: null,
     itemData: [
         {
-            "itemName": null,
-            "creator": null,
-            "price": null,
-            "upcCode": null,
-            "image": null,
-            "stores": []
+            // "itemName": 'testItem',
+            // "creator": 'testGuy',
+            // "price": '100',
+            // "upcCode": '1',
+            // "image": "http://via.placeholder.com/301x150",
+            // "stores": [
+            //     {
+            //         "name": "Target",
+            //         "inventory": "not in stock"
+            //     },
+            //     {
+            //         "name": "Apple store",
+            //         "inventory": "last seen by Ralph"
+            //     },
+            //     {
+            //         "name": "Best Buy",
+            //         "inventory": "last seen by Hernicio"
+            //     }
+            // ]
         }
     ]
 };
@@ -29,7 +43,7 @@ export const mainReducer = (state = initialState, action) => {
         }
         case 'GET_ITEMS_SUCCESS': {
             return Object.assign({}, state, {
-                itemData: action.items,
+                itemData: action.items, 
                 activeItem: action.result,
                 loading: false,
                 error: null
@@ -41,17 +55,21 @@ export const mainReducer = (state = initialState, action) => {
                 loading: false
             });
         }
+        case 'FETCH_USER': {
+            console.log('----------->action: ', action.payload);
+            return action.payload || false; // need to update state here, object.assign or ...spread, return {...state, user:true}
+        }
         default : return state;
     } 
 };
 
 
-import { combineReducers } from "redux";
-import authReducer from "./authReducer";
+// import { combineReducers } from "redux";
+// import authReducer from "./authReducer";
 
-const rootReducer = combineReducers ({
-  auth: authReducer
-});
+// const rootReducer = combineReducers ({
+//   auth: authReducer
+// });
 
-export default rootReducer;
+// export default rootReducer;
 
