@@ -7,27 +7,29 @@ const initialState = {
     loading: false,
     error: null,
     activeItem: null,
-    itemData: [
+    accessToken: undefined,
+    itemData: 
+    [
         {
-            // "itemName": 'testItem',
-            // "creator": 'testGuy',
-            // "price": '100',
-            // "upcCode": '1',
-            // "image": "http://via.placeholder.com/301x150",
-            // "stores": [
-            //     {
-            //         "name": "Target",
-            //         "inventory": "not in stock"
-            //     },
-            //     {
-            //         "name": "Apple store",
-            //         "inventory": "last seen by Ralph"
-            //     },
-            //     {
-            //         "name": "Best Buy",
-            //         "inventory": "last seen by Hernicio"
-            //     }
-            // ]
+            "itemName": 'testItem',
+            "creator": 'testGuy',
+            "price": '100',
+            "upcCode": '1',
+            "image": "http://via.placeholder.com/301x150",
+            "stores": [
+                {
+                    "name": "Target",
+                    "inventory": "not in stock"
+                },
+                {
+                    "name": "Apple store",
+                    "inventory": "last seen by Ralph"
+                },
+                {
+                    "name": "Best Buy",
+                    "inventory": "last seen by Hernicio"
+                }
+            ]
         }
     ]
 };
@@ -42,9 +44,10 @@ export const mainReducer = (state = initialState, action) => {
               });
         }
         case 'GET_ITEMS_SUCCESS': {
+            console.log('LOLOLOL')
             return Object.assign({}, state, {
                 itemData: action.items, 
-                activeItem: action.result,
+                // activeItem: action.result,
                 loading: false,
                 error: null
             });

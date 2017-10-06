@@ -65,7 +65,7 @@ export const getItemsError = error => ({
   error
 });
 
-export const fetchItems = (id) => dispatch => {
+export const fetchItems = () => dispatch => {
     // const credentials = `${username}:${password}`;
     // const encodedAuthHeader = btoa(credentials);
     // const authString = `Basic ${encodedAuthHeader}`;
@@ -142,13 +142,20 @@ export const fetchItems = (id) => dispatch => {
     ]
     // console.log('ID', id)
     // console.log(sampleData.find(x => x.upcCode == id), 'SAMPLE DATA FIND')
-    const result = sampleData.find(x => x.upcCode == id)
-    console.log('RESULT', result)
+    // const result = sampleData.find(x => x.upcCode == id)
+    // console.log('RESULT', result)
 
+
+    //---oldWAY
     dispatch(getItemsRequest());
-    dispatch(getItemsSuccess(sampleData, result))
+    console.log('SAMPLE DATA')
+    dispatch(getItemsSuccess(sampleData))
+
+
+
+
     // return fetch('/api/sessions/', opts)
-    // return(sampleData)
+    // return fetch(sampleData)
     //     console.log('dispatch') 
     //   .then(res => {
     //     if (!res.ok) {
