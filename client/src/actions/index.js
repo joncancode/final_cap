@@ -140,8 +140,8 @@ export const fetchItems = (id) => dispatch => {
             ]
         }
     ]
-    console.log('ID', id)
-    console.log(sampleData.find(x => x.upcCode == id), 'SAMPLE DATA FIND')
+    // console.log('ID', id)
+    // console.log(sampleData.find(x => x.upcCode == id), 'SAMPLE DATA FIND')
     const result = sampleData.find(x => x.upcCode == id)
     console.log('RESULT', result)
 

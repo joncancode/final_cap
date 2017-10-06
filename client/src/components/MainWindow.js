@@ -18,21 +18,24 @@ class MainWindow extends React.Component {
         this.state = {id: this.props.match.params.id}
     }
     
-    componentWillReceiveProps(nextProps) {
-        this.setState({id: nextProps.id})
-        // console.log(this.state)
-    }
-
+    
     componentDidMount() {
         if(this.props.match.params.itemId) {
             this.props.dispatch(fetchItems(this.props.match.params.itemId));
         } else {
             console.log(this.props, 'THESE ARE THE PROPS FROM ELSE IN COMPDIDMOUNT')
-            this.props.dispatch(fetchItems("1"));
+            // this.props.dispatch(fetchItems("1"));
             // alert('NOPE')
         }
-      }
-      
+    }
+    
+    componentWillReceiveProps(nextProps) {
+
+        
+    console.log('next props', nextProps);        
+        this.setState({id: nextProps.id})
+        // console.log(this.state)
+    }
     
         renderResults() {
             // console.log('MAINWINDOW PROPS', this.props);            
@@ -98,7 +101,15 @@ class MainWindow extends React.Component {
             </div>
         )
     }
-        }
+    else {
+        return (
+        <div className="product-window">
+            <p>nothing yet</p>
+        </div>
+        )
+    }
+
+}
         
     
     render() {
