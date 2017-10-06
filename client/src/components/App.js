@@ -28,7 +28,6 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-
         // this.props.fetchUser(); // passing users to reducer
         // console.log('xxxxx-xxx-xx-xx-xx-xx-xx---xx', this.props)
 
@@ -73,11 +72,12 @@ class App extends React.Component {
                             < WishList /> 
                                 <div>
                                     <Route exact path="/LoginPage" component={LoginPage} />
-                                    <Route exact path="/" component={MainWindow}/>
-                                    <Route exact path="/:itemId" component={MainWindow}/>
-                                    <Route exact path="/items/" component={Test}/>
-                                    <Route exact path="/Home" component={ChatWindow}/>
+                                    <Route exact path="/items/" component={MainWindow}/>
+                                    <Route exact path="/items/:itemId" component={MainWindow}/>
+                                    {/* <Route exact path="/items/" component={Test}/> */}
+                                    <Route exact path="/Home/" component={MainWindow}/>
                                 </div>
+                                <ChatWindow/>
                             
                         </div>
                 </div>
