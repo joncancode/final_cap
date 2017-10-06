@@ -3,25 +3,12 @@ const express = require('express');
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const passport = require('passport');
-
 const app = express();
-
-// need models
-require('./models/User');
-
-// const passport = require('passport');
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
-// const keys = require('./config/keys');
-// const mongoose = require('mongoose');
-// const app = express();
 // require("./Routes/authRoutes")(app);
 const { User } = require('./models/User');
-
-
-// here i define User
-// const User = require('./models/User');
 
 // Mongoose's default connection logic is deprecated as of 4.11.0.
 var promise = mongoose.connect(keys.MONGO_URI, {
@@ -46,12 +33,12 @@ app.use(passport.initialize());
 app.use(passport.session())
 
 passport.serializeUser((user, cb) => {
-    console.log('serial user', user)
+    // console.log('serial user', user)
     cb(null, user.id); // auto generated mongo id is the user.id, used to find user in cookie
 });
 
 passport.deserializeUser((id, cb) => {
-    console.log({id})
+    // console.log({id})
     User.findById(id)
     .then(user => {
         cb(null, user);
@@ -67,55 +54,37 @@ passport.use(
     // profile contains google user id, the unique id token need to save to user record
     (accessToken, refreshToken, profile, cb) => {
 
-        // use mongoose model to create new user and save to db
-        // console.log('resume saving to db fix here')
-        // new User({ googleId: profile.id}).save();
+    // use mongoose model to create new user and save to database
+        User
+        .findOne({ googleId: profile.id })
+        .then(user => {
+            console.log('-----A')
+          if (user) {
+            user.accessToken = accessToken;
+            return user.save();
+          } else {
+              console.log('------B')
+            User
+              .create({
+                // displayName: profile.givenName,
+                givenName: profile.name.givenName,
+                googleId: profile.id,
+                accessToken: accessToken
+              })
+              .then(console.log('successful log'))
+              .catch(err => {
+                console.error(err);
+              });
+          }
+        });
 
-        
-        const user = database[accessToken] = {
-            googleId: profile.id,
-            accessToken: accessToken
-        };
-        return cb(null, user);
+      const user = {
+        googleId: profile.id,
+        accessToken: accessToken,
+        givenName: profile.name.givenName
+      };
+      return cb(null, user);
 
-    //     User
-    //     .findOne({ googleId: profile.id })
-    //     .then(user => {
-    //       if (user) {
-    //         user.accessToken = accessToken;
-    //         return user.save();
-    //       } else {
-    //         User
-    //           .create({
-    //             displayName: profile.displayName,
-    //             googleId: profile.id,
-    //             accessToken
-    //           })
-    //           .then(console.log('this worked!'))
-    //           .catch(err => {
-    //             console.error(err);
-    //           });
-    //       }
-    //     });
-    //   const user = {
-    //     googleId: profile.id,
-    //     accessToken: accessToken
-    //   };
-    //   return cb(null, user);
-
- 
-        // User
-        // .findOne({googleId: profile.id})
-        // .then((existingUser) => {
-        //     if (existingUser) {
-        //         // user already exists
-        //         cb(null, existingUser); // telling passport, user exists great we are done
-        //     } else {
-        //         // user does not exist, create new user
-        //         new Users({googleId: profile.id}).save() // persisting to mongo database the google id
-        //         .then(user => cb(null, user)); // if success, done
-        //     }
-        // });
     }
 ));
 
@@ -131,7 +100,7 @@ passport.use(
 );
 
 app.get('/api/auth/google',
-    passport.authenticate('google', { scope: ['profile'] }));
+    passport.authenticate('google', { scope: ['profile', 'email'] }));
    
 app.get('/api/auth/google/callback',
     passport.authenticate('google', {
@@ -139,9 +108,12 @@ app.get('/api/auth/google/callback',
         session: false
     }),
     (req, res, next) => {
+        // console.log('------>', req.user)
         res.cookie('accessToken', req.user.accessToken, {expires: 0});
         res.redirect('/Home');
+        return req.user;
     }
+    
 );
 
 /*
@@ -172,12 +144,26 @@ app.get('/api/auth/logout', (req, res) => {
 app.get('/api/me',
     passport.authenticate(['bearer' ],{session: false}),
     (req, res) => res.json({
-        googleId: req.user.googleId
+        googleId: req.user.googleId,
+        displayName: req.user.displayName
     })
 );
 
 app.get("/api/current_user", (req, res) => {
     res.send(req.user);
+    console.log('req.user: ', req.user);
+
+});
+
+
+app.get('/account', ensureAuthenticated, function(req, res){
+    User.findById(req.session.passport.user, function(err, user) {
+      if(err) {
+        console.log(err);  // handle errors
+      } else {
+        res.render('account', { user: user});
+      }
+    });
   });
 
 
@@ -191,7 +177,11 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
     res.sendFile(index);
 });
 
-
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    res.redirect('/');
+  }
+  
 
 
 //======================================================================//

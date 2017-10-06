@@ -51,7 +51,7 @@ class Header extends Component {
         <nav>
           <div className="header">
             <ul className="auth-controls">
-              <li style={{float:'left'}}><Link to={this.props.auth ? "/Home" : "/Login"} className="appName">Find Smithy</Link></li>
+              <li style={{float:'left'}}><Link to={this.props.auth ? "#" : "#"} className="appName">Find Smithy</Link></li>
               {this.renderContent()}
             </ul>
           </div>
