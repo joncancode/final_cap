@@ -64,12 +64,12 @@ class App extends React.Component {
 
         // return <QuestionPage />;
         return(
-            <BrowserRouter history={BrowserHistory}> 
+            <BrowserRouter history={BrowserHistory}>
                 <div className="app">
 
                     < Header currentUser={this.state.currentUser}/>
                         <div className="main-container">
-                            < WishList /> 
+                            < WishList />
                                 <div>
                                     <Route exact path="/LoginPage" component={LoginPage} />
                                     <Route exact path="/items/" component={MainWindow}/>
@@ -78,7 +78,7 @@ class App extends React.Component {
                                     <Route exact path="/Home/" component={MainWindow}/>
                                 </div>
                                 <ChatWindow/>
-                            
+
                         </div>
                 </div>
             </BrowserRouter>
