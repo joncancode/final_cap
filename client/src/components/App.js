@@ -28,7 +28,6 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-
         // this.props.fetchUser(); // passing users to reducer
         // console.log('xxxxx-xxx-xx-xx-xx-xx-xx---xx', this.props)
 
@@ -65,8 +64,9 @@ class App extends React.Component {
 
         // return <QuestionPage />;
         return(
-            <BrowserRouter history={BrowserHistory}> 
+            <BrowserRouter history={BrowserHistory}>
                 <div className="app">
+<<<<<<< HEAD
                     < Header />
         
                                 <div className="main-container">
@@ -82,6 +82,22 @@ class App extends React.Component {
                                 </div>
                                 
             
+=======
+
+                    < Header currentUser={this.state.currentUser}/>
+                        <div className="main-container">
+                            < WishList />
+                                <div>
+                                    <Route exact path="/LoginPage" component={LoginPage} />
+                                    <Route exact path="/items/" component={MainWindow}/>
+                                    <Route exact path="/items/:itemId" component={MainWindow}/>
+                                    {/* <Route exact path="/items/" component={Test}/> */}
+                                    <Route exact path="/Home/" component={MainWindow}/>
+                                </div>
+                                <ChatWindow/>
+
+                        </div>
+>>>>>>> 3ef522c30fdf791f0c85684bacdb0c9a0935ab71
                 </div>
             </BrowserRouter>
         )

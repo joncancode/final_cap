@@ -18,26 +18,35 @@ class MainWindow extends React.Component {
         this.state = {id: this.props.match.params.id}
     }
     
+    
+    componentDidMount() {
+        if(this.props.match.params.itemId) {
+            this.props.dispatch(fetchItems(this.props.match.params.itemId));
+        } else {
+            console.log(this.props, 'THESE ARE THE PROPS FROM ELSE IN COMPDIDMOUNT')
+            // this.props.dispatch(fetchItems("1"));
+            // alert('NOPE')
+        }
+    }
+    
     componentWillReceiveProps(nextProps) {
+
+        
+    console.log('next props', nextProps);        
         this.setState({id: nextProps.id})
         // console.log(this.state)
     }
-
-    componentDidMount() {
-        this.props.dispatch(
-          fetchItems(this.state.id)
-        );
-      }
-      
     
-          renderResults() {
-            console.log('MAINWINDOW PROPS', this.props);            
+        renderResults() {
+            // console.log('MAINWINDOW PROPS', this.props);            
         
         
         
              
         if (this.props.loading) {
             // return <Spinner spinnerName="circle" noFadeIn />;
+
+            console.log('LOADING');
             return <div>loading items...</div>;
         }
       
@@ -47,6 +56,15 @@ class MainWindow extends React.Component {
                 {this.props.error}
               </strong>
             );
+          }
+          if (this.props.activeItem === null) {
+
+            console.log('NULL ERROR');
+              return (
+                  <div className="product-window">
+                      <p>didnt work</p>
+                  </div>
+              )
           }
         if (this.props.activeItem) {
             const currentItem = this.props.activeItem;
@@ -83,7 +101,15 @@ class MainWindow extends React.Component {
             </div>
         )
     }
-        }
+    else {
+        return (
+        <div className="product-window">
+            <p>nothing yet</p>
+        </div>
+        )
+    }
+
+}
         
     
     render() {
@@ -91,6 +117,7 @@ class MainWindow extends React.Component {
           <div className="user-data">
             <div className="user-sessions-container">
               {this.renderResults()}
+              {/* <p>Hello</p> */}
             </div>
           </div>
         );
