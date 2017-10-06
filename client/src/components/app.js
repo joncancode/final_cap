@@ -75,9 +75,8 @@ class App extends React.Component {
                                     <Route exact path="/items/" component={MainWindow}/>
                                     <Route exact path="/items/:itemId" component={MainWindow}/>
                                     {/* <Route exact path="/items/" component={Test}/> */}
-                                    <Route exact path="/Home/" component={MainWindow}/>
+                                    <Route exact path="/Home" component={ChatWindow}/>
                                 </div>
-                                <ChatWindow/>
                             
                         </div>
                 </div>
