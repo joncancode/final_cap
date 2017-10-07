@@ -8,7 +8,7 @@ const itemSchema = new Schema({
   currency: { type: Number, required: true},
   upc: { type: Number, required: true},
   user_data: [],
-  images: [],
+  images: [String]
 });
 
 itemSchema.methods.apiRepr = function() {
