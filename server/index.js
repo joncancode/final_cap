@@ -4,11 +4,13 @@ const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
-
+const bodyParser = require('body-parser');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
 // require("./Routes/authRoutes")(app);
 const { User } = require('./models/User');
+const { Item } = require('./models/Item');
+const { ItemError } = require('./models/Item-Error');
 
 // Mongoose's default connection logic is deprecated as of 4.11.0.
 var promise = mongoose.connect(keys.MONGO_URI, {
@@ -28,7 +30,7 @@ const database = {
 // if(process.env.NODE_ENV != 'production') {
 //   keys = require('./secret');
 // }
-
+app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session())
 
@@ -58,12 +60,12 @@ passport.use(
         User
         .findOne({ googleId: profile.id })
         .then(user => {
-            console.log('-----A')
+            // console.log('-----A')
           if (user) {
             user.accessToken = accessToken;
             return user.save();
           } else {
-              console.log('------B')
+            //   console.log('------B')
             User
               .create({
                 // displayName: profile.givenName,
@@ -149,12 +151,6 @@ app.get('/api/me',
     })
 );
 
-app.get("/api/current_user", (req, res) => {
-    res.send(req.user);
-    console.log('req.user: ', req.user);
-
-});
-
 
 app.get('/account', ensureAuthenticated, function(req, res){
     User.findById(req.session.passport.user, function(err, user) {
@@ -164,6 +160,44 @@ app.get('/account', ensureAuthenticated, function(req, res){
         res.render('account', { user: user});
       }
     });
+  });
+
+
+
+//----Item Endpoints------------------------------------
+
+// Get All Items
+app.get('/api/items', (req, res) => {
+    Item
+      .find()
+      .then(items => {
+        console.log('title: ', items.title);
+        res.json({
+            items: items.map(item => item)
+        })
+          .catch(err => {
+            console.error(err);
+            res.status(500).json({message: 'Internal server error'});
+          });
+      });
+  });
+  
+  app.post('/api/item', (req, res) => {
+      console.log('inside endpoint here', req.body)
+    Item
+      .create({
+        title: req.body.title,
+        currency: req.body.currency,
+        upc: req.body.upc,
+        user_data: req.body.user_data
+      })
+      .then(()=> {
+        res.status(201).json(req.body);
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+      });
   });
 
 
