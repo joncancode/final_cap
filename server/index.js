@@ -212,6 +212,16 @@ app.get('/api/items', (req, res) => {
       });
   });
 
+  app.delete('/api/items/:id', (req, res) => {
+      console.log('REQ', req.body)
+      console.log('RES', res.body)
+    Item.delete(req.params.id);
+    console.log(`Deleted item \`${req.params.id}\``);
+    res.status(204).end();
+  });
+
+
+
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
