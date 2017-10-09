@@ -30,15 +30,13 @@ class MainWindow extends React.Component {
     // }
 
     componentWillReceiveProps(nextProps) {
-
-
         console.log('next props', nextProps);
         this.setState({ id: nextProps.id })
         // console.log(this.state)
     }
 
     renderResults() {
-        // console.log('MAINWINDOW PROPS', this.props);            
+        console.log('MAINWINDOW PROPS', this.props);            
 
 
 
@@ -66,36 +64,42 @@ class MainWindow extends React.Component {
                 </div>
             )
         }
-        if (this.props.activeItem) {
-            const currentItem = this.props.activeItem;
-            const storeData = currentItem.stores.map((item, index) =>
-                <tr key={index}>
-                    <th>Store</th>
-                    <th>{item.name}</th>
-                    <th>{item.inventory}</th>
-                </tr>
-            );
+        if (this.props.itemData.items) {
+            const currentItem = this.props.itemData.items[2];
+            console.log('current item is....', currentItem)
+            // return (
+            //     <div>
+            //         <p>nice</p>
+            //         </div>
+            // )
+            // const storeData = currentItem.stores.map((item, index) =>
+            //     <tr key={index}>
+            //         <th>Store</th>
+            //         <th>{item.name}</th>
+            //         <th>{item.inventory}</th>
+            //     </tr>
+            // );
 
             return (
                 <div className="product-window">
                     <div className="item-overview">
-                        <h2>{currentItem.itemName}</h2>
-                        <p>Added by {currentItem.creator}</p>
-                        <img src={currentItem.image} />
+                        <h2>{currentItem.title}</h2>
+                        <p>Added by --fill out later---</p>
+                        <p>--add image later--</p>
                     </div>
                     <div className="item-info">
                         <table>
                             <tr>
                                 <th>Price</th>
-                                <th>${currentItem.price}</th>
+                                <th>${currentItem.currency}</th>
                                 <th></th>
                             </tr>
                             <tr>
                                 <th>UPC Code</th>
-                                <th>{currentItem.upcCode}</th>
+                                <th>{currentItem.upc}</th>
                                 <th></th>
                             </tr>
-                            {storeData}
+                            {/* {storeData} */}
                         </table>
                     </div>
                 </div>

@@ -29,54 +29,30 @@ class WishList extends React.Component {
 
 
         if (this.props.itemData) {
-            console.log('ITEM DATA FROM RENDERIWHSLIST ITEMS', this.props.itemData.items)
+            // console.log('ITEM DATA FROM RENDERIWHSLIST ITEMS', this.props.itemData.items)
             const items = this.props.itemData.items[2];
             return (
                 <BrowserRouter history={BrowserHistory}>
                     <ul>
                         <li>
-                        <Link to={`/items/${items.upc}`}>
+                        <Link to={`/Home/${items.upc}`}>
                             {items.title}
                         </Link>
                         </li>
                     </ul>
                 </BrowserRouter>
             )
-        
-
-
-
-            // const wishListItems = this.props.itemData.items.map((item, index) =>
-
-            //     <BrowserRouter history={BrowserHistory}>
-            //     <ul>
-            //         <li key={item}>
-            //         {/* <Link to={`/items/${i.upc}`}> */}
-            //         who cares
-            //                 {/* {item.title} */}
-            //         {/* </Link>  */}
-            //         </li>
-            //     </ul>
-            // //     /* </BrowserRouter> */
-            // );
-            // return (
-            //     {wishListItems}
-            // )
-            // return (
-            //     <li>{this.props.itemData.items[0].title}</li>
-            // )
-
         }
         else {
 
             return (
-                <p>not yet, chief</p>
+                <p>no data</p>
             )
         }
     }
 
     render() {
-        console.log('ITEM DATA PROPS', this.props)
+        // console.log('ITEM DATA PROPS', this.props)
 
         return (
             <div className="wish-list">
