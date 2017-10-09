@@ -201,7 +201,10 @@ app.get('/api/items', (req, res) => {
         title: req.body.title,
         currency: req.body.currency,
         upc: req.body.upc,
-        user_data: req.body.user_data
+        creator: req.body.creator,
+        stores: req.body.stores,
+        user_data: req.body.user_data,
+        images: req.body.images
       })
       .then(()=> {
         res.status(201).json(req.body);

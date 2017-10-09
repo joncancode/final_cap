@@ -30,14 +30,36 @@ class WishList extends React.Component {
 
         if (this.props.itemData) {
             // console.log('ITEM DATA FROM RENDERIWHSLIST ITEMS', this.props.itemData.items)
-            const items = this.props.itemData.items[2];
+            // //MAP FUNCTION
+            // const itemResults = this.props.itemData.items((item, index) =>
+
+
+            //     <li>
+            // {/* <Link to={`/Home/${item.upc}`}> */}
+            //         {item.title}
+            //         {/* </Link> */}
+            //     </li>
+            // );
+            // return (
+            //     <BrowserRouter history={BrowserHistory}>
+            //         <ul>
+            //             {itemResults}
+            //         </ul>
+            //     </BrowserRouter>
+            // )
+
+            //ALT HARDCODED SINGLEITEM
+
+            const item = this.props.itemData.items[0];
+            console.log('ITEM DATA FROM ALTERNATE', item)
+
             return (
                 <BrowserRouter history={BrowserHistory}>
                     <ul>
                         <li>
-                        <Link to={`/Home/${items.upc}`}>
-                            {items.title}
-                        </Link>
+                            <Link to={`/Home/${item.upc}`}>
+                                {item.title}
+                            </Link>
                         </li>
                     </ul>
                 </BrowserRouter>

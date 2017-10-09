@@ -7,6 +7,8 @@ const itemSchema = new Schema({
   title: { type: String, required: true},
   currency: { type: Number, required: true},
   upc: { type: Number, required: true},
+  creator: { type: String, required: true },
+  stores: [],
   user_data: [],
   images: [String]
 });
@@ -15,10 +17,13 @@ itemSchema.methods.apiRepr = function() {
   return {
     id: this._id,
     title: this.title,
-    id: this._id,
     currency: this.price,
     upc: this.upcCode,
-    user_data: this.user_data    
+    creator: this.creator,
+    stores: this.stores,
+    user_data: this.user_data,
+    images: this.images,
+    id: this._id,
   };
 };
 

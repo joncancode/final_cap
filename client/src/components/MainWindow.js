@@ -65,26 +65,26 @@ class MainWindow extends React.Component {
             )
         }
         if (this.props.itemData.items) {
-            const currentItem = this.props.itemData.items[2];
+            const currentItem = this.props.itemData.items[0];
             console.log('current item is....', currentItem)
             // return (
             //     <div>
             //         <p>nice</p>
             //         </div>
             // )
-            // const storeData = currentItem.stores.map((item, index) =>
-            //     <tr key={index}>
-            //         <th>Store</th>
-            //         <th>{item.name}</th>
-            //         <th>{item.inventory}</th>
-            //     </tr>
-            // );
+            const storeData = currentItem.stores.map((item, index) =>
+                <tr key={index}>
+                    <th>Store</th>
+                    <th>{item.name}</th>
+                    <th>{item.inventory}</th>
+                </tr>
+            );
 
             return (
                 <div className="product-window">
                     <div className="item-overview">
                         <h2>{currentItem.title}</h2>
-                        <p>Added by --fill out later---</p>
+                        <p>Added by {currentItem.creator}</p>
                         <p>--add image later--</p>
                     </div>
                     <div className="item-info">
@@ -99,7 +99,7 @@ class MainWindow extends React.Component {
                                 <th>{currentItem.upc}</th>
                                 <th></th>
                             </tr>
-                            {/* {storeData} */}
+                            {storeData}
                         </table>
                     </div>
                 </div>
@@ -112,13 +112,12 @@ class MainWindow extends React.Component {
                 </div>
             )
         }
-
     }
 
 
     render() {
         return (
-            <div className="user-data">
+            <div className="main-window">
                 <div className="user-sessions-container">
                     {this.renderResults()}
                     {/* <p>Hello</p> */}
