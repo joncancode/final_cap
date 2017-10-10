@@ -74,26 +74,8 @@ class WishList extends React.Component {
     }
 
     render() {
-<<<<<<< HEAD
-        
-        const wishListItems = this.props.itemData.map((item, index) =>
-            <li key={index}>
-            <BrowserRouter history={BrowserHistory}>
-                    <Link to={`/${item.upcCode}`}>
-                    {/* <Link to={`/items/`}> */}
-                    {/* <Link to={`/test/`}> */}
-
-                        {item.itemName}
-                    </Link> 
-             {/* <Route path="/:id" component={MainWindow}/> */}
-        </BrowserRouter>
-            </li>
-        );
-        
-=======
         // console.log('ITEM DATA PROPS', this.props)
 
->>>>>>> ff7ccba63972f4844936aed11bfcbb290cf82bef
         return (
             <div className="wish-list">
                 <h2>Wish list</h2>
