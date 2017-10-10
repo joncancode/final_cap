@@ -8,7 +8,7 @@ app.get('/', function(req, res) {
   console.log(__dirname + ' dir name');
 });
 
-// get the client to connect to the server with socket.io, responds in the console
+// get the client to connect to the server with socket.io, responds in the console.
 io.on('connection', function(socket) {
   console.log('Client is connected on socket.js');
 
