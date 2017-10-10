@@ -15,8 +15,9 @@ import './styles/ProductWindow.css';
 class MainWindow extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { id: this.props.match.params.id }
+        this.state = {upc: this.props.match.params.itemId }
     }
+
 
     // componentDidMount() {
     //     if(this.props.match.params.itemId) {
@@ -29,11 +30,14 @@ class MainWindow extends React.Component {
     // }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({ id: nextProps.id })
+        console.log('next props', nextProps);
+        this.setState({ upc: nextProps.upc })
+        console.log(this.state)
     }
 
     renderResults() {
-        // console.log('MAINWINDOW PROPS', this.props);            
+        console.log('MAINWINDOW PROPS', this.props);
+
 
 
 
@@ -54,16 +58,19 @@ class MainWindow extends React.Component {
         }
 
         if (this.props.activeItem === null) {
-
             // console.log('NULL ERROR');
             return (
                 <div className="product-window">
-                    <p>didnt work</p>
+                    <p>didnt work. null</p>
                 </div>
             )
         }
-        if (this.props.activeItem) {
-            const currentItem = this.props.activeItem;
+        // if (this.props.itemData.items) {
+        if (this.props.itemData) {
+            const currentItem = this.props.itemData.items[0];
+            console.log('current item is....', currentItem)
+            console.log(this.state, 'UPC IN STATE')
+            
             const storeData = currentItem.stores.map((item, index) =>
                 <tr key={index}>
                     <th>Store</th>
@@ -75,20 +82,20 @@ class MainWindow extends React.Component {
             return (
                 <div className="product-window">
                     <div className="item-overview">
-                        <h2>{currentItem.itemName}</h2>
+                        <h2>{currentItem.title}</h2>
                         <p>Added by {currentItem.creator}</p>
-                        <img src={currentItem.image} />
+                        <img src={currentItem.images[0]}></img>
                     </div>
                     <div className="item-info">
                         <table>
                             <tr>
                                 <th>Price</th>
-                                <th>${currentItem.price}</th>
+                                <th>${currentItem.currency}</th>
                                 <th></th>
                             </tr>
                             <tr>
                                 <th>UPC Code</th>
-                                <th>{currentItem.upcCode}</th>
+                                <th>{currentItem.upc}</th>
                                 <th></th>
                             </tr>
                             {storeData}
@@ -104,13 +111,12 @@ class MainWindow extends React.Component {
                 </div>
             )
         }
-
     }
 
 
     render() {
         return (
-            <div className="user-data">
+            <div className="main-window">
                 <div className="user-sessions-container">
                     {this.renderResults()}
                     {/* <p>Hello</p> */}

@@ -4,11 +4,13 @@ const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const app = express();
-
+const bodyParser = require('body-parser');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
 // require("./Routes/authRoutes")(app);
 const { User } = require('./models/User');
+const { Item } = require('./models/Item');
+const { ItemError } = require('./models/Item-Error');
 
 // Mongoose's default connection logic is deprecated as of 4.11.0.
 var promise = mongoose.connect(keys.MONGO_URI, {
@@ -20,15 +22,28 @@ const session = require('express-session');
 const database = {
 };
 
-// let secret = {
-//   CLIENT_ID: process.env.CLIENT_ID,
-//   CLIENT_SECRET: process.env.SECRET
-// }
+let secret = {
+  CLIENT_ID: process.env.CLIENT_ID,
+  CLIENT_SECRET: process.env.SECRET,
+  MONGO_URI: process.env.MONGO_URI
+}
 
-// if(process.env.NODE_ENV != 'production') {
-//   keys = require('./secret');
-// }
+if(process.env.NODE_ENV != 'production') {
+  secret = require('./config/keys');
+}
 
+
+// CORS
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept'
+    );
+    next();
+});
+
+app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session())
 
@@ -58,12 +73,12 @@ passport.use(
         User
         .findOne({ googleId: profile.id })
         .then(user => {
-            console.log('-----A')
+            // console.log('-----A')
           if (user) {
             user.accessToken = accessToken;
             return user.save();
           } else {
-              console.log('------B')
+            //   console.log('------B')
             User
               .create({
                 // displayName: profile.givenName,
@@ -149,12 +164,6 @@ app.get('/api/me',
     })
 );
 
-app.get("/api/current_user", (req, res) => {
-    res.send(req.user);
-    console.log('req.user: ', req.user);
-
-});
-
 
 app.get('/account', ensureAuthenticated, function(req, res){
     User.findById(req.session.passport.user, function(err, user) {
@@ -165,6 +174,57 @@ app.get('/account', ensureAuthenticated, function(req, res){
       }
     });
   });
+
+
+
+//----Item Endpoints------------------------------------
+
+// Get All Items
+app.get('/api/items', (req, res) => {
+    Item
+      .find()
+      .then(items => {
+        console.log('title: ', items.title);
+        res.json({
+            items: items.map(item => item)
+        })
+          .catch(err => {
+            console.error(err);
+            res.status(500).json({message: 'Internal server error'});
+          });
+      });
+  });
+  
+  app.post('/api/item', (req, res) => {
+      console.log('inside endpoint here', req.body)
+    Item
+      .create({
+        title: req.body.title,
+        currency: req.body.currency,
+        upc: req.body.upc,
+        creator: req.body.creator,
+        stores: req.body.stores,
+        user_data: req.body.user_data,
+        images: req.body.images
+      })
+      .then(()=> {
+        res.status(201).json(req.body);
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error' });
+      });
+  });
+
+  app.delete('/api/items/:id', (req, res) => {
+      console.log('REQ', req.body)
+      console.log('RES', res.body)
+    Item.delete(req.params.id);
+    console.log(`Deleted item \`${req.params.id}\``);
+    res.status(204).end();
+  });
+
+
 
 
 // Serve the built client

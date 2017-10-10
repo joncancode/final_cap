@@ -1,6 +1,6 @@
 .wish-list {
     background-color: #32C3C3;
-    max-width: 10%;
+    flex:1;
 }
 
 .wish-list ul {
@@ -10,6 +10,7 @@
 
 .wish-list li {
     text-align: left;
+    float: none;
 }
 
 .add-item-modal {

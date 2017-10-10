@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as Cookies from 'js-cookie';
 import { BrowserHistory, BrowserRouter, Link, Router, Route } from 'react-router-dom';
 
 import { fetchItems } from '../actions/';
-
 
 import MainWindow from './MainWindow';
 
@@ -13,8 +13,8 @@ import './styles/WishList.css';
 
 class WishList extends React.Component {
     componentDidMount() {
-
-        this.props.dispatch(fetchItems());
+        const accessToken = Cookies.get('accessToken');
+        this.props.dispatch(fetchItems(accessToken));
     }
 
     //Add Item Modal 
@@ -51,17 +51,61 @@ class WishList extends React.Component {
         }
         else {
             return (
-
-                <li>nothing yet</li>
-
+                <p>not worked</p>
             )
         }
+    }
+
+    renderWishListItems() {
 
 
+        if (this.props.itemData) {
+            // console.log('ITEM DATA FROM RENDERIWISHLIST ITEMS', this.props.itemData.items)
+            //MAP FUNCTION
+            const itemResults = this.props.itemData.items.map((item, index) => (
+
+
+                <li key={index}>
+                    <Link to={`/Home/${item.upc}`}>
+                        {item.title}
+                    </Link>
+                </li>
+            ));
+            return (
+
+                <ul>
+                    {itemResults}
+                </ul>
+
+            )
+
+            //ALT HARDCODED SINGLEITEM
+
+            // const item = this.props.itemData.items[0];
+            // console.log('ITEM DATA FROM ALTERNATE', item)
+
+            // return (
+            //     <BrowserRouter history={BrowserHistory}>
+            //         <ul>
+            //             <li>
+            //                 <Link to={`/Home/${item.upc}`}>
+            //                     {item.title}
+            //                 </Link>
+            //             </li>
+            //         </ul>
+            //     </BrowserRouter>
+            // )
+        }
+        else {
+
+            return (
+                <p>no data</p>
+            )
+        }
     }
 
     render() {
-
+        // console.log('ITEM DATA PROPS', this.props)
 
         return (
             <div className="wish-list">
@@ -85,16 +129,23 @@ class WishList extends React.Component {
                         </div>
                     </Modal>
                 </div>
-                <BrowserRouter history={BrowserHistory}>
-                <ul>
-                    {this.renderWishListItems()}
-                    {/* <li>hi</li> */}
-                </ul>
-                </BrowserRouter>
+                <div>
+                    <ul>
+                        {this.renderWishListItems()}
+                        {/* {this.props.itemData.items.map((item, index) => (
+                            <li>
+                                <Link to={`/Home/${item.upc}`}>
+                                    {item.title}
+                                </Link>
+                            </li>))} */}
+                    </ul>
+                </div>
             </div>
         )
     }
 }
+
+
 
 const mapStateToProps = function (state) {
     return {

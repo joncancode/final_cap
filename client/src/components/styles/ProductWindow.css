@@ -1,10 +1,10 @@
-.product-window {
+/* .product-window {
     display: flex;
 }
 
 .product-window > div {
     flex: 1;
-}
+} */
 
 .item-overview > p, h2 {
     padding-left: 10px;

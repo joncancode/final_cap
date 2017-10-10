@@ -66,18 +66,24 @@ class App extends React.Component {
         return(
             <BrowserRouter history={BrowserHistory}>
                 <div className="app">
-
                     < Header currentUser={this.state.currentUser}/>
                         <div className="main-container">
-                            < WishList />
-                                <div>
+                            
+                                
                                     <Route exact path="/LoginPage" component={LoginPage} />
-                                    <Route exact path="/items/" component={MainWindow}/>
-                                    <Route exact path="/items/:itemId" component={MainWindow}/>
-                                    {/* <Route exact path="/items/" component={Test}/> */}
+
+                                    <Route exact path="/Home/" component={WishList} /> 
+                                    <Route exact path="/Home/:itemId" component={WishList}/>
+
                                     <Route exact path="/Home/" component={MainWindow}/>
-                                </div>
-                                <ChatWindow/>
+                                    <Route exact path="/Home/:itemId" component={MainWindow}/>
+
+                                    <Route exact path="/Home/" component={ChatWindow}/>
+                                    <Route exact path="/Home/:itemId" component={ChatWindow}/>
+
+                                    {/* <Route exact path="/Home/items/" component={MainWindow}/> */}
+                                
+                               
 
                         </div>
                 </div>
@@ -88,4 +94,7 @@ class App extends React.Component {
 
 // export default App;
 // actions are assign to the app component as props
+
+
 export default connect(null, actions)(App);
+

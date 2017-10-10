@@ -5,14 +5,13 @@ var io = require('socket.io')(http);
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/index.html');
-  console.log(__dirname + " dir name");
+  console.log(__dirname + ' dir name');
 });
 
 // get the client to connect to the server with socket.io, responds in the console
 io.on('connection', function(socket) {
   console.log('Client is connected on socket.js');
 
-  
   socket.on('new user', function(data, callback) {
     if (usernames.indexOf(data) !== -1) {
       callback(false);
@@ -32,14 +31,15 @@ io.on('connection', function(socket) {
   // Send message
   socket.on('send message', function(data) {
     io.emit('send message', data);
-    console.log('message from handleSubmit', data)
+    console.log('server-side message from handleSubmit', data);
+    
   });
 
-    // A user is typing
-    socket.on('user is message', function(data) {
-      io.emit('user is message', data);
-      console.log('user is typing from socker server side', data)
-    });
+  // A user is typing
+  socket.on('user is typing', function(data) {
+    socket.broadcast.emit('user is typing', data);
+    console.log('server-side message from user is typing', data);
+  });
 
   // Disconnect event
   socket.on('disconnect', function(data) {
