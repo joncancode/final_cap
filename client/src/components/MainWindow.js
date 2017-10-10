@@ -17,7 +17,7 @@ class MainWindow extends React.Component {
         super(props);
         this.state = {upc: this.props.match.params.itemId }
 
-        console.log('THIS PROPS', this.props);
+        console.log('THIS CONSTRUCTOR PROPS', this.props);
     }
 
 
@@ -33,13 +33,13 @@ class MainWindow extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         console.log('next props', nextProps);
-        this.setState({ upc: nextProps.upc })
+        this.setState({ upc: nextProps.match.params.itemId })
         console.log('COMPONENT WILL RECIEVE PROPS STATE',this.state)
     }
 
-    renderResults() {
+    renderResults(state) {
         console.log('MAINWINDOW PROPS', this.props);
-
+        console.log(state, 'UPC IN STATE ON RENDER RESULTS')
 
 
 
@@ -117,10 +117,13 @@ class MainWindow extends React.Component {
 
 
     render() {
+        const renderState = this.state;
+        
+        console.log('RENDER STATE', renderState);
         return (
             <div className="main-window">
                 <div className="user-sessions-container">
-                    {this.renderResults()}
+                    {this.renderResults(renderState)}
                     {/* <p>Hello</p> */}
                 </div>
             </div>
