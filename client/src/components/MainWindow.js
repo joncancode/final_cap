@@ -15,7 +15,7 @@ import './styles/ProductWindow.css';
 class MainWindow extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { id: this.props.match.params.id }
+        this.state = {upc: this.props.match.params.itemId }
     }
 
 
@@ -31,12 +31,13 @@ class MainWindow extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         console.log('next props', nextProps);
-        this.setState({ id: nextProps.id })
-        // console.log(this.state)
+        this.setState({ upc: nextProps.upc })
+        console.log(this.state)
     }
 
     renderResults() {
-        console.log('MAINWINDOW PROPS', this.props);            
+        console.log('MAINWINDOW PROPS', this.props);
+
 
 
 
@@ -55,23 +56,21 @@ class MainWindow extends React.Component {
                 </strong>
             );
         }
-        if (this.props.activeItem === null) {
 
-            console.log('NULL ERROR');
+        if (this.props.activeItem === null) {
+            // console.log('NULL ERROR');
             return (
                 <div className="product-window">
                     <p>didnt work. null</p>
                 </div>
             )
         }
-        if (this.props.itemData.items) {
+        // if (this.props.itemData.items) {
+        if (this.props.itemData) {
             const currentItem = this.props.itemData.items[0];
             console.log('current item is....', currentItem)
-            // return (
-            //     <div>
-            //         <p>nice</p>
-            //         </div>
-            // )
+            console.log(this.state, 'UPC IN STATE')
+            
             const storeData = currentItem.stores.map((item, index) =>
                 <tr key={index}>
                     <th>Store</th>
@@ -85,7 +84,7 @@ class MainWindow extends React.Component {
                     <div className="item-overview">
                         <h2>{currentItem.title}</h2>
                         <p>Added by {currentItem.creator}</p>
-                        <p>--add image later--</p>
+                        <img src={currentItem.images[0]}></img>
                     </div>
                     <div className="item-info">
                         <table>

@@ -29,41 +29,41 @@ class WishList extends React.Component {
 
 
         if (this.props.itemData) {
-            // console.log('ITEM DATA FROM RENDERIWHSLIST ITEMS', this.props.itemData.items)
-            // //MAP FUNCTION
-            // const itemResults = this.props.itemData.items((item, index) =>
+            // console.log('ITEM DATA FROM RENDERIWISHLIST ITEMS', this.props.itemData.items)
+            //MAP FUNCTION
+            const itemResults = this.props.itemData.items.map((item, index) => (
 
 
-            //     <li>
-            // {/* <Link to={`/Home/${item.upc}`}> */}
-            //         {item.title}
-            //         {/* </Link> */}
-            //     </li>
-            // );
-            // return (
-            //     <BrowserRouter history={BrowserHistory}>
-            //         <ul>
-            //             {itemResults}
-            //         </ul>
-            //     </BrowserRouter>
-            // )
+                <li key={index}>
+                    <Link to={`/Home/${item.upc}`}>
+                        {item.title}
+                    </Link>
+                </li>
+            ));
+            return (
+
+                <ul>
+                    {itemResults}
+                </ul>
+
+            )
 
             //ALT HARDCODED SINGLEITEM
 
-            const item = this.props.itemData.items[0];
-            console.log('ITEM DATA FROM ALTERNATE', item)
+            // const item = this.props.itemData.items[0];
+            // console.log('ITEM DATA FROM ALTERNATE', item)
 
-            return (
-                <BrowserRouter history={BrowserHistory}>
-                    <ul>
-                        <li>
-                            <Link to={`/Home/${item.upc}`}>
-                                {item.title}
-                            </Link>
-                        </li>
-                    </ul>
-                </BrowserRouter>
-            )
+            // return (
+            //     <BrowserRouter history={BrowserHistory}>
+            //         <ul>
+            //             <li>
+            //                 <Link to={`/Home/${item.upc}`}>
+            //                     {item.title}
+            //                 </Link>
+            //             </li>
+            //         </ul>
+            //     </BrowserRouter>
+            // )
         }
         else {
 
@@ -99,12 +99,22 @@ class WishList extends React.Component {
                     </Modal>
                 </div>
                 <div>
-                    {this.renderWishListItems()}
+                    <ul>
+                        {this.renderWishListItems()}
+                        {/* {this.props.itemData.items.map((item, index) => (
+                            <li>
+                                <Link to={`/Home/${item.upc}`}>
+                                    {item.title}
+                                </Link>
+                            </li>))} */}
+                    </ul>
                 </div>
             </div>
         )
     }
 }
+
+
 
 const mapStateToProps = function (state) {
     return {

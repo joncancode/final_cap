@@ -80,7 +80,7 @@ export const fetchItems = accessToken => dispatch => {
         })
         .then(items => {
 
-            console.log('THIS IS ITEMS RETURNING FROM GET ITEM SUCCESS', items);
+            // console.log('THIS IS ITEMS RETURNING FROM GET ITEM SUCCESS', items);
             return dispatch(getItemsSuccess(items));
         })
         .catch(err => {
