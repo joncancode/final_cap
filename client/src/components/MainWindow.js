@@ -16,6 +16,8 @@ class MainWindow extends React.Component {
     constructor(props) {
         super(props);
         this.state = {upc: this.props.match.params.itemId }
+
+        console.log('THIS PROPS', this.props);
     }
 
 
@@ -32,7 +34,7 @@ class MainWindow extends React.Component {
     componentWillReceiveProps(nextProps) {
         console.log('next props', nextProps);
         this.setState({ upc: nextProps.upc })
-        console.log(this.state)
+        console.log('COMPONENT WILL RECIEVE PROPS STATE',this.state)
     }
 
     renderResults() {
@@ -57,7 +59,7 @@ class MainWindow extends React.Component {
             );
         }
 
-        if (this.props.activeItem === null) {
+        if (this.props.itemData === null) {
             // console.log('NULL ERROR');
             return (
                 <div className="product-window">
