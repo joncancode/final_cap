@@ -22,14 +22,15 @@ const session = require('express-session');
 const database = {
 };
 
-// let secret = {
-//   CLIENT_ID: process.env.CLIENT_ID,
-//   CLIENT_SECRET: process.env.SECRET
-// }
+let secret = {
+  CLIENT_ID: process.env.CLIENT_ID,
+  CLIENT_SECRET: process.env.SECRET,
+  MONGO_URI: process.env.MONGO_URI
+}
 
-// if(process.env.NODE_ENV != 'production') {
-//   keys = require('./secret');
-// }
+if(process.env.NODE_ENV != 'production') {
+  secret = require('./config/keys');
+}
 
 
 // CORS
