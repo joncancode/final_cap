@@ -35,10 +35,6 @@ export const mainReducer = (state = initialState, action) => {
                 loading: false
             });
         }
-<<<<<<< HEAD
-        case 'FETCH_USER': {            
-            console.log('-------------------->hello')
-=======
 
     //API REQUESTS
         case 'GET_API_REQUEST': {
@@ -64,7 +60,6 @@ export const mainReducer = (state = initialState, action) => {
         }
 
         case 'FETCH_USER': {
->>>>>>> 28befa72bf5f044cc5008d80ee4347745ce15ed9
             console.log('----------->action: ', action.payload);
             return action.payload || false; 
         }
