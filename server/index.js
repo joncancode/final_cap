@@ -69,17 +69,6 @@ passport.use(
     // profile contains google user id, the unique id token need to save to user record
     (accessToken, refreshToken, profile, cb) => {
 
-
-        // Without Database, logout toggle is functional
-        // const user = database[accessToken] = {
-        //     googleId: profile.id,
-        //     accessToken: accessToken
-        // };
-        // console.log('without db is running here!')
-        // return cb(null, user);
-
-
-
     // use mongoose model to create new user and save to database
         User
         .findOne({ googleId: profile.id })
@@ -105,12 +94,12 @@ passport.use(
           }
         });
 
-      const user = {
-        googleId: profile.id,
-        accessToken: accessToken,
-        givenName: profile.name.givenName
-      };
-    //   console.log('user is :', user)
+        const user = database[accessToken] = {
+            googleId: profile.id,
+            accessToken: accessToken,
+            givenName: profile.name.givenName
+        };
+
       return cb(null, user);
 
     }
