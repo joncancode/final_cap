@@ -69,6 +69,17 @@ passport.use(
     // profile contains google user id, the unique id token need to save to user record
     (accessToken, refreshToken, profile, cb) => {
 
+
+        // Without Database, logout toggle is functional
+        // const user = database[accessToken] = {
+        //     googleId: profile.id,
+        //     accessToken: accessToken
+        // };
+        // console.log('without db is running here!')
+        // return cb(null, user);
+
+
+
     // use mongoose model to create new user and save to database
         User
         .findOne({ googleId: profile.id })
@@ -104,6 +115,8 @@ passport.use(
 
     }
 ));
+
+
 // passport.use(BearerStrategy)
 
 passport.use(
@@ -161,30 +174,30 @@ app.get('/api/auth/logout', (req, res) => {
     res.redirect('/LoginPage');
 });
 
-// app.get('/api/me',
-//     passport.authenticate('bearer', {session: false}),
-//     (req, res) => res.json({
-//         googleId: req.user.googleId,
-//         displayName: req.user.displayName
-//     })
-// );
-app.get(
-    '/api/me',
-    passport.authenticate('bearer', { session: false }),
-    (req, res) => {
-      User.findOne({ accessToken: req.user.accessToken })
-        .then(user => {
-          res.status(200).send(user).json({
-                    googleId: req.user.googleId,
-                    displayName: req.user.displayName
-                })
-        })
-        .catch(err => {
-          console.err(err);
-          res.status(204).send(err);
-        });
-    }
-  );
+app.get('/api/me',
+    passport.authenticate('bearer', {session: false}),
+    (req, res) => res.json({
+        googleId: req.user.googleId,
+        displayName: req.user.displayName
+    })
+);
+// app.get(
+//     '/api/me',
+//     passport.authenticate('bearer', { session: false }),
+//     (req, res) => {
+//       User.findOne({ accessToken: req.user.accessToken })
+//         .then(user => {
+//           res.status(200).send(user).json({
+//                     googleId: req.user.googleId,
+//                     displayName: req.user.displayName
+//                 })
+//         })
+//         .catch(err => {
+//           console.err(err);
+//           res.status(204).send(err);
+//         });
+//     }
+//   );
 
 // app.get('/account', ensureAuthenticated, function(req, res){
 //     User.findById(req.session.passport.user, function(err, user) {
@@ -257,11 +270,6 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
     const index = path.resolve(__dirname, '../client/build', 'index.html');
     res.sendFile(index);
 });
-
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) { return next(); }
-    res.redirect('/');
-  }
 
 
 
