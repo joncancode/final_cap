@@ -1,4 +1,5 @@
 
+
 //--FetchUser------------------------------
 
 import axios from "axios";
@@ -66,12 +67,61 @@ export const getItemsError = error => ({
 });
 
 export const fetchItems = accessToken => dispatch => {
+    
     dispatch(getItemsRequest());
     return fetch('/api/items/', {
         headers: {
             Authorization: `Bearer ${accessToken}`
         }
     })
+    .then(res => { 
+        if (!res.ok) {
+            return Promise.reject(res.statusText);
+        }
+        return res.json();
+    })
+    .then(items => {
+        
+            // console.log('THIS IS ITEMS RETURNING FROM GET ITEM SUCCESS', items);
+            return dispatch(getItemsSuccess(items));
+        })
+        .catch(err => {
+            dispatch(getItemsError(err));
+        });
+};
+
+
+//API REQUEST
+export const GET_API_REQUEST = 'GET_API_REQUEST';
+export const getApiRequest = () => ({
+    type: GET_API_REQUEST
+});
+
+export const GET_API_SUCCESS = 'GET_API_SUCCESS';
+export const getApiSuccess = items => ({
+    type: GET_API_SUCCESS,
+    items
+});
+
+export const GET_API_ERROR = 'GET_API_ERROR';
+export const getApiError = error => ({
+    type: GET_API_ERROR,
+    error
+});
+
+export const fetchApiItems = accessToken => dispatch => {
+    // let query = 099923418528;
+    console.log('FETCH ITEMS')
+    // fetch(`https://api.upcitemdb.com/prod/trial/lookup?upc=099923418528`)
+    dispatch(getApiRequest());
+    return fetch('https://api.upcitemdb.com/prod/trial/search?s=apple&match_mode=0&type=product'
+    , 
+    {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    }
+    )
     .then(res => { 
             if (!res.ok) {
                 return Promise.reject(res.statusText);
@@ -80,10 +130,12 @@ export const fetchItems = accessToken => dispatch => {
         })
         .then(items => {
 
+            
+        console.log('SUCCESS FROM GETAPISUCCESS', items);            
             // console.log('THIS IS ITEMS RETURNING FROM GET ITEM SUCCESS', items);
-            return dispatch(getItemsSuccess(items));
+            return dispatch(getApiSuccess(items));
         })
         .catch(err => {
-            dispatch(getItemsError(err));
+            dispatch(getApiError(err));
         });
 };

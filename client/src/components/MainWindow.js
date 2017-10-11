@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { render } from 'react-dom';
 // import { Router, Route, IndexRoute, browserHistory } from 'react-router';
@@ -15,29 +15,28 @@ import './styles/ProductWindow.css';
 class MainWindow extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {upc: this.props.match.params.itemId }
+        this.state = {upc: this.props.match.params.itemId,
+        currentItem: 'cookie' }
     }
 
+    //filter here by id with the data thats being passed in
+    componentDidMount() {
+        //get itemData props
+        console.log('Component did mount PROPS', this.props)
 
-    // componentDidMount() {
-    //     if(this.props.match.params.itemId) {
-    //         this.props.dispatch(fetchItems(this.props.match.params.itemId));
-    //     } else {
-    //         console.log(this.props, 'THESE ARE THE PROPS FROM ELSE IN COMPDIDMOUNT')
-    //         // this.props.dispatch(fetchItems("1"));
-    //         // alert('NOPE')
-    //     }
-    // }
+        //filter
+        console.log(this.state)
+        
+        //set state to filter
+    }
 
     componentWillReceiveProps(nextProps) {
-        console.log('next props', nextProps);
-        this.setState({ upc: nextProps.upc })
-        console.log(this.state)
+        this.setState({ upc: nextProps.match.params.itemId})
     }
 
-    renderResults() {
-        console.log('MAINWINDOW PROPS', this.props);
-
+    renderResults(state) {
+        // console.log('MAINWINDOW PROPS', this.props);
+        
 
 
 
@@ -45,7 +44,7 @@ class MainWindow extends React.Component {
         if (this.props.loading) {
             // return <Spinner spinnerName="circle" noFadeIn />;
 
-            console.log('LOADING');
+            // console.log('LOADING');
             return <div>loading items...</div>;
         }
 
@@ -57,7 +56,7 @@ class MainWindow extends React.Component {
             );
         }
 
-        if (this.props.activeItem === null) {
+        if (this.props.itemData === null) {
             // console.log('NULL ERROR');
             return (
                 <div className="product-window">
@@ -66,10 +65,10 @@ class MainWindow extends React.Component {
             )
         }
         // if (this.props.itemData.items) {
-        if (this.props.itemData) {
+        if (this.props.itemData && this.state.upc) {
             const currentItem = this.props.itemData.items[0];
-            console.log('current item is....', currentItem)
-            console.log(this.state, 'UPC IN STATE')
+            // console.log('current item is....', currentItem)
+            // console.log(this.state, 'UPC IN STATE')
             
             const storeData = currentItem.stores.map((item, index) =>
                 <tr key={index}>
@@ -115,10 +114,16 @@ class MainWindow extends React.Component {
 
 
     render() {
+        const renderState = this.state;
+        
+        // console.log('RENDER STATE', renderState);
         return (
             <div className="main-window">
+                <Link to={`/Home/`}>
+                    <span className="back-button">go back</span>
+                </Link>
                 <div className="user-sessions-container">
-                    {this.renderResults()}
+                    {this.renderResults(renderState)}
                     {/* <p>Hello</p> */}
                 </div>
             </div>

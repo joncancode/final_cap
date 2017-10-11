@@ -7,8 +7,10 @@ export default class LookUp extends React.Component {
     }
 
     componentDidMount() {
-        let query;
+        let query = 099923418528;
+        
         fetch(`https://api.upcitemdb.com/prod/trial/lookup?upc={query}}`)
+
         .then(result=>result.json())
         .then(items=>this.setState({items}))
     }

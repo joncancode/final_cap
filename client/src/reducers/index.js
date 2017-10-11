@@ -7,35 +7,13 @@ const initialState = {
     loading: false,
     error: null,
     activeItem: null,
-    itemData: null,
-    // [
-    //     {
-    //         "itemName": 'testItem',
-    //         "creator": 'testGuy',
-    //         "price": '100',
-    //         "upcCode": '1',
-    //         "image": "http://via.placeholder.com/301x150",
-    //         "stores": [
-    //             {
-    //                 "name": "Target",
-    //                 "inventory": "not in stock"
-    //             },
-    //             {
-    //                 "name": "Apple store",
-    //                 "inventory": "last seen by Ralph"
-    //             },
-    //             {
-    //                 "name": "Best Buy",
-    //                 "inventory": "last seen by Hernicio"
-    //             }
-    //         ]
-    //     }
-    // ]
+    itemData: null
 };
 
 export const mainReducer = (state = initialState, action) => {
 
     switch(action.type) {
+    //GET USER SUBMITTED ITEMS
         case 'GET_ITEMS_REQUEST': {
             return Object.assign({}, state, {
                 loading: true,
@@ -43,9 +21,10 @@ export const mainReducer = (state = initialState, action) => {
               });
         }
         case 'GET_ITEMS_SUCCESS': {
+            
             return Object.assign({}, state, {
                 itemData: action.items, 
-                activeItem: action.result,
+                // activeItem: action.result,
                 loading: false,
                 error: null
             });
@@ -56,6 +35,30 @@ export const mainReducer = (state = initialState, action) => {
                 loading: false
             });
         }
+
+    //API REQUESTS
+        case 'GET_API_REQUEST': {
+            return Object.assign({}, state, {
+                loading: true,
+                error: null
+              });
+        }
+        case 'GET_API_SUCCESS': {
+            // console.log('LOLOLOL')
+            return Object.assign({}, state, {
+                apiData: action.items, 
+                // activeItem: action.result,
+                loading: false,
+                error: null
+            });
+        }
+        case 'GET_API_ERROR': {
+            return Object.assign({}, state, {
+                error: action.error,
+                loading: false
+            });
+        }
+
         case 'FETCH_USER': {
             console.log('----------->action: ', action.payload);
             return action.payload || false; // need to update state here, object.assign or ...spread, return {...state, user:true}
