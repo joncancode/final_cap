@@ -13,7 +13,8 @@ class ChatWindow extends React.Component {
       user: '',
       message: '',
       msgArr: [],
-      socket: socket
+      socket: socket,
+      isTyping: '',
     };
   }
 
@@ -21,7 +22,7 @@ class ChatWindow extends React.Component {
     socket.on(`send message`, data => {
       this.setState({
         message: '',
-        msgArr: msgArr.push(data)
+        msgArr: msgArr.push(data),
       });
       console.log('the array', msgArr);
     });
@@ -29,12 +30,16 @@ class ChatWindow extends React.Component {
 
   onChangeValue = e => {
     this.setState({
-      message: e.target.value
+      message: e.target.value,
+      isTyping: 'A user is typing...'
     });
     console.log(e.target.value);
+    // socket.emit('user is typing', this.state.isTyping)
+    this.userTyping(this.state.isTyping)
+  };
 
-    this.isTyping = 'A user is typing...';
-    socket.emit('user is typing', this.isTyping)
+  userTyping = isTyping => {
+    socket.emit(`user is typing`, this.state.isTyping);
   };
 
   sendMessage = msgArr => {
@@ -44,16 +49,15 @@ class ChatWindow extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.isTyping = ''
     var message = this.state.message;
     this.sendMessage(message);
     this.setState({
-      message: [message]
+      message: [message],
+      isTyping: ''
     });
   };
 
   render() {
-    // const arr = ['one', 'two', 'three']
     return (
       <div className="chat-window">
         <div id="mainWrapper">
@@ -62,12 +66,12 @@ class ChatWindow extends React.Component {
             <div className="chatWindow">
             <div className="isTyping">
 
-                <p>{this.isTyping}</p>
+                <p>{this.state.isTyping}</p>
                 
                 </div>
               {msgArr.map(function(item) {
                 return (
-                  <ul className="listOfMessages">
+                  <ul className="listOfMessages" key="msgArr" >
                     <li key={item.key}>{item}</li>
                   </ul>
                 );

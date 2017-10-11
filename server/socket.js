@@ -9,8 +9,12 @@ app.get('/', function(req, res) {
 });
 
 // get the client to connect to the server with socket.io, responds in the console
+var clients = 0;
 io.on('connection', function(socket) {
-  console.log('Client is connected on socket.js');
+  ++clients;
+  io.sockets.emit('users count', clients); 
+  
+  console.log('Clients connected on socket.js: ', clients)
 
   socket.on('new user', function(data, callback) {
     if (usernames.indexOf(data) !== -1) {
@@ -32,7 +36,6 @@ io.on('connection', function(socket) {
   socket.on('send message', function(data) {
     io.emit('send message', data);
     console.log('server-side message from handleSubmit', data);
-    
   });
 
   // A user is typing
@@ -44,6 +47,8 @@ io.on('connection', function(socket) {
   // Disconnect event
   socket.on('disconnect', function(data) {
     if (!socket.username) {
+      --clients;
+      console.log('Clients remaining on socket.js: ', clients)
       return;
     }
     usernames.splice(usernames.indexOf(socket.username), 1);
