@@ -14,26 +14,23 @@ import './styles/ProductWindow.css';
 
 class MainWindow extends React.Component {
     constructor(props) {
+        //uses params from WishList routing to select current item by upc code
         super(props);
         this.state = {upc: this.props.match.params.itemId,
-        currentItem: 'cookie' }
+        currentItem: undefined }
     }
 
-    //filter here by id with the data thats being passed in
-    componentDidMount() {
-        //get itemData props
-        console.log('Component did mount PROPS', this.props)
-
-        //filter
-        console.log(this.state)
-        
-        //set state to filter
-    }
-
+    
+    
     componentWillReceiveProps(nextProps) {
+        //updates upc in local state on new route
         this.setState({ upc: nextProps.match.params.itemId})
-    }
 
+        //sets currentItem by filtering upc code from local state through itemData
+        const filteredItem = nextProps.itemData.items.filter( x => x.upc == this.props.match.params.itemId)
+        this.setState({currentItem: filteredItem})
+    }
+    
     renderResults(state) {
         // console.log('MAINWINDOW PROPS', this.props);
         
@@ -56,7 +53,7 @@ class MainWindow extends React.Component {
             );
         }
 
-        if (this.props.itemData === null) {
+        if (this.state.currentItem === null) {
             // console.log('NULL ERROR');
             return (
                 <div className="product-window">
@@ -65,9 +62,11 @@ class MainWindow extends React.Component {
             )
         }
         // if (this.props.itemData.items) {
-        if (this.props.itemData && this.state.upc) {
-            const currentItem = this.props.itemData.items[0];
-            // console.log('current item is....', currentItem)
+        if (this.state.currentItem && this.state.upc) {
+            const currentItem = this.state.currentItem[0];
+            // const currentItem = this.props.itemData.items[0];
+            console.log(this.state, 'STATE')
+            console.log('current item is....', currentItem)
             // console.log(this.state, 'UPC IN STATE')
             
             const storeData = currentItem.stores.map((item, index) =>
@@ -83,7 +82,7 @@ class MainWindow extends React.Component {
                     <div className="item-overview">
                         <h2>{currentItem.title}</h2>
                         <p>Added by {currentItem.creator}</p>
-                        <img src={currentItem.images[0]}></img>
+                        {<img src={currentItem.images[0]}></img>}
                     </div>
                     <div className="item-info">
                         <table>
