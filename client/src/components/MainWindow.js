@@ -14,35 +14,21 @@ import './styles/ProductWindow.css';
 
 class MainWindow extends React.Component {
     constructor(props) {
+        //uses params from WishList routing to select current item by upc code
         super(props);
         this.state = {upc: this.props.match.params.itemId,
         currentItem: undefined }
     }
 
-    componentDidMount() {
-        
-        
-    }
     
-    //filter here by id with the data thats being passed in
+    
     componentWillReceiveProps(nextProps) {
-        
+        //updates upc in local state on new route
         this.setState({ upc: nextProps.match.params.itemId})
-        
-    //get itemData props
-        // console.log('componentWillReceivePROPS', nextProps)
-        
-    //filter
-        // console.log(this.props.match.params.itemId, 'ITEM ID IN PARAMS')
 
-        // console.log('NEXT PROPS ITem DATA', nextProps.itemData.items);
+        //sets currentItem by filtering upc code from local state through itemData
         const filteredItem = nextProps.itemData.items.filter( x => x.upc == this.props.match.params.itemId)
-        // const currentItem = nextProps.itemData.items.filter( x => x.upc === this.props.match.params.itemId)
-        console.log(filteredItem, 'FILTERED ITEM');
-
-    //set state to filter
-    this.setState({currentItem: filteredItem})
-    console.log(this.state)
+        this.setState({currentItem: filteredItem})
     }
     
     renderResults(state) {
