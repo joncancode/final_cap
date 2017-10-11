@@ -64,7 +64,7 @@ class ChatWindow extends React.Component {
           <h2>Chatosphere</h2>
           <div id="chatWrapper">
             <div className="chatWindow">
-            <div className="isTyping">
+            <div className="userTyping" key={this.state.isTyping} >
 
                 <p>{this.state.isTyping}</p>
                 
