@@ -29,10 +29,11 @@ class App extends React.Component {
 
     componentDidMount() {
         // this.props.fetchUser(); // passing users to reducer
-        // console.log('xxxxx-xxx-xx-xx-xx-xx-xx---xx', this.props)
+        console.log('App Component this.props: ', this.props)
 
         // Job 4: Redux-ify all of the state and fetch calls to async actions.
         const accessToken = Cookies.get('accessToken');
+        console.log('App Component accessToken: ', accessToken)
         if (accessToken) {
             fetch('/api/me', {
                 headers: {
@@ -43,6 +44,7 @@ class App extends React.Component {
                     if (res.status === 401) {
                         // Unauthorized, clear the cookie and go to
                         // the login page
+                        console.log('componentDidMount, you are unauthorized')
                         Cookies.remove('accessToken');
                         return;
                     }
@@ -75,10 +77,10 @@ class App extends React.Component {
                                     <Route exact path="/Home/" component={WishList} /> 
                                     <Route exact path="/Home/:itemId" component={WishList}/>
 
-                                    <Route exact path="/Home/" component={MainWindow}/>
-                                    <Route exact path="/Home/:itemId" component={MainWindow}/>
+                                    {/* {<Route exact path="/Home/" component={MainWindow}/>}
+                                    <Route exact path="/Home/:itemId" component={MainWindow}/> */}
 
-                                    <Route exact path="/Home/" component={ChatWindow}/>
+                                    {<Route exact path="/Home/" component={ChatWindow}/>}
                                     <Route exact path="/Home/:itemId" component={ChatWindow}/>
 
                                     {/* <Route exact path="/Home/items/" component={MainWindow}/> */}
