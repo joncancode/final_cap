@@ -13,8 +13,7 @@ class ChatWindow extends React.Component {
       user: '',
       message: '',
       msgArr: [],
-      socket: socket,
-      isTyping: '',
+      socket: socket
     };
   }
 
@@ -22,7 +21,7 @@ class ChatWindow extends React.Component {
     socket.on(`send message`, data => {
       this.setState({
         message: '',
-        msgArr: msgArr.push(data),
+        msgArr: msgArr.push(data)
       });
       console.log('the array', msgArr);
     });
@@ -30,16 +29,12 @@ class ChatWindow extends React.Component {
 
   onChangeValue = e => {
     this.setState({
-      message: e.target.value,
-      isTyping: 'A user is typing...'
+      message: e.target.value
     });
     console.log(e.target.value);
-    // socket.emit('user is typing', this.state.isTyping)
-    this.userTyping(this.state.isTyping)
-  };
 
-  userTyping = isTyping => {
-    socket.emit(`user is typing`, this.state.isTyping);
+    this.isTyping = 'A user is typing...';
+    socket.emit('user is typing', this.isTyping)
   };
 
   sendMessage = msgArr => {
@@ -49,29 +44,30 @@ class ChatWindow extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    this.isTyping = ''
     var message = this.state.message;
     this.sendMessage(message);
     this.setState({
-      message: [message],
-      isTyping: ''
+      message: [message]
     });
   };
 
   render() {
+    // const arr = ['one', 'two', 'three']
     return (
       <div className="chat-window">
         <div id="mainWrapper">
           <h2>Chatosphere</h2>
           <div id="chatWrapper">
             <div className="chatWindow">
-            <div className="userTyping" key={this.state.isTyping} >
+            <div className="isTyping">
 
-                <p>{this.state.isTyping}</p>
+                <p>{this.isTyping}</p>
                 
                 </div>
               {msgArr.map(function(item) {
                 return (
-                  <ul className="listOfMessages" key="msgArr" >
+                  <ul className="listOfMessages">
                     <li key={item.key}>{item}</li>
                   </ul>
                 );
