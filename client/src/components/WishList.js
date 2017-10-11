@@ -29,14 +29,16 @@ class WishList extends React.Component {
     // }
     renderWishListItems() {
         if (this.props.itemData) {
-            console.log('YES THERE ARE ITEM DATA', this.props.itemData)
-            const wishListItems = this.props.itemData.map((item, index) =>
+            // console.log('YES THERE ARE ITEM DATA', this.props.itemData)
+            const itemResults = this.props.itemData.items;
+            const renderedItems = itemResults.map((item, index) => (
+           
                 <Link to={`/items/${item.upcCode}`}>
                     <li key={index}>
                         {item.itemName}
                     </li>
                 </Link>
-            );
+            ))
         }
         else {
             return (
