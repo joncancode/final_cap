@@ -21,7 +21,7 @@ export const mainReducer = (state = initialState, action) => {
               });
         }
         case 'GET_ITEMS_SUCCESS': {
-            // console.log('LOLOLOL')
+            
             return Object.assign({}, state, {
                 itemData: action.items, 
                 // activeItem: action.result,

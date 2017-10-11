@@ -14,8 +14,10 @@ import './styles/WishList.css';
 
 class WishList extends React.Component {
     componentDidMount() {
+        
         const accessToken = Cookies.get('accessToken');
         this.props.dispatch(fetchItems(accessToken));
+        
     }
 
     //Add Item Modal 
@@ -44,10 +46,11 @@ class WishList extends React.Component {
     }
 
     renderWishListItems() {
-
+        // console.log('ITEM PROPS', this.props);
         if (this.props.itemData) {
             // console.log('ITEM DATA FROM RENDERIWISHLIST ITEMS', this.props.itemData.items)
-            const itemResults = this.props.itemData.items.map((item, index) => (
+            const itemResults = this.props.itemData.items;
+            const renderedItems = itemResults.map((item, index) => (
                 <li key={index}>
                     <Link to={`/Home/${item.upc}`}>
                         {item.title}
@@ -56,7 +59,7 @@ class WishList extends React.Component {
             ));
             return (
                 <ul>
-                    {itemResults}
+                    {renderedItems}
                 </ul>
             )
         }

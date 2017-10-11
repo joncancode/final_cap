@@ -56,6 +56,9 @@ class App extends React.Component {
             );
         }
     }
+    passItemDataToParent = (data) => {
+        console.log(data, 'DATA IN CALLBACK')
+    }
 
     render() {
         // if (!this.state.currentUser) {
@@ -72,8 +75,9 @@ class App extends React.Component {
                                 
                                     <Route exact path="/LoginPage" component={LoginPage} />
 
-                                    <Route exact path="/Home/" component={WishList} /> 
-                                    <Route exact path="/Home/:itemId" component={WishList}/>
+                                    <Route exact path="/Home/" component={WishList} callbackFromParent={this.passItemDataToParent}/> 
+                                    <Route exact path="/Home/:itemId" component={WishList} callbackFromParent={this.passItemDataToParent}/> 
+        
 
                                     <Route exact path="/Home/" component={MainWindow}/>
                                     <Route exact path="/Home/:itemId" component={MainWindow}/>

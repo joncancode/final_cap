@@ -67,6 +67,7 @@ export const getItemsError = error => ({
 });
 
 export const fetchItems = accessToken => dispatch => {
+    
     dispatch(getItemsRequest());
     return fetch('/api/items/', {
         headers: {
@@ -74,13 +75,13 @@ export const fetchItems = accessToken => dispatch => {
         }
     })
     .then(res => { 
-            if (!res.ok) {
-                return Promise.reject(res.statusText);
-            }
-            return res.json();
-        })
-        .then(items => {
-
+        if (!res.ok) {
+            return Promise.reject(res.statusText);
+        }
+        return res.json();
+    })
+    .then(items => {
+        
             // console.log('THIS IS ITEMS RETURNING FROM GET ITEM SUCCESS', items);
             return dispatch(getItemsSuccess(items));
         })
@@ -89,8 +90,9 @@ export const fetchItems = accessToken => dispatch => {
         });
 };
 
+
 //API REQUEST
-export const GET_API_REQUEST = 'API';
+export const GET_API_REQUEST = 'GET_API_REQUEST';
 export const getApiRequest = () => ({
     type: GET_API_REQUEST
 });
