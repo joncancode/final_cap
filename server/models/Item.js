@@ -10,7 +10,8 @@ const itemSchema = new Schema({
   creator: { type: String, required: true },
   stores: [],
   user_data: [],
-  images: [String]
+  images: [String],
+  offers: {merchant: String, availability: String}
 });
 
 itemSchema.methods.apiRepr = function() {
@@ -24,6 +25,7 @@ itemSchema.methods.apiRepr = function() {
     user_data: this.user_data,
     images: this.images,
     id: this._id,
+    offers: this.offers
   };
 };
 

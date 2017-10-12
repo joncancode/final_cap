@@ -15,7 +15,8 @@
 
 .wish-list li {
     background-color: #364F6B;
-
+    
+    border-bottom: 1px solid black;
     text-align: left;
     float: none;
 }
