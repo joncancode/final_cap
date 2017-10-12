@@ -1,10 +1,12 @@
 .main-window {
-    color: violet;
+    background-color: #364F6B;
+    color: #F5F5F5;
     flex: 3;
     /* float: left;
     width: 40%; */
 }
 
 .back-button {
-    background-color: black;
+    background-color: #364F6B;
 }
+

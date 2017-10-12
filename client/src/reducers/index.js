@@ -1,5 +1,5 @@
 import actions from '../actions';
-import { FETCH_USER } from "../actions/types";
+// import { FETCH_USER } from "../actions/types";
 
 const initialState = {
     currentUser: null,
@@ -18,7 +18,7 @@ export const mainReducer = (state = initialState, action) => {
             return Object.assign({}, state, {
                 loading: true,
                 error: null
-              });
+            });
         }
         case 'GET_ITEMS_SUCCESS': {
             
@@ -61,7 +61,7 @@ export const mainReducer = (state = initialState, action) => {
 
         case 'FETCH_USER': {
             console.log('----------->action: ', action.payload);
-            return action.payload || false; // need to update state here, object.assign or ...spread, return {...state, user:true}
+            return action.payload || false; 
         }
         default : return state;
     } 

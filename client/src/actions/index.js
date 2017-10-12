@@ -23,15 +23,16 @@ function getCookie(cname) {
 
 // action creator with axios
 export const fetchUser = () => {
+    console.log('fetching user inside actions :/')
     return function (dispatch) {
         axios
             .get("/api/me", {
                 headers: {
-                    authorization: 'Bearer ' + getCookie('accessToken')
+                    Authorization: 'Bearer ' + getCookie('accessToken')
                 }
             })
             .then(res => {
-
+                console.log('res is: ', res)
                 return dispatch({ type: FETCH_USER, payload: res.data });
             })
     };

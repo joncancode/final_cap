@@ -48,12 +48,12 @@ app.use(passport.initialize());
 app.use(passport.session())
 
 passport.serializeUser((user, cb) => {
-    // console.log('serial user', user)
+    console.log('serial user', user)
     cb(null, user.id); // auto generated mongo id is the user.id, used to find user in cookie
 });
 
 passport.deserializeUser((id, cb) => {
-    // console.log({id})
+    console.log({id})
     User.findById(id)
     .then(user => {
         cb(null, user);
@@ -73,12 +73,13 @@ passport.use(
         User
         .findOne({ googleId: profile.id })
         .then(user => {
-            // console.log('-----A')
+            console.log('-----A: User exists, getting token')
           if (user) {
             user.accessToken = accessToken;
+            console.log('GoogleStrategy token------->',user.accessToken)
             return user.save();
           } else {
-            //   console.log('------B')
+              console.log('------B: User does not exist, creating user')
             User
               .create({
                 // displayName: profile.givenName,
@@ -93,22 +94,28 @@ passport.use(
           }
         });
 
-      const user = {
-        googleId: profile.id,
-        accessToken: accessToken,
-        givenName: profile.name.givenName
-      };
+        const user = database[accessToken] = {
+            googleId: profile.id,
+            accessToken: accessToken,
+            givenName: profile.name.givenName
+        };
+
       return cb(null, user);
 
     }
 ));
 
+
+// passport.use(BearerStrategy)
+
 passport.use(
     new BearerStrategy(
         (token, done) => {
+            console.log('BearerStrategy token------->', token)
             if (!(token in database)) {
                 return done(null, false);
             }
+            console.log('BearerStrategy, what is in the database: ', database)
             return done(null, database[token]);
         }
     )
@@ -123,7 +130,7 @@ app.get('/api/auth/google/callback',
         session: false
     }),
     (req, res, next) => {
-        // console.log('------>', req.user)
+        console.log('Callback token------------->', req.user.accessToken)
         res.cookie('accessToken', req.user.accessToken, {expires: 0});
         res.redirect('/Home');
         return req.user;
@@ -157,23 +164,39 @@ app.get('/api/auth/logout', (req, res) => {
 });
 
 app.get('/api/me',
-    passport.authenticate(['bearer' ],{session: false}),
+    passport.authenticate('bearer', {session: false}),
     (req, res) => res.json({
         googleId: req.user.googleId,
         displayName: req.user.displayName
     })
 );
+// app.get(
+//     '/api/me',
+//     passport.authenticate('bearer', { session: false }),
+//     (req, res) => {
+//       User.findOne({ accessToken: req.user.accessToken })
+//         .then(user => {
+//           res.status(200).send(user).json({
+//                     googleId: req.user.googleId,
+//                     displayName: req.user.displayName
+//                 })
+//         })
+//         .catch(err => {
+//           console.err(err);
+//           res.status(204).send(err);
+//         });
+//     }
+//   );
 
-
-app.get('/account', ensureAuthenticated, function(req, res){
-    User.findById(req.session.passport.user, function(err, user) {
-      if(err) {
-        console.log(err);  // handle errors
-      } else {
-        res.render('account', { user: user});
-      }
-    });
-  });
+// app.get('/account', ensureAuthenticated, function(req, res){
+//     User.findById(req.session.passport.user, function(err, user) {
+//       if(err) {
+//         console.log(err);  // handle errors
+//       } else {
+//         res.render('account', { user: user});
+//       }
+//     });
+// });
 
 
 
@@ -184,7 +207,7 @@ app.get('/api/items', (req, res) => {
     Item
       .find()
       .then(items => {
-        console.log('title: ', items.title);
+        // console.log('title: ', items.title);
         res.json({
             items: items.map(item => item)
         })
@@ -237,11 +260,6 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
     res.sendFile(index);
 });
 
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) { return next(); }
-    res.redirect('/');
-  }
-  
 
 
 //======================================================================//
