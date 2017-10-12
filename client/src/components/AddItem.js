@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { render } from 'react-dom';
 
-// import { fetchApiItems } from '../actions/';
+import { postItems } from '../actions/';
 
 import './styles/AddItem.css';
 
@@ -16,7 +16,17 @@ class AddItem extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { value: '' };
+        this.state = {
+            title: '',
+            currency: '',
+            upc: '',
+            creator: ''
+        };
+        // upc: req.body.upc,
+        // creator: req.body.creator,
+        // stores: req.body.stores,
+        // user_data: req.body.user_data,
+        // images: req.body.images
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,15 +37,20 @@ class AddItem extends React.Component {
     }
 
     handleChange(event) {
-        this.setState({ value: event.target.value });
+        this.setState({ title: event.target.value,
+        currency:event.target.value,
+        upc: event.target.value,
+        creator: event.target.value
+    });
     }
 
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
         event.preventDefault();
+        // const userInput = this.state;
+        console.log('inputted value----' + this.state);
+        this.props.dispatch(postItems(this.state));
+        //ACTION FOR SUBMIT
     }
-
-
 
     render() {
         return (
@@ -44,8 +59,20 @@ class AddItem extends React.Component {
 
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Test:
-                        <input type="text" value={this.state.value} onChange={this.handleChange} />
+                        Title:
+                        <input type="text" title={this.state.title} onChange={this.handleChange} />
+                    </label>
+                    <label>
+                        Currency:
+                        <input type="text" title={this.state.currency} onChange={this.handleChange} />
+                    </label>
+                    <label>
+                        UPC:
+                        <input type="text" title={this.state.upc} onChange={this.handleChange} />
+                    </label>
+                    <label>
+                        Creator:
+                        <input type="text" title={this.state.creator} onChange={this.handleChange} />
                     </label>
                     <button type="submit">Search</button>
                 </form>
