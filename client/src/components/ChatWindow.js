@@ -83,7 +83,7 @@ class ChatWindow extends React.Component {
                 value={this.state.message}
                 onChange={this.onChangeValue}
               />
-              <input type="submit" value="Submit" />
+              <input id="input-submit"type="submit" value="Submit" />
             </form>
           </div>
         </div>

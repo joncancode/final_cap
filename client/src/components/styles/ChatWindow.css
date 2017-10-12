@@ -1,5 +1,5 @@
 .chat-window {
-  background-color: skyblue;
+  background-color: #3FC1C9;
   padding-bottom: 50px;
   margin: 0px;
   flex: 2;
@@ -8,8 +8,8 @@
 }
 
 .chat-window > h2 {
-  background-color: blue;
-  color: white;
+  background-color: #FFF5F5;
+  color: #FFF5F5;
   margin: 0px;
 }
 
@@ -17,13 +17,14 @@
   min-height: 220px;
   max-height: 220px;
   margin-bottom: 10px;
-  background-color: whitesmoke;
+  background-color: #FFF5F5;
+  color: #364F6B;
   list-style-type: none;
   overflow: scroll;
 }
 
 .listOfMessages {
-    background-color: whitesmoke;
+    background-color: #FFF5F5;
     padding-right: 20px;
     line-height: 1.4;
 }
@@ -35,4 +36,37 @@
     margin-left: 25px;
     position:absolute;
     margin-top: 190px;
+    color: #364F6B;
+}
+
+input {
+  font-size: 20px;
+  margin: 7px;
+}
+
+input {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 12px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+
+input {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+
+#input-submit:hover {
+  background-color: #FC5185;
+  color: white;
 }
