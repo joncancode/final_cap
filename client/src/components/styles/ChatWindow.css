@@ -36,9 +36,6 @@
     margin-left: 25px;
     position:absolute;
     margin-top: 190px;
-<<<<<<< HEAD
-    color: darkblue;
-=======
     color: #364F6B;
 }
 
@@ -60,7 +57,6 @@ input {
   -webkit-transition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   cursor: pointer;
->>>>>>> f2c82daaf07d120476b9d4194304504858de3745
 }
 
 
