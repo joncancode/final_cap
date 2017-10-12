@@ -81,13 +81,13 @@ class App extends React.Component {
                                     <Route exact path="/Home/:itemId" component={WishList} callbackFromParent={this.passItemDataToParent}/> 
         
 
-                                    {/* {<Route exact path="/Home/" component={MainWindow}/>}
-                                    <Route exact path="/Home/:itemId" component={MainWindow}/> */}
+                                    <Route exact path="/Home/" component={MainWindow}/>
+                                    <Route exact path="/Home/:itemId" component={MainWindow}/>
 
-                                    {<Route exact path="/Home/" component={ChatWindow}/>}
+                                    <Route exact path="/Home/" component={ChatWindow}/>
                                     <Route exact path="/Home/:itemId" component={ChatWindow}/>
 
-                                    {/* <Route exact path="/Home/items/" component={MainWindow}/> */}
+                                    <Route exact path="/Home/items/" component={MainWindow}/>
                                 
                                
 

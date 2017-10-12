@@ -1,14 +1,17 @@
 .wish-list {
-    background-color: #32C3C3;
+    background-color: #3FC1C9;
     flex:1;
 }
 
 .wish-list ul {
     list-style-type: none;
+    color: #415B90;
     padding: 0px;
 }
 
 .wish-list li {
+    background-color: #364F6B;
+
     text-align: left;
     float: none;
 }
@@ -24,7 +27,11 @@
 
 
 .close-button {
-    background-color: red;
+    background-color: #3FC1C9;
     margin: 10px 0px;
     padding: 5px;
+}
+
+a:hover {
+    background-color: #FC5185;
 }
