@@ -36,6 +36,29 @@ export const mainReducer = (state = initialState, action) => {
             });
         }
 
+    //POST ITEM
+        case 'POST_ITEMS_REQUEST': {
+            return Object.assign({}, state, {
+                loading: true,
+                error: null
+              });
+        }
+        case 'POST_ITEMS_SUCCESS': {
+            console.log('action.item in reducer post success', action.item);
+            return Object.assign({}, state, {
+                item: action.item,
+                loading: false,
+                error: null
+              });
+        }
+        case 'POST_ITEMS_ERROR': {
+            return Object.assign({}, state, {
+                loading: false,
+                error: action.item
+              });
+        }
+
+
     //API REQUESTS
         case 'GET_API_REQUEST': {
             return Object.assign({}, state, {

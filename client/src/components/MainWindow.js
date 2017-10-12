@@ -65,8 +65,8 @@ class MainWindow extends React.Component {
         if (this.state.currentItem && this.state.upc) {
             const currentItem = this.state.currentItem[0];
             // const currentItem = this.props.itemData.items[0];
-            console.log(this.state, 'STATE')
-            console.log('current item is....', currentItem)
+            // console.log(this.state, 'STATE')
+            // console.log('current item is....', currentItem)
             // console.log(this.state, 'UPC IN STATE')
             
             const storeData = currentItem.stores.map((item, index) =>

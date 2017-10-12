@@ -97,10 +97,9 @@ export const postItemsRequest = () => ({
 });
 
 export const POST_ITEMS_SUCCESS = 'POST_ITEMS_SUCCESS';
-export const postItemsSuccess = (items, result) => ({
+export const postItemsSuccess = item => ({
     type: POST_ITEMS_SUCCESS,
-    items,
-    result
+    item
 });
 
 export const POST_ITEMS_ERROR = 'POST_ITEMS_ERROR';
@@ -119,7 +118,7 @@ export const postItems = input => dispatch => {
     }
     console.log('INPUT IN POST ITEMS.....', input);
     console.log('FORMATTED POST REQUESET', formattedPostRequest)
-    dispatch(postItemsRequest())
+
     const opts = {
         headers: {
             Accept: 'application/json',
@@ -129,26 +128,21 @@ export const postItems = input => dispatch => {
         method: 'POST',
         body: JSON.stringify(formattedPostRequest)
     };
-    return dispatch => {
-        return dispatch => {
-            fetch('/api/item', opts)
-                .then(function (res) {
-                    console.log(res, 'RES FROM API ITEMS POST DISPATCH')
-                    return res;
-                })
-                .catch(err => {
-                    console.log('POST ITEMS  ERROR')
-                    dispatch(postItemsError(err));
-                });
-        };
-    }
 
- 
-    //   .then(function(response) {
-    //     return response.json()
-    //   }).then(function(body) {
-    //     console.log(body);
-    //   });
+    dispatch(postItemsRequest())
+    // return dispatch => {
+
+    console.log('dispatch', dispatch);
+    fetch('/api/item', opts)
+        .then(function (res) {
+            console.log(res, 'RES FROM API ITEMS POST DISPATCH')
+            dispatch(postItemsSuccess(res))
+        })
+        .catch(err => {
+            console.log('POST ITEMS  ERROR')
+            dispatch(postItemsError(err));
+        });
+
 }
 
 

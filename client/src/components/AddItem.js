@@ -47,7 +47,7 @@ class AddItem extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         // const userInput = this.state;
-        console.log('inputted value----' + this.state);
+        // console.log('inputted value----' + this.state);
         this.props.dispatch(postItems(this.state));
         //ACTION FOR SUBMIT
     }
@@ -64,11 +64,11 @@ class AddItem extends React.Component {
                     </label>
                     <label>
                         Currency:
-                        <input type="text" title={this.state.currency} onChange={this.handleChange} />
+                        <input type="text" title={this.state.currency} onChange={this.handleChange} onKeyPress='return event.charCode >= 48 && event.charCode <= 57' />
                     </label>
                     <label>
                         UPC:
-                        <input type="text" title={this.state.upc} onChange={this.handleChange} />
+                        <input type="text" title={this.state.upc} onChange={this.handleChange} onKeyPress='return event.charCode >= 48 && event.charCode <= 57'/>
                     </label>
                     <label>
                         Creator:
