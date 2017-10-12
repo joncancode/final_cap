@@ -1,14 +1,21 @@
 .wish-list {
-    background-color: #32C3C3;
+    background-color: #3FC1C9;
     flex:1;
+}
+
+.wish-list h2 {
+    text-align: center;
 }
 
 .wish-list ul {
     list-style-type: none;
+    color: #415B90;
     padding: 0px;
 }
 
 .wish-list li {
+    background-color: #364F6B;
+
     text-align: left;
     float: none;
 }
@@ -24,7 +31,38 @@
 
 
 .close-button {
-    background-color: red;
+    background-color: #3FC1C9;
     margin: 10px 0px;
     padding: 5px;
+}
+
+a:hover {
+    background-color: #FC5185;
+}
+
+button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 12px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+
+button {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #008CBA;
+}
+
+button:hover {
+    background-color: #FC5185;
+    color: white;
 }

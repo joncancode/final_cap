@@ -1,0 +1,17 @@
+#header-title h2 {
+    text-align: center;
+    color: pink
+}
+
+#header-title {
+    text-align: center;
+    font-size: 30px;
+}
+
+#description {
+    font-size: 20px;
+}
+
+#LoginPageContainer {
+    margin: 30px;
+}
