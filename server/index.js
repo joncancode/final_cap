@@ -73,13 +73,13 @@ passport.use(
         User
         .findOne({ googleId: profile.id })
         .then(user => {
-            console.log('-----A: User exists, getting token')
+            // console.log('-----A: User exists, getting token')
           if (user) {
             user.accessToken = accessToken;
-            console.log('GoogleStrategy token------->',user.accessToken)
+            // console.log('GoogleStrategy token------->',user.accessToken)
             return user.save();
           } else {
-              console.log('------B: User does not exist, creating user')
+            //   console.log('------B: User does not exist, creating user')
             User
               .create({
                 // displayName: profile.givenName,
@@ -111,11 +111,11 @@ passport.use(
 passport.use(
     new BearerStrategy(
         (token, done) => {
-            console.log('BearerStrategy token------->', token)
+            // console.log('BearerStrategy token------->', token)
             if (!(token in database)) {
                 return done(null, false);
             }
-            console.log('BearerStrategy, what is in the database: ', database)
+            // console.log('BearerStrategy, what is in the database: ', database)
             return done(null, database[token]);
         }
     )
@@ -130,7 +130,7 @@ app.get('/api/auth/google/callback',
         session: false
     }),
     (req, res, next) => {
-        console.log('Callback token------------->', req.user.accessToken)
+        // console.log('Callback token------------->', req.user.accessToken)
         res.cookie('accessToken', req.user.accessToken, {expires: 0});
         res.redirect('/Home');
         return req.user;

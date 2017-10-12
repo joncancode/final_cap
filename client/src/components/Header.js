@@ -46,7 +46,7 @@ class Header extends Component {
 
 
     render() {
-      console.log('Header render() this.props: ', this.props);
+      // console.log('Header render() this.props: ', this.props);
       return (
         <nav>
           <div className="header">

@@ -29,11 +29,11 @@ class App extends React.Component {
 
     componentDidMount() {
         // this.props.fetchUser(); // passing users to reducer
-        console.log('App Component this.props: ', this.props)
+        // console.log('App Component this.props: ', this.props)
 
         // Job 4: Redux-ify all of the state and fetch calls to async actions.
         const accessToken = Cookies.get('accessToken');
-        console.log('App Component accessToken: ', accessToken)
+        // console.log('App Component accessToken: ', accessToken)
         if (accessToken) {
             fetch('/api/me', {
                 headers: {
