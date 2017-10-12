@@ -124,7 +124,7 @@ class MainWindow extends React.Component {
         return (
             <div className="main-window">
                 <Link to={`/Home/`}>
-                    <span className="back-button">go back</span>
+                    <button className="back-button">go back</button>
                 </Link>
                 <div className="user-sessions-container">
                     {this.renderResults(renderState)}

@@ -42,7 +42,7 @@ class AddItem extends React.Component {
                 <h2>Add new item</h2>
 
                 <form onSubmit={this.handleSubmit}>
-                    <input type="text" title={this.state.title} onChange={this.handleChange} />
+                    <input placeholder="eg banana" type="text" title={this.state.title} onChange={this.handleChange} />
                     <button type="submit">Search</button>
                 </form>
                 {/* <button onClick={this.hideModal.bind(this)} className="close-button">Close</button> */}
