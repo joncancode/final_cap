@@ -8,5 +8,9 @@
 
 .back-button {
     background-color: #364F6B;
+    border: 1px solid white;
+    color: white;
+    margin-top: 15px;
+    padding: 10px;
 }
 

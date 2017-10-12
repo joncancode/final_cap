@@ -235,6 +235,7 @@ app.get('/api/items', (req, res) => {
         res.status(201).json(req.body);
       })
       .catch(err => {
+        console.log('error inside of server index.js', req.body)
         console.error(err);
         res.status(500).json({ message: 'Internal server error' });
       });

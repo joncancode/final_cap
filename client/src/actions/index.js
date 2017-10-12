@@ -1,3 +1,4 @@
+const faker = require('faker');
 
 
 //--FetchUser------------------------------
@@ -97,10 +98,9 @@ export const postItemsRequest = () => ({
 });
 
 export const POST_ITEMS_SUCCESS = 'POST_ITEMS_SUCCESS';
-export const postItemsSuccess = (items, result) => ({
+export const postItemsSuccess = item => ({
     type: POST_ITEMS_SUCCESS,
-    items,
-    result
+    item
 });
 
 export const POST_ITEMS_ERROR = 'POST_ITEMS_ERROR';
@@ -111,15 +111,33 @@ export const postItemsError = error => ({
 
 //POST ITEM
 export const postItems = input => dispatch => {
+    //hardcoded data until API hooked up
+    const randomUpc = Math.floor(100000000 + Math.random() * 900000000);;
+    const placeholderImage = "http://via.placeholder.com/200x200";
+
+
     let formattedPostRequest = {
         title: input.title,
-        currency: input.currency,
-        upc: input.upc,
-        creator: input.creator
+        currency: faker.commerce.price(),
+        upc: randomUpc,
+        //edit to user logged in
+        creator: faker.name.findName(),
+        images: placeholderImage,
+        stores: [
+            {
+                name: faker.company.companyName(),
+                inventory: faker.name.findName()
+            },
+            {
+                name: faker.company.companyName(),
+                inventory: faker.name.findName()
+            },
+        ]
+
     }
     console.log('INPUT IN POST ITEMS.....', input);
-    console.log('FORMATTED POST REQUESET', formattedPostRequest)
-    dispatch(postItemsRequest())
+    // console.log('FORMATTED POST REQUESET', formattedPostRequest)
+
     const opts = {
         headers: {
             Accept: 'application/json',
@@ -129,26 +147,20 @@ export const postItems = input => dispatch => {
         method: 'POST',
         body: JSON.stringify(formattedPostRequest)
     };
-    return dispatch => {
-        return dispatch => {
-            fetch('/api/item', opts)
-                .then(function (res) {
-                    console.log(res, 'RES FROM API ITEMS POST DISPATCH')
-                    return res;
-                })
-                .catch(err => {
-                    console.log('POST ITEMS  ERROR')
-                    dispatch(postItemsError(err));
-                });
-        };
-    }
 
- 
-    //   .then(function(response) {
-    //     return response.json()
-    //   }).then(function(body) {
-    //     console.log(body);
-    //   });
+    dispatch(postItemsRequest())
+    // return dispatch => {
+
+    fetch('/api/item', opts)
+        .then(function (res) {
+            // console.log(res, 'RES FROM API ITEMS POST DISPATCH')
+            dispatch(postItemsSuccess(res))
+        })
+        .catch(err => {
+            // console.log('POST ITEMS  ERROR')
+            dispatch(postItemsError(err));
+        });
+
 }
 
 

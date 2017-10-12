@@ -65,15 +65,15 @@ class MainWindow extends React.Component {
         if (this.state.currentItem && this.state.upc) {
             const currentItem = this.state.currentItem[0];
             // const currentItem = this.props.itemData.items[0];
-            console.log(this.state, 'STATE')
-            console.log('current item is....', currentItem)
+            // console.log(this.state, 'STATE')
+            // console.log('current item is....', currentItem)
             // console.log(this.state, 'UPC IN STATE')
             
             const storeData = currentItem.stores.map((item, index) =>
                 <tr key={index}>
                     <th>Store</th>
                     <th>{item.name}</th>
-                    <th>{item.inventory}</th>
+                    <th>last seen by {item.inventory}</th>
                 </tr>
             );
 
@@ -124,7 +124,7 @@ class MainWindow extends React.Component {
         return (
             <div className="main-window">
                 <Link to={`/Home/`}>
-                    <span className="back-button">go back</span>
+                    <button className="back-button">go back</button>
                 </Link>
                 <div className="user-sessions-container">
                     {this.renderResults(renderState)}

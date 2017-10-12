@@ -1,4 +1,9 @@
-.add-item label {
+.add-item {
+    padding: 20px 50px;
+}
+
+.add-item input {
     display: block;
+    margin: 10px auto;
 
 }
