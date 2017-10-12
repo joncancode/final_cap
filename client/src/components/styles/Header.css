@@ -3,19 +3,20 @@
     background-color: #2ED1D1;
     color: white;
     font-size: 30px;
+    border-bottom: .5px solid black;
 }
 
 a {
-    color: white;
+    color: #FFF5F5;
     text-decoration: none;
 }
 
 
-a:hover {
-    background-color: purple;
+.header a:hover {
+    background-color: #FC5185;
 }
 a:visited {
-    color: white;
+    color: #FFF5F5;
 }
 
 ul {
@@ -23,7 +24,7 @@ ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #364F6B;
 }
 
 li {
@@ -43,5 +44,5 @@ li a {
 
 }
 .active {
-    background-color:#4CAF50;
+    background-color:#3FC1C9;
     }
