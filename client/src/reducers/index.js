@@ -44,7 +44,7 @@ export const mainReducer = (state = initialState, action) => {
               });
         }
         case 'POST_ITEMS_SUCCESS': {
-            console.log('action.item in reducer post success', action.item);
+            // console.log('action.item in reducer post success', action.item);
             return Object.assign({}, state, {
                 item: action.item,
                 loading: false,

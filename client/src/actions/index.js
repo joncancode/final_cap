@@ -117,7 +117,7 @@ export const postItems = input => dispatch => {
         creator: input.creator
     }
     console.log('INPUT IN POST ITEMS.....', input);
-    console.log('FORMATTED POST REQUESET', formattedPostRequest)
+    // console.log('FORMATTED POST REQUESET', formattedPostRequest)
 
     const opts = {
         headers: {
@@ -132,14 +132,13 @@ export const postItems = input => dispatch => {
     dispatch(postItemsRequest())
     // return dispatch => {
 
-    console.log('dispatch', dispatch);
     fetch('/api/item', opts)
         .then(function (res) {
-            console.log(res, 'RES FROM API ITEMS POST DISPATCH')
+            // console.log(res, 'RES FROM API ITEMS POST DISPATCH')
             dispatch(postItemsSuccess(res))
         })
         .catch(err => {
-            console.log('POST ITEMS  ERROR')
+            // console.log('POST ITEMS  ERROR')
             dispatch(postItemsError(err));
         });
 

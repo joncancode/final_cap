@@ -36,18 +36,29 @@ class AddItem extends React.Component {
         this.refs.modal.hide();
     }
 
+
+    // handleChange(event) {
+    //     this.setState({
+    //         title: event.target.value,
+    //         currency: event.target.value,
+    //         upc: event.target.value,
+    //         creator: event.target.value
+    //     });
+    // }
     handleChange(event) {
-        this.setState({ title: event.target.value,
-        currency:event.target.value,
-        upc: event.target.value,
-        creator: event.target.value
-    });
+        this.setState({
+            title: event.target.value,
+            currency: event.target.value,
+            upc: event.target.value,
+            creator: event.target.value
+        });
     }
 
     handleSubmit(event) {
         event.preventDefault();
+        console.log(event, 'handleSubmit EVENT....')
         // const userInput = this.state;
-        // console.log('inputted value----' + this.state);
+        console.log('inputted value----', this.state);
         this.props.dispatch(postItems(this.state));
         //ACTION FOR SUBMIT
     }
@@ -64,11 +75,11 @@ class AddItem extends React.Component {
                     </label>
                     <label>
                         Currency:
-                        <input type="text" title={this.state.currency} onChange={this.handleChange} onKeyPress='return event.charCode >= 48 && event.charCode <= 57' />
+                        <input type="text" title={this.state.currency} onChange={this.handleChange} />
                     </label>
                     <label>
                         UPC:
-                        <input type="text" title={this.state.upc} onChange={this.handleChange} onKeyPress='return event.charCode >= 48 && event.charCode <= 57'/>
+                        <input type="text" title={this.state.upc} onChange={this.handleChange} />
                     </label>
                     <label>
                         Creator:
