@@ -73,7 +73,7 @@ class MainWindow extends React.Component {
                 <tr key={index}>
                     <th>Store</th>
                     <th>{item.name}</th>
-                    <th>{item.inventory}</th>
+                    <th>last seen by {item.inventory}</th>
                 </tr>
             );
 

@@ -1,3 +1,4 @@
+const faker = require('faker');
 
 
 //--FetchUser------------------------------
@@ -110,11 +111,29 @@ export const postItemsError = error => ({
 
 //POST ITEM
 export const postItems = input => dispatch => {
+    //hardcoded data until API hooked up
+    const randomUpc = Math.floor(100000000 + Math.random() * 900000000);;
+    const placeholderImage = "http://via.placeholder.com/200x200";
+
+
     let formattedPostRequest = {
         title: input.title,
-        currency: input.currency,
-        upc: input.upc,
-        creator: input.creator
+        currency: faker.commerce.price(),
+        upc: randomUpc,
+        //edit to user logged in
+        creator: faker.name.findName(),
+        images: placeholderImage,
+        stores: [
+            {
+                name: faker.company.companyName(),
+                inventory: faker.name.findName()
+            },
+            {
+                name: faker.company.companyName(),
+                inventory: faker.name.findName()
+            },
+        ]
+
     }
     console.log('INPUT IN POST ITEMS.....', input);
     // console.log('FORMATTED POST REQUESET', formattedPostRequest)
