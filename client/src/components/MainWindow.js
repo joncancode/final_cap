@@ -96,6 +96,11 @@ class MainWindow extends React.Component {
                                 <th>{currentItem.upc}</th>
                                 <th></th>
                             </tr>
+                            {/* <tr>
+                                <th>Stores</th>
+                                <th>{currentItem.offers}</th>
+                                <th></th>
+                            </tr> */}
                             {storeData}
                         </table>
                     </div>

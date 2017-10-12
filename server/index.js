@@ -228,7 +228,8 @@ app.get('/api/items', (req, res) => {
         creator: req.body.creator,
         stores: req.body.stores,
         user_data: req.body.user_data,
-        images: req.body.images
+        images: req.body.images,
+        offers: req.body.images
       })
       .then(()=> {
         res.status(201).json(req.body);
@@ -248,6 +249,18 @@ app.get('/api/items', (req, res) => {
   });
 
 
+
+  // PUT request for finding stores nearby
+
+
+
+
+
+
+
+
+
+  
 
 
 // Serve the built client
