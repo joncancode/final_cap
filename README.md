@@ -1,84 +1,59 @@
-# Find Smithy
+# [Find Smithy](https://find-smithy.herokuapp.com/)
 
-   "heroku-postbuild": "cd client && npm install --only=dev && npm run build",
 
-Find Smithy is an application that brings the community together. Not sure if that Nintendo Switch is still available at the local Walmart? Add what you want to our communal list and allow the crowdsourcing to do its magic.
+Find Smithy is an application that brings the community together. Not sure if that Nintendo Switch is still available at the local Walmart? Add what you want to our communal list and allow the crowd sourcing to do its magic.
 
 What's to come - A system to reward points for those who contribute more.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Follow these instructions to see the project up and running on your local machine for development and testing purposes. See the live version of the project [Find Smithy](https://find-smithy.herokuapp.com/) hosted on Heroku.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+Things you need to before installing.
 
-```
-Give examples
-```
 
-### Installing
+1. Create a secret.js file within the folder server/config.
+2. Setup a [google developers api](https://console.developers.google.com/api)
+3. Add the origin URI: http://localhost:8080 & http://localhost:5000
+4. Add the redirect URI: http://localhost:8080/api/auth/google/callback & http://localhost:5000/auth/google/callback
+5. Add the Client ID & the Client secret to the secret.js file.
+6. Set up mongo database on mlab.
+7. Store the MONGO_URI inside the secret.js file.
 
-A step by step series of examples that tell you have to get a development env running
 
-Say what the step will be
+### Installing & Initializing
 
-```
-Give the example
-```
+Follow step by step for installation in the command line.
 
-And repeat
+1. In the root folder of the project ```npm install  ```
+2. In the root folder of the project run ```npm run dev```
+3. In the server folder, run ```npm run socket```
 
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [JavaScript](https://stackoverflow.com/questions/tagged/javascript) - The web framework used
+* [React](https://reactjs.org/) - Front End
+* [Redux](http://redux.js.org/) - Front End
+* [Node.js](https://nodejs.org/en/docs/) - Back End
+* [MongoDB](https://docs.mongodb.com/) - Database
+* [Socket.io](https://socket.io/docs/) - Communications client & server
+* [Passport.js](http://passportjs.org/docs) - Authentication
+* [Heroku](https://www.heroku.com//) - Host
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [GitHub](https://github.com/) for versioning. For the versions available, see the [repository](https://github.com/joncancode/final_cap). 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Jonathan Haines** - [joncancode](https://github.com/joncancode)
+* **David Dinnison** - [daviddinnison](https://github.com/daviddinnison)
+* **Daniel Kato** - [dankato](https://github.com/dankato)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
@@ -86,6 +61,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+Special thanks to our mentor [Mark Learst](https://github.com/ipaintcode)
