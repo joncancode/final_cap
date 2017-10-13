@@ -28,7 +28,9 @@ class MainWindow extends React.Component {
 
 
 
-    componentWillReceiveProps(nextProps) {
+    componentWillRecconsole.log('NEXT PROPS......', nextProps)
+        // this.setState( { stores: nextProps.stores } )eiveProps(nextProps) {
+        // 
         //updates upc in local state on new route
         this.setState({ upc: nextProps.match.params.itemId })
 
