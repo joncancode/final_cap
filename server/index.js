@@ -190,7 +190,7 @@ app.get('/api/items/:id', (req, res) => {
 // });
 
 app.put('/api/items/:id', jsonParser, (req, res) => {
-    const requiredFields = ['id', 'stores'];
+    const requiredFields = ['id', 'store'];
     for (let i=0; i<requiredFields.length; i++) {
       const field = requiredFields[i];
       if (!(field in req.body)) {
@@ -204,17 +204,12 @@ app.put('/api/items/:id', jsonParser, (req, res) => {
       console.error(message);
       return res.status(400).send(message);
     }
-
     console.log(`Updating item \`${req.params.id}\``);
-    
-    // Item.update( 
-    //     { currency: { $gt: 50 } } 
-    // )
     
 
       Item.update(
         { _id: req.params.id },
-        { stores: req.body.stores },
+        { $push: {stores: req.body.store}},
         { multi: true }, ( err, raw ) => {
           if ( err ) return handleError( err )
             console.log( 'Raw response from mlab ', raw )
