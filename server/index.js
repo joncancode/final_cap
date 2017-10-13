@@ -228,12 +228,19 @@ app.get('/api/items/:id', (req, res) => {
 })
 
 app.put('/api/items/:id', (req, res) => {
-    Item.findById(req.params._id, function (err, item) {
-        console.log('ITEM DOT STORE', item)
+    Item.findById(req.params.id, function (err, item) {
+        
+        console.log('REQ PARAMS', req.params)
+
+        let request = JSON.stringify(req.body)
+        console.log('ITEM......', item)
+        console.log('JSON STRINGIFY ON REQUEST', request)
         if (err)
             res.send(err);
+
         
-        item.stores = req.body.stores; 
+
+        item.stores = request[0]; 
         item.save(function (err) {
             if (err)
                 res.send(err);
@@ -269,21 +276,21 @@ app.post('/api/item', (req, res) => {
 });
 
 
-app.put('/api/item/:id', (req, res) => {
-    console.log('inside endpoint here', req.body)
-    Item
-        .create({
-            stores: req.body.stores,
-        })
-        .then(() => {
-            res.status(201).json(req.body);
-        })
-        .catch(err => {
-            console.log('error inside of server index.js', req.body)
-            console.error(err);
-            res.status(500).json({ message: 'Internal server error' });
-        });
-});
+// app.put('/api/item/:id', (req, res) => {
+//     console.log('inside endpoint here', req.body.stores)
+//     Item
+//         .create({
+//             stores: req.body.stores,
+//         })
+//         .then(() => {
+//             res.status(201).json(req.body);
+//         })
+//         .catch(err => {
+//             console.log('error inside of server index.js', req.body)
+//             console.error(err);
+//             res.status(500).json({ message: 'Internal server error' });
+//         });
+// });
 
 
 
