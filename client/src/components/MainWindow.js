@@ -43,10 +43,10 @@ class MainWindow extends React.Component {
         // console.log('ID', id)
         const placeholderStore = {
             "id": `${id}`,
-            "stores": [{
+            "store": {
                 "name": faker.company.companyName(),
                 "inventory": faker.name.findName()
-            }]
+            }
         }
         // console.log('placeholder store....', placeholderStore)
         this.props.dispatch(addStore(placeholderStore));
