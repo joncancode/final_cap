@@ -7,33 +7,35 @@ import { render } from 'react-dom';
 
 import { fetchItems } from '../actions/';
 
-import ProductWindow from './ProductWindow';
+// import ProductWindow from './ProductWindow';
 import './styles/MainWindow.css';
-import './styles/ProductWindow.css';
+// import './styles/ProductWindow.css';
 
 
 class MainWindow extends React.Component {
     constructor(props) {
         //uses params from WishList routing to select current item by upc code
         super(props);
-        this.state = {upc: this.props.match.params.itemId,
-        currentItem: undefined }
+        this.state = {
+            upc: this.props.match.params.itemId,
+            currentItem: undefined
+        }
     }
 
-    
-    
+
+
     componentWillReceiveProps(nextProps) {
         //updates upc in local state on new route
-        this.setState({ upc: nextProps.match.params.itemId})
+        this.setState({ upc: nextProps.match.params.itemId })
 
         //sets currentItem by filtering upc code from local state through itemData
-        const filteredItem = nextProps.itemData.items.filter( x => x.upc == this.props.match.params.itemId)
-        this.setState({currentItem: filteredItem})
+        const filteredItem = nextProps.itemData.items.filter(x => x.upc == this.props.match.params.itemId)
+        this.setState({ currentItem: filteredItem })
     }
-    
+
     renderResults(state) {
         // console.log('MAINWINDOW PROPS', this.props);
-        
+
 
 
 
@@ -56,7 +58,7 @@ class MainWindow extends React.Component {
         if (this.state.currentItem === null) {
             // console.log('NULL ERROR');
             return (
-                <div className="product-window">
+                <div className="main-window">
                     <p>didnt work. null</p>
                 </div>
             )
@@ -68,7 +70,7 @@ class MainWindow extends React.Component {
             // console.log(this.state, 'STATE')
             // console.log('current item is....', currentItem)
             // console.log(this.state, 'UPC IN STATE')
-            
+
             const storeData = currentItem.stores.map((item, index) =>
                 <tr key={index}>
                     <th>Store</th>
@@ -78,7 +80,7 @@ class MainWindow extends React.Component {
             );
 
             return (
-                <div className="product-window">
+                <div className="main-window">
                     <div className="item-overview">
                         <h2>{currentItem.title}</h2>
                         <p>Added by {currentItem.creator}</p>
@@ -109,7 +111,7 @@ class MainWindow extends React.Component {
         }
         else {
             return (
-                <div className="product-window">
+                <div className="main-window">
                     <p>nothing yet</p>
                 </div>
             )
@@ -119,16 +121,18 @@ class MainWindow extends React.Component {
 
     render() {
         const renderState = this.state;
-        
+
         // console.log('RENDER STATE', renderState);
         return (
-            <div className="main-window">
+            <div className="rendered-main-window-container">
                 <Link to={`/Home/`}>
-                    <button className="back-button">go back</button>
+                    <button className="back-button">Home</button>
                 </Link>
-                <div className="user-sessions-container">
-                    {this.renderResults(renderState)}
-                    {/* <p>Hello</p> */}
+                <div className="main-window">
+                    <div>
+                        {this.renderResults(renderState)}
+                        {/* <p>Hello</p> */}
+                    </div>
                 </div>
             </div>
         );

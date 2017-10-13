@@ -23,22 +23,22 @@ const database = {
 };
 
 let secret = {
-  CLIENT_ID: process.env.CLIENT_ID,
-  CLIENT_SECRET: process.env.SECRET,
-  MONGO_URI: process.env.MONGO_URI
+    CLIENT_ID: process.env.CLIENT_ID,
+    CLIENT_SECRET: process.env.SECRET,
+    MONGO_URI: process.env.MONGO_URI
 }
 
-if(process.env.NODE_ENV != 'production') {
-  secret = require('./config/keys');
+if (process.env.NODE_ENV != 'production') {
+    secret = require('./config/keys');
 }
 
 
 // CORS
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
     );
     next();
 });
@@ -53,57 +53,57 @@ passport.serializeUser((user, cb) => {
 });
 
 passport.deserializeUser((id, cb) => {
-    console.log({id})
+    console.log({ id })
     User.findById(id)
-    .then(user => {
-        cb(null, user);
-    });
+        .then(user => {
+            cb(null, user);
+        });
 });
 
 passport.use(
     new GoogleStrategy({
-        clientID:  keys.CLIENT_ID,
+        clientID: keys.CLIENT_ID,
         clientSecret: keys.CLIENT_SECRET,
         callbackURL: `/api/auth/google/callback`
     },
-    // profile contains google user id, the unique id token need to save to user record
-    (accessToken, refreshToken, profile, cb) => {
+        // profile contains google user id, the unique id token need to save to user record
+        (accessToken, refreshToken, profile, cb) => {
 
-    // use mongoose model to create new user and save to database
-        User
-        .findOne({ googleId: profile.id })
-        .then(user => {
-            // console.log('-----A: User exists, getting token')
-          if (user) {
-            user.accessToken = accessToken;
-            // console.log('GoogleStrategy token------->',user.accessToken)
-            return user.save();
-          } else {
-            //   console.log('------B: User does not exist, creating user')
+            // use mongoose model to create new user and save to database
             User
-              .create({
-                // displayName: profile.givenName,
-                givenName: profile.name.givenName,
+                .findOne({ googleId: profile.id })
+                .then(user => {
+                    // console.log('-----A: User exists, getting token')
+                    if (user) {
+                        user.accessToken = accessToken;
+                        // console.log('GoogleStrategy token------->',user.accessToken)
+                        return user.save();
+                    } else {
+                        //   console.log('------B: User does not exist, creating user')
+                        User
+                            .create({
+                                // displayName: profile.givenName,
+                                givenName: profile.name.givenName,
+                                googleId: profile.id,
+                                accessToken: accessToken
+                            })
+                            .then(console.log('successful log'))
+                            .catch(err => {
+                                console.error(err);
+                            });
+                    }
+                });
+
+            const user = database[accessToken] = {
                 googleId: profile.id,
-                accessToken: accessToken
-              })
-              .then(console.log('successful log'))
-              .catch(err => {
-                console.error(err);
-              });
-          }
-        });
+                accessToken: accessToken,
+                givenName: profile.name.givenName
+            };
 
-        const user = database[accessToken] = {
-            googleId: profile.id,
-            accessToken: accessToken,
-            givenName: profile.name.givenName
-        };
+            return cb(null, user);
 
-      return cb(null, user);
-
-    }
-));
+        }
+    ));
 
 
 // passport.use(BearerStrategy)
@@ -123,7 +123,7 @@ passport.use(
 
 app.get('/api/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
-   
+
 app.get('/api/auth/google/callback',
     passport.authenticate('google', {
         failureRedirect: '/',
@@ -131,11 +131,11 @@ app.get('/api/auth/google/callback',
     }),
     (req, res, next) => {
         // console.log('Callback token------------->', req.user.accessToken)
-        res.cookie('accessToken', req.user.accessToken, {expires: 0});
+        res.cookie('accessToken', req.user.accessToken, { expires: 0 });
         res.redirect('/Home');
         return req.user;
     }
-    
+
 );
 
 /*
@@ -164,7 +164,7 @@ app.get('/api/auth/logout', (req, res) => {
 });
 
 app.get('/api/me',
-    passport.authenticate('bearer', {session: false}),
+    passport.authenticate('bearer', { session: false }),
     (req, res) => res.json({
         googleId: req.user.googleId,
         displayName: req.user.displayName
@@ -205,72 +205,88 @@ app.get('/api/me',
 // Get All Items
 app.get('/api/items', (req, res) => {
     Item
-      .find()
-      .then(items => {
-        // console.log('title: ', items.title);
-        res.json({
-            items: items.map(item => item)
-        })
-          .catch(err => {
-            console.error(err);
-            res.status(500).json({message: 'Internal server error'});
-          });
-      });
-  });
+        .find()
+        .then(items => {
+            // console.log('title: ', items.title);
+            res.json({
+                items: items.map(item => item)
+            })
+                .catch(err => {
+                    console.error(err);
+                    res.status(500).json({ message: 'Internal server error' });
+                });
+        });
+});
 
-  //get one item
-  app.get('/api/items/:id', (req, res)=> { 
-    Item.findById(req.params.id, function(err, item) {
+//get one item
+app.get('/api/items/:id', (req, res) => {
+    Item.findById(req.params.id, function (err, item) {
         if (err)
             res.send(err);
         res.json(item);
     })
 })
 
-  
-  app.post('/api/item', (req, res) => {
-      console.log('inside endpoint here', req.body)
-    Item
-      .create({
-        title: req.body.title,
-        currency: req.body.currency,
-        upc: req.body.upc,
-        creator: req.body.creator,
-        stores: req.body.stores,
-        user_data: req.body.user_data,
-        images: req.body.images,
-        offers: req.body.images
-      })
-      .then(()=> {
-        res.status(201).json(req.body);
-      })
-      .catch(err => {
-        console.log('error inside of server index.js', req.body)
-        console.error(err);
-        res.status(500).json({ message: 'Internal server error' });
-      });
-  });
+app.put('/api/items/:id', (req, res) => {
+    Item.findById(req.params.id, function (err, item) {
+        if (err)
+            res.send(err);
+        
+        item.store = req.body.store; 
+        item.save(function (err) {
+            if (err)
+                res.send(err);
 
-
-  app.put('/api/item/:id', (req, res) => {
-    console.log('inside endpoint here', req.body)
-    Item
-    .create({
-      stores: req.body.stores,
+            res.json({ message: 'Store added' });
+        });
     })
-    .then(()=> {
-      res.status(201).json(req.body);
-    })
-    .catch(err => {
-      console.log('error inside of server index.js', req.body)
-      console.error(err);
-      res.status(500).json({ message: 'Internal server error' });
-    });
 });
 
 
 
-  // PUT request for finding stores nearby
+app.post('/api/item', (req, res) => {
+    console.log('inside endpoint here', req.body)
+    Item
+        .create({
+            title: req.body.title,
+            currency: req.body.currency,
+            upc: req.body.upc,
+            creator: req.body.creator,
+            stores: req.body.stores,
+            user_data: req.body.user_data,
+            images: req.body.images,
+            offers: req.body.images
+        })
+        .then(() => {
+            res.status(201).json(req.body);
+        })
+        .catch(err => {
+            console.log('error inside of server index.js', req.body)
+            console.error(err);
+            res.status(500).json({ message: 'Internal server error' });
+        });
+});
+
+
+app.put('/api/item/:id', (req, res) => {
+    console.log('inside endpoint here', req.body)
+    Item
+        .create({
+            stores: req.body.stores,
+        })
+        .then(() => {
+            res.status(201).json(req.body);
+        })
+        .catch(err => {
+            console.log('error inside of server index.js', req.body)
+            console.error(err);
+            res.status(500).json({ message: 'Internal server error' });
+        });
+});
+
+
+
+// PUT request for finding stores nearby
 
 
 
@@ -280,7 +296,7 @@ app.get('/api/items', (req, res) => {
 
 
 
-  
+
 
 
 // Serve the built client
@@ -314,7 +330,7 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 //   console.log('statusCode: ', res.statusCode);
 //   console.log('headers: ', res.headers);
 //   res.on('data', function(d) {
-      
+
 //     // let newData = ('BODY: ' + d)
 //     console.log('item name: ', JSON.parse(d).items[0].title);
 //     console.log('brand: ', JSON.parse(d).items[0].brand);
@@ -322,7 +338,7 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 //     console.log('upc code: ', JSON.parse(d).items[0].upc);
 //     console.log('about: ', JSON.parse(d).items[0].description);
 //     console.log('images: ', JSON.parse(d).items[0].images[0]);
-    
+
 //   })
 // })
 // req.on('error', function(e) {
@@ -343,7 +359,7 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 
 
 let server;
-function runServer(port=3001) {
+function runServer(port = 3001) {
     return new Promise((resolve, reject) => {
         server = app.listen(port, () => {
             resolve();

@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {Link, Router} from 'react-router-dom';
 
-import './styles/ProductWindow.css';
-
 
 
 class Test extends React.Component {
