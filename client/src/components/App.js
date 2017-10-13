@@ -5,7 +5,6 @@ import LoginPage from './login-page';
 import Header from './Header';
 import WishList from './WishList';
 import MainWindow from './MainWindow';
-import ProductWindow from './ProductWindow';
 import ChatWindow from './ChatWindow';
 import Test from './Test';
 import * as actions from "../actions";

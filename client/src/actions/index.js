@@ -113,8 +113,8 @@ export const postItemsError = error => ({
 export const postItems = input => dispatch => {
     //hardcoded data until API hooked up
     const randomUpc = Math.floor(100000000 + Math.random() * 900000000);;
-    const placeholderImage = "http://via.placeholder.com/200x200";
-
+    // const placeholderImage = "http://via.placeholder.com/200x200";
+    // const placeholderImage = `https://source.unsplash.com/200x200/?${input.title}`
 
     let formattedPostRequest = {
         title: input.title,
@@ -122,17 +122,17 @@ export const postItems = input => dispatch => {
         upc: randomUpc,
         //edit to user logged in
         creator: faker.name.findName(),
-        images: placeholderImage,
-        stores: [
-            {
-                name: faker.company.companyName(),
-                inventory: faker.name.findName()
-            },
-            {
-                name: faker.company.companyName(),
-                inventory: faker.name.findName()
-            },
-        ]
+        images: `https://source.unsplash.com/200x200/?${input.title}`
+        // stores: [
+        //     {
+        //         name: faker.company.companyName(),
+        //         inventory: faker.name.findName()
+        //     },
+        //     {
+        //         name: faker.company.companyName(),
+        //         inventory: faker.name.findName()
+        //     },
+        // ]
 
     }
     console.log('INPUT IN POST ITEMS.....', input);
@@ -163,6 +163,48 @@ export const postItems = input => dispatch => {
 
 }
 
+//ADD STORE
+export const ADD_STORE_REQUEST = 'ADD_STORE_REQUEST';
+export const addStoreRequest = () => ({
+    type: ADD_STORE_REQUEST
+});
+
+export const ADD_STORE_SUCCESS = 'ADD_STORE_SUCCESS';
+export const addStoreSuccess = item => ({
+    type: ADD_STORE_SUCCESS,
+    item
+});
+
+export const ADD_STORE_ERROR = 'ADD_STORE_ERROR';
+export const addStoreError = error => ({
+    type: ADD_STORE_ERROR,
+    error
+});
+
+export const addStore = store => dispatch => {
+    console.log('ADD STORE IN ACTION', store)
+    const opts = {
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+            //   Authorization: `Basic ${window.encodedAuthHeader}`
+        },
+        method: 'PUT',
+        body: JSON.stringify(store)
+    };
+    dispatch(addStoreRequest())
+    fetch(`/api/items/${store.id}`, opts)
+    .then(function (res) {
+        // console.log(res, 'RES FROM API ITEMS POST DISPATCH')
+        console.log('RES IN ADDSTORE SUCCESS', res)
+        dispatch(addStoreSuccess(res))
+    })
+    .catch(err => {
+        // console.log('POST ITEMS  ERROR')
+        dispatch(addStoreError(err));
+    });
+
+}
 
 
 

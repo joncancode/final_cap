@@ -8,7 +8,7 @@ const itemSchema = new Schema({
   currency: { type: Number, required: true},
   upc: { type: Number, required: true},
   creator: { type: String, required: true },
-  stores: [],
+  stores: [{name: String, inventory: String}],
   user_data: [],
   images: [String],
   offers: {merchant: String, availability: String}
