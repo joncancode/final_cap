@@ -5,7 +5,9 @@
     flex: 3;
     min-width: 900px;
 }
-
+.main-window > p {
+    padding: 50px;
+}
 .rendered-main-window-container {
     background-color: #364F6B;
 }

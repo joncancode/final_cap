@@ -228,11 +228,12 @@ app.get('/api/items/:id', (req, res) => {
 })
 
 app.put('/api/items/:id', (req, res) => {
-    Item.findById(req.params.id, function (err, item) {
+    Item.findById(req.params._id, function (err, item) {
+        console.log('ITEM DOT STORE', item)
         if (err)
             res.send(err);
         
-        item.store = req.body.store; 
+        item.stores = req.body.stores; 
         item.save(function (err) {
             if (err)
                 res.send(err);

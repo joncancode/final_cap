@@ -163,8 +163,27 @@ export const postItems = input => dispatch => {
 
 }
 
+//ADD STORE
+export const ADD_STORE_REQUEST = 'ADD_STORE_REQUEST';
+export const addStoreRequest = () => ({
+    type: ADD_STORE_REQUEST
+});
 
+export const ADD_STORE_SUCCESS = 'ADD_STORE_SUCCESS';
+export const addStoreSuccess = item => ({
+    type: ADD_STORE_SUCCESS,
+    item
+});
 
+export const ADD_STORE_ERROR = 'ADD_STORE_ERROR';
+export const addStoreError = error => ({
+    type: ADD_STORE_ERROR,
+    error
+});
+
+export const addStore = store => dispatch => {
+    console.log('ADD STORE DISPATCH')
+}
 
 
 

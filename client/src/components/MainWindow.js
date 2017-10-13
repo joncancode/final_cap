@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { render } from 'react-dom';
 // import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-import { fetchItems } from '../actions/';
+import { addStore } from '../actions/';
 
 // import ProductWindow from './ProductWindow';
 import './styles/MainWindow.css';
@@ -33,16 +33,16 @@ class MainWindow extends React.Component {
         this.setState({ currentItem: filteredItem })
     }
 
+    handleClick(event) {
+        event.preventDefault();
+        this.props.dispatch(addStore());
+        //ACTION FOR SUBMIT
+    }
+
     renderResults(state) {
         // console.log('MAINWINDOW PROPS', this.props);
-
-
-
-
-
         if (this.props.loading) {
             // return <Spinner spinnerName="circle" noFadeIn />;
-
             // console.log('LOADING');
             return <div>loading items...</div>;
         }
@@ -98,12 +98,10 @@ class MainWindow extends React.Component {
                                 <th>{currentItem.upc}</th>
                                 <th></th>
                             </tr>
-                            {/* <tr>
-                                <th>Stores</th>
-                                <th>{currentItem.offers}</th>
-                                <th></th>
-                            </tr> */}
                             {storeData}
+                            
+                                <button type="submit" onClick={this.handleClick}>Add store</button>
+                            
                         </table>
                     </div>
                 </div>
@@ -112,7 +110,7 @@ class MainWindow extends React.Component {
         else {
             return (
                 <div className="main-window">
-                    <p>nothing yet</p>
+                    <p>Select an item</p>
                 </div>
             )
         }
