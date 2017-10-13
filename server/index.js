@@ -246,7 +246,7 @@ app.get('/api/items/:id', (req, res) => {
 // });
 
 app.put('/api/items/:id', jsonParser, (req, res) => {
-    const requiredFields = ['id', 'store'];
+    const requiredFields = ['id', 'stores'];
     for (let i=0; i<requiredFields.length; i++) {
       const field = requiredFields[i];
       if (!(field in req.body)) {
@@ -263,9 +263,14 @@ app.put('/api/items/:id', jsonParser, (req, res) => {
 
     console.log(`Updating item \`${req.params.id}\``);
     
+    // Item.update( 
+    //     { currency: { $gt: 50 } } 
+    // )
+    
+
       Item.update(
         { _id: req.params.id },
-        { store: req.body.store },
+        { stores: req.body.stores },
         { multi: true }, ( err, raw ) => {
           if ( err ) return handleError( err )
             console.log( 'Raw response from mlab ', raw )
