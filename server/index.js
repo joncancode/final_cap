@@ -217,6 +217,16 @@ app.get('/api/items', (req, res) => {
           });
       });
   });
+
+  //get one item
+  app.get('/api/items/:id', (req, res)=> { 
+    Item.findById(req.params.id, function(err, item) {
+        if (err)
+            res.send(err);
+        res.json(item);
+    })
+})
+
   
   app.post('/api/item', (req, res) => {
       console.log('inside endpoint here', req.body)
@@ -241,13 +251,22 @@ app.get('/api/items', (req, res) => {
       });
   });
 
-  app.delete('/api/items/:id', (req, res) => {
-      console.log('REQ', req.body)
-      console.log('RES', res.body)
-    Item.delete(req.params.id);
-    console.log(`Deleted item \`${req.params.id}\``);
-    res.status(204).end();
-  });
+
+  app.put('/api/item/:id', (req, res) => {
+    console.log('inside endpoint here', req.body)
+    Item
+    .create({
+      stores: req.body.stores,
+    })
+    .then(()=> {
+      res.status(201).json(req.body);
+    })
+    .catch(err => {
+      console.log('error inside of server index.js', req.body)
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
 
 
 

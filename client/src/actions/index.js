@@ -113,8 +113,8 @@ export const postItemsError = error => ({
 export const postItems = input => dispatch => {
     //hardcoded data until API hooked up
     const randomUpc = Math.floor(100000000 + Math.random() * 900000000);;
-    const placeholderImage = "http://via.placeholder.com/200x200";
-
+    // const placeholderImage = "http://via.placeholder.com/200x200";
+    // const placeholderImage = `https://source.unsplash.com/200x200/?${input.title}`
 
     let formattedPostRequest = {
         title: input.title,
@@ -122,7 +122,7 @@ export const postItems = input => dispatch => {
         upc: randomUpc,
         //edit to user logged in
         creator: faker.name.findName(),
-        images: placeholderImage,
+        images: `https://source.unsplash.com/200x200/?${input.title}`,
         stores: [
             {
                 name: faker.company.companyName(),
