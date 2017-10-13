@@ -7,7 +7,6 @@ const app = express();
 const bodyParser = require('body-parser');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
-// require("./Routes/authRoutes")(app);
 const { User } = require('./models/User');
 const { Item } = require('./models/Item');
 const { ItemError } = require('./models/Item-Error');
@@ -18,7 +17,6 @@ var promise = mongoose.connect(keys.MONGO_URI, {
 });
 
 const session = require('express-session');
-
 const database = {
 };
 
@@ -31,7 +29,6 @@ let secret = {
 if(process.env.NODE_ENV != 'production') {
   secret = require('./config/keys');
 }
-
 
 // CORS
 app.use(function(req, res, next) {
@@ -105,9 +102,6 @@ passport.use(
     }
 ));
 
-
-// passport.use(BearerStrategy)
-
 passport.use(
     new BearerStrategy(
         (token, done) => {
@@ -135,28 +129,8 @@ app.get('/api/auth/google/callback',
         res.redirect('/Home');
         return req.user;
     }
-    
 );
 
-/*
-app.get('/api/auth/google/callback',
-    (req, res, next) => {
-    return passport.authenticate('google', {
-    failureRedirect: '/',
-    session: false
-},
-    (err, user, info) => {
-        console.log('user', user)
-        console.log('req user', req.user)
-        if (err) {
-        res.redirect('/'); 
-    } else {
-        res.cookie('accessToken', req.user.accessToken, {expires: 0});
-        req.user = user;
-    }
-    })(req, res, next);
-    })
-*/
 app.get('/api/auth/logout', (req, res) => {
     req.logout();
     res.clearCookie('accessToken');
@@ -170,39 +144,9 @@ app.get('/api/me',
         displayName: req.user.displayName
     })
 );
-// app.get(
-//     '/api/me',
-//     passport.authenticate('bearer', { session: false }),
-//     (req, res) => {
-//       User.findOne({ accessToken: req.user.accessToken })
-//         .then(user => {
-//           res.status(200).send(user).json({
-//                     googleId: req.user.googleId,
-//                     displayName: req.user.displayName
-//                 })
-//         })
-//         .catch(err => {
-//           console.err(err);
-//           res.status(204).send(err);
-//         });
-//     }
-//   );
-
-// app.get('/account', ensureAuthenticated, function(req, res){
-//     User.findById(req.session.passport.user, function(err, user) {
-//       if(err) {
-//         console.log(err);  // handle errors
-//       } else {
-//         res.render('account', { user: user});
-//       }
-//     });
-// });
-
-
 
 //----Item Endpoints------------------------------------
 
-// Get All Items
 app.get('/api/items', (req, res) => {
     Item
       .find()
@@ -249,20 +193,19 @@ app.get('/api/items', (req, res) => {
     res.status(204).end();
   });
 
-
-
-  // PUT request for finding stores nearby
-
-
-
-
-
-
-
-
-
-  
-
+app.get('/api/items/:id', (req, res) => {
+    Item
+    .find()
+    .then(items => {
+      res.json({
+          items: items.map(item => item)
+      })
+        .catch(err => {
+          console.error(err);
+          res.status(500).json({message: 'Internal server error'});
+        });
+    });
+});
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
@@ -273,7 +216,6 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
     const index = path.resolve(__dirname, '../client/build', 'index.html');
     res.sendFile(index);
 });
-
 
 
 //======================================================================//
@@ -319,9 +261,6 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 
 
 //======================================================================//
-
-
-
 
 let server;
 function runServer(port=3001) {
