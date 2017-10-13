@@ -122,17 +122,17 @@ export const postItems = input => dispatch => {
         upc: randomUpc,
         //edit to user logged in
         creator: faker.name.findName(),
-        images: `https://source.unsplash.com/200x200/?${input.title}`,
-        stores: [
-            {
-                name: faker.company.companyName(),
-                inventory: faker.name.findName()
-            },
-            {
-                name: faker.company.companyName(),
-                inventory: faker.name.findName()
-            },
-        ]
+        images: `https://source.unsplash.com/200x200/?${input.title}`
+        // stores: [
+        //     {
+        //         name: faker.company.companyName(),
+        //         inventory: faker.name.findName()
+        //     },
+        //     {
+        //         name: faker.company.companyName(),
+        //         inventory: faker.name.findName()
+        //     },
+        // ]
 
     }
     console.log('INPUT IN POST ITEMS.....', input);
