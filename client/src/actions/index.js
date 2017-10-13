@@ -182,8 +182,31 @@ export const addStoreError = error => ({
 });
 
 export const addStore = store => dispatch => {
-    console.log('ADD STORE DISPATCH')
+    console.log('ADD STORE IN ACTION', store)
+    const opts = {
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+            //   Authorization: `Basic ${window.encodedAuthHeader}`
+        },
+        method: 'PUT',
+        body: JSON.stringify(store)
+    };
+    dispatch(addStoreRequest())
+    fetch(`/api/items/${store.id}`, opts)
+    .then(function (res) {
+        // console.log(res, 'RES FROM API ITEMS POST DISPATCH')
+        console.log('RES IN ADDSTORE SUCCESS', res)
+        dispatch(addStoreSuccess(res))
+    })
+    .catch(err => {
+        // console.log('POST ITEMS  ERROR')
+        dispatch(addStoreError(err));
+    });
+
 }
+
+
 
 
 

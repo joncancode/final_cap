@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { render } from 'react-dom';
+
+const faker = require('faker');
 // import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import { addStore } from '../actions/';
@@ -14,8 +16,10 @@ import './styles/MainWindow.css';
 
 class MainWindow extends React.Component {
     constructor(props) {
-        //uses params from WishList routing to select current item by upc code
         super(props);
+        
+        this.handleSubmit = this.handleSubmit.bind(this);
+        //uses params from WishList routing to select current item by upc code
         this.state = {
             upc: this.props.match.params.itemId,
             currentItem: undefined
@@ -33,9 +37,19 @@ class MainWindow extends React.Component {
         this.setState({ currentItem: filteredItem })
     }
 
-    handleClick(event) {
+    handleSubmit(event) {
         event.preventDefault();
-        this.props.dispatch(addStore());
+        const id = this.state.currentItem[0]._id;
+        // console.log('ID', id)
+        const placeholderStore = {
+            "id": `${id}`,
+            "stores": [{
+                "name": faker.company.companyName(),
+                "inventory": faker.name.findName()
+            }]
+        }
+        // console.log('placeholder store....', placeholderStore)
+        this.props.dispatch(addStore(placeholderStore));
         //ACTION FOR SUBMIT
     }
 
@@ -68,7 +82,7 @@ class MainWindow extends React.Component {
             const currentItem = this.state.currentItem[0];
             // const currentItem = this.props.itemData.items[0];
             // console.log(this.state, 'STATE')
-            // console.log('current item is....', currentItem)
+            console.log('current item is....', currentItem)
             // console.log(this.state, 'UPC IN STATE')
 
             const storeData = currentItem.stores.map((item, index) =>
@@ -99,9 +113,9 @@ class MainWindow extends React.Component {
                                 <th></th>
                             </tr>
                             {storeData}
-                            
-                                <button type="submit" onClick={this.handleClick}>Add store</button>
-                            
+                            <form onSubmit={this.handleSubmit}>
+                                <button type="submit">Add store</button>
+                            </form>
                         </table>
                     </div>
                 </div>
