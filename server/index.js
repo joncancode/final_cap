@@ -12,6 +12,8 @@ const { User } = require('./models/User');
 const { Item } = require('./models/Item');
 const { ItemError } = require('./models/Item-Error');
 
+const jsonParser = bodyParser.json();
+
 // Mongoose's default connection logic is deprecated as of 4.11.0.
 var promise = mongoose.connect(keys.MONGO_URI, {
     useMongoClient: true
@@ -227,30 +229,52 @@ app.get('/api/items/:id', (req, res) => {
     })
 })
 
-app.put('/api/items/:id', (req, res) => {
-    Item.findById(req.params.id, function (err, item) {
-        
-        console.log('REQ PARAMS', req.params)
+// app.put('/api/items/:id', (req, res) => {
+//     Item.findById(req.params.id, function (err, item) {
+//         console.log('REQ PARAMS', req.params)
 
-        let request = JSON.stringify(req.body)
-        console.log('ITEM......', item)
-        console.log('JSON STRINGIFY ON REQUEST', request)
-        if (err)
-            res.send(err);
+//         let request = JSON.stringify(req.body)
 
-        
 
-        item.stores = request[0]; 
-        item.save(function (err) {
-            if (err)
-                res.send(err);
+//         Item.save(function (err) {
+//             if (err)
+//                 res.send(err);
 
-            res.json({ message: 'Store added' });
-        });
-    })
+//             res.json({ message: 'Store added' });
+//         });
+//     })
+// });
+
+app.put('/api/items/:id', jsonParser, (req, res) => {
+    const requiredFields = ['id', 'store'];
+    for (let i=0; i<requiredFields.length; i++) {
+      const field = requiredFields[i];
+      if (!(field in req.body)) {
+        const message = `Missing \`${field}\` in request body`
+        console.error(message);
+        return res.status(400).send(message);
+      }
+    }
+    if (req.params.id !== req.body.id) {
+      const message = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match`;
+      console.error(message);
+      return res.status(400).send(message);
+    }
+
+    console.log(`Updating item \`${req.params.id}\``);
+    
+      Item.update(
+        { _id: req.params.id },
+        { store: req.body.store },
+        { multi: true }, ( err, raw ) => {
+          if ( err ) return handleError( err )
+            console.log( 'Raw response from mlab ', raw )
+            console.log(err)
+            // console.log(req.params.id)
+            console.log('---------->',req.params)
+      } )
+      res.status(204).end();
 });
-
-
 
 app.post('/api/item', (req, res) => {
     console.log('inside endpoint here', req.body)
