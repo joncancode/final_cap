@@ -1,6 +1,7 @@
 .wish-list {
     background-color: #3FC1C9;
     flex:1;
+    min-width: 180px;
 }
 
 .wish-list h2 {

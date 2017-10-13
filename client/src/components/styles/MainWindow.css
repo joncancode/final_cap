@@ -3,7 +3,7 @@
     color: #F5F5F5;
     display: flex;
     flex: 3;
-    min-width: 900px;
+    /* min-width: 900px; */
 }
 .main-window > p {
     padding: 50px;
@@ -30,7 +30,7 @@
 }
 
 .item-overview > img {
-    max-width: 350px;
+    /* max-width: 350px; */
 }
 
 table {
