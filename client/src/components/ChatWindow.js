@@ -2,7 +2,7 @@ import React from 'react';
 import './styles/ChatWindow.css';
 
 import io from 'socket.io-client';
-let socket = io('http://localhost:3400');
+let socket = io('https://find-smithy.herokuapp.com/');
 
 //this component needs to be reduxified
 let msgArr = [];
